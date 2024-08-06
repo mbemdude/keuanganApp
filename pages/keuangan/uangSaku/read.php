@@ -1,11 +1,34 @@
+    <?php 
+        if (isset($_SESSION["hasil"])) {
+            if ($_SESSION["hasil"]) {
+    ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <h5>Berhasil</h5>
+          <?php echo $_SESSION['pesan'] ?>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php 
+        } else {
+    ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <h5>Berhasil</h5>
+          <?php echo $_SESSION['pesan'] ?>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php
+        }
+            unset($_SESSION['hasil']);
+            unset($_SESSION['pesan']);
+        }
+    ?>
 <!-- Content -->
-<section class="content">
+  <section class="content">
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <a href="#" class="btn btn-success">Tambah Data <i class="bi bi-plus-circle-fill"></i></a>
+                <a href="?page=tambah-uang-saku" class="btn btn-success">Tambah Data <i class="bi bi-plus-circle-fill"></i></a>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -36,9 +59,9 @@
                       <td><?php echo $row['nama'] ?></td>
                       <td><?php echo rupiah($row['saldo']) ?></td>
                       <td>
-                        <a href="#" class="btn btn-info"><i class="bi bi-eye"></i></a>
-                        <a href="#" class="btn btn-warning"><i class="bi bi-pen"></i></a>
-                        <a href="#" class="btn btn-danger"><i class="bi bi-trash"></i></a>
+                        <a href="?page=show-uang-saku&id=<?php echo $row['id']?>" class="btn btn-info"><i class="bi bi-eye"></i></a>
+                        <a href="?page=edit-uang-saku&id=<?php echo $row['id']?>" class="btn btn-warning"><i class="bi bi-pen"></i></a>
+                        <a href="?page=hapus-uang-saku&id=<?php echo $row['id']?>" class="btn btn-danger"><i class="bi bi-trash"></i></a>
                       </td>
                     </tr>
                     <?php } ?>
