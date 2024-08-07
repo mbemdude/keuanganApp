@@ -44,6 +44,18 @@ if(isset($_GET['page'])) {
         case 'hapus-barang':
             file_exists('pages/kasir/barang/delete.php') ? include 'pages/kasir/barang/delete.php' : include 'pages/404.php';
             break;
+        case 'transaksi':
+            file_exists('pages/kasir/transaksi/read.php') ? include 'pages/kasir/transaksi/read.php' : include 'pages/404.php';
+            break;
+        case 'tambah-transaksi':
+            file_exists('pages/kasir/transaksi/add.php') ? include 'pages/kasir/transaksi/add.php' : include 'pages/404.php';
+            break;
+        case 'edit-transaksi':
+            file_exists('pages/kasir/transaksi/update.php') ? include 'pages/kasir/transaksi/update.php' : include 'pages/404.php';
+            break;
+        case 'hapus-transaksi':
+            file_exists('pages/kasir/transaksi/delete.php') ? include 'pages/kasir/transaksi/delete.php' : include 'pages/404.php';
+            break;
         case 'jenjang':
             file_exists('pages/masterdata/jenjang/read.php') ? include 'pages/masterdata/jenjang/read.php' : include 'pages/404.php';
             break;
