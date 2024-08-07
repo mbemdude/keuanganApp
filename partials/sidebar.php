@@ -42,43 +42,84 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="nav-item"> 
+                            <a href="#" class="nav-link"> 
+                                <i class="nav-icon bi bi-box-seam-fill"></i>
+                                <p>
+                                    Kasir
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item"> 
+                                    <a href="?page=barang" class="nav-link"> 
+                                        <i class="nav-icon bi bi-circle"></i>
+                                        <p>Stock Barang</p>
+                                    </a> 
+                                    <a href="?page=transaksi" class="nav-link"> 
+                                        <i class="nav-icon bi bi-circle"></i>
+                                        <p>Transaksi</p>
+                                    </a> 
+                                </li>
+                            </ul>
+                        </li>
                         <li class="nav-header">
-                            <i class="bi bi-archive-fill"></i>
-                             Master Data
+                             <span>Master Data</span>
                         </li>
                         <li class="nav-item"> 
-                            <a href="?page=jenjang" class="nav-link"> 
-                                <i class="nav-icon bi bi-file-earmark-fill"></i>
-                                <p>Jenjang</p>
+                            <a href="#" class="nav-link"> 
+                                <i class="nav-icon bi bi-archive-fill"></i>
+                                <p>
+                                    Data Utama
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
                             </a>
-                        </li>
-                        <li class="nav-item"> 
-                            <a href="?page=kelas" class="nav-link"> 
-                                <i class="nav-icon bi bi-file-earmark-fill"></i>
-                                <p>Kelas</p>
-                            </a>
-                        </li>
-                        <li class="nav-item"> 
-                            <a href="?page=status" class="nav-link"> 
-                                <i class="nav-icon bi bi-file-earmark-fill"></i>
-                                <p>Status</p>
-                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item"> 
+                                    <a href="?page=jenjang" class="nav-link"> 
+                                        <i class="nav-icon bi bi-file-earmark-fill"></i>
+                                        <p>Jenjang</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item"> 
+                                    <a href="?page=kelas" class="nav-link"> 
+                                        <i class="nav-icon bi bi-file-earmark-fill"></i>
+                                        <p>Kelas</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item"> 
+                                    <a href="?page=status" class="nav-link"> 
+                                        <i class="nav-icon bi bi-file-earmark-fill"></i>
+                                        <p>Status</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="nav-header">
-                            <i class="bi bi-person-badge-fill"></i>
-                             Admin
+                             <span>Admin</span>
                         </li>
                         <li class="nav-item"> 
-                            <a href="?page=role" class="nav-link"> 
-                                <i class="nav-icon bi bi-person-fill-gear"></i>
-                                <p>Role</p>
+                            <a href="#" class="nav-link"> 
+                                <i class="nav-icon bi bi-person-badge-fill"></i>
+                                <p>
+                                    Pengaturan User
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
                             </a>
-                        </li>
-                        <li class="nav-item"> 
-                            <a href="?page=user" class="nav-link"> 
-                                <i class="nav-icon bi bi-person-plus-fill"></i>
-                                <p>User</p>
-                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item"> 
+                                    <a href="?page=role" class="nav-link"> 
+                                        <i class="nav-icon bi bi-person-fill-gear"></i>
+                                        <p>Role</p>
+                                    </a> 
+                                </li>
+                                <li class="nav-item"> 
+                                    <a href="?page=user" class="nav-link"> 
+                                        <i class="nav-icon bi bi-person-plus-fill"></i>
+                                        <p>Role</p>
+                                    </a> 
+                                </li>
+                            </ul>
                         </li>
                     </ul> 
                     <!--end::Sidebar Menu-->
