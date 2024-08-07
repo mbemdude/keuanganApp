@@ -36,7 +36,7 @@
                             <ul class="nav nav-treeview">
                                 <li class="nav-item"> 
                                     <a href="?page=uang-saku" class="nav-link"> 
-                                        <i class="nav-icon bi bi-circle"></i>
+                                        <i class="nav-icon bi bi-credit-card-fill"></i>
                                         <p>Uang Saku</p>
                                     </a> 
                                 </li>
@@ -44,7 +44,7 @@
                         </li>
                         <li class="nav-item"> 
                             <a href="#" class="nav-link"> 
-                                <i class="nav-icon bi bi-box-seam-fill"></i>
+                                <i class="nav-icon bi bi-cart-fill"></i>
                                 <p>
                                     Kasir
                                     <i class="nav-arrow bi bi-chevron-right"></i>
@@ -53,11 +53,11 @@
                             <ul class="nav nav-treeview">
                                 <li class="nav-item"> 
                                     <a href="?page=barang" class="nav-link"> 
-                                        <i class="nav-icon bi bi-circle"></i>
+                                        <i class="nav-icon bi bi-box2-fill"></i>
                                         <p>Stock Barang</p>
                                     </a> 
                                     <a href="?page=transaksi" class="nav-link"> 
-                                        <i class="nav-icon bi bi-circle"></i>
+                                        <i class="nav-icon bi bi-receipt-cutoff"></i>
                                         <p>Transaksi</p>
                                     </a> 
                                 </li>
@@ -116,7 +116,7 @@
                                 <li class="nav-item"> 
                                     <a href="?page=user" class="nav-link"> 
                                         <i class="nav-icon bi bi-person-plus-fill"></i>
-                                        <p>Role</p>
+                                        <p>User</p>
                                     </a> 
                                 </li>
                             </ul>

@@ -23,9 +23,6 @@ if(isset($_GET['page'])) {
         case 'uang-saku':
             file_exists('pages/keuangan/uangSaku/read.php') ? include 'pages/keuangan/uangSaku/read.php' : include 'pages/404.php';
             break;
-        case 'show-uang-saku':
-            file_exists('pages/keuangan/uangSaku/show.php') ? include 'pages/keuangan/uangSaku/show.php' : include 'pages/404.php';
-            break;
         case 'tambah-uang-saku':
             file_exists('pages/keuangan/uangSaku/add.php') ? include 'pages/keuangan/uangSaku/add.php' : include 'pages/404.php';
             break;
@@ -34,6 +31,18 @@ if(isset($_GET['page'])) {
             break;
         case 'hapus-uang-saku':
             file_exists('pages/keuangan/uangSaku/delete.php') ? include 'pages/keuangan/uangSaku/delete.php' : include 'pages/404.php';
+            break;
+        case 'barang':
+            file_exists('pages/kasir/barang/read.php') ? include 'pages/kasir/barang/read.php' : include 'pages/404.php';
+            break;
+        case 'tambah-barang':
+            file_exists('pages/kasir/barang/add.php') ? include 'pages/kasir/barang/add.php' : include 'pages/404.php';
+            break;
+        case 'edit-barang':
+            file_exists('pages/kasir/barang/update.php') ? include 'pages/kasir/barang/update.php' : include 'pages/404.php';
+            break;
+        case 'hapus-barang':
+            file_exists('pages/kasir/barang/delete.php') ? include 'pages/kasir/barang/delete.php' : include 'pages/404.php';
             break;
         case 'jenjang':
             file_exists('pages/masterdata/jenjang/read.php') ? include 'pages/masterdata/jenjang/read.php' : include 'pages/404.php';

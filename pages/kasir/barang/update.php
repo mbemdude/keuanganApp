@@ -5,7 +5,7 @@ if (isset($_GET['id'])) {
 
     // Find data
     $id = $_GET['id'];
-    $findSql = "SELECT * FROM role WHERE id = :id";
+    $findSql = "SELECT * FROM barang WHERE id = :id";
     $stmt = $db->prepare($findSql);
     $stmt->bindParam(':id', $id);
     $stmt->execute();
@@ -14,9 +14,9 @@ if (isset($_GET['id'])) {
     if (isset($row['id'])) {
         if (isset($_POST['button_update'])) {
             // Validasi
-            $validationSql = "SELECT * FROM role WHERE role = :role AND id != :id";
+            $validationSql = "SELECT * FROM barang WHERE kode_barang = :kode_barang AND id != :id";
             $stmtValidation = $db->prepare($validationSql);
-            $stmtValidation->bindParam(':role', $_POST['role']);
+            $stmtValidation->bindParam(':kode_barang', $_POST['kode_barang']);
             $stmtValidation->bindParam(':id', $_POST['id']);
             $stmtValidation->execute();
 
@@ -24,15 +24,18 @@ if (isset($_GET['id'])) {
                 ?>
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <h5>Gagal</h5>
-                    Data role sudah ada
+                    Data kdoe barang sudah ada
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 <?php
             } else {
                 // Update Query
-                $updateSql = "UPDATE role SET role = :role WHERE id = :id";
+                $updateSql = "UPDATE barang SET kode_barang = :kode_barang, nama_barang = :nama_barang, harga = :harga, stock = :stock WHERE id = :id";
                 $stmt = $db->prepare($updateSql);
-                $stmt->bindParam(':role', $_POST['role']);
+                $stmt->bindParam(':kode_barang', $_POST['kode_barang']);
+                $stmt->bindParam(':nama_barang', $_POST['nama_barang']);
+                $stmt->bindParam(':harga', $_POST['harga']);
+                $stmt->bindParam(':stock', $_POST['stock']);
                 $stmt->bindParam(':id', $_POST['id']);
 
                 if ($stmt->execute()) {
@@ -42,7 +45,7 @@ if (isset($_GET['id'])) {
                     $_SESSION['hasil'] = false;
                     $_SESSION['pesan'] = "Gagal simpan data";
                 }
-                echo "<meta http-equiv='refresh' content='0;url=?page=role'>";
+                echo "<meta http-equiv='refresh' content='0;url=?page=barang'>";
             }
         }
         ?>
@@ -55,12 +58,18 @@ if (isset($_GET['id'])) {
                 <div class="card-body">
                     <form method="POST">    
                         <div class="form-group">
-                            <label for="role">Jenjang</label>
-                            <input type="text" name="role" class="form-control" value="<?= $row['role'] ?>">
+                            <label for="kode_barang">Kode Barang</label>
+                            <input type="text" name="kode_barang" class="form-control" value="<?= $row['kode_barang'] ?>">
+                            <label for="nama_barang">Nama Barang</label>
+                            <input type="text" name="nama_barang" class="form-control" value="<?= $row['nama_barang'] ?>">
+                            <label for="harga">Harga</label>
+                            <input type="text" name="harga" class="form-control" value="<?= $row['harga'] ?>">
+                            <label for="stock">Stock</label>
+                            <input type="text" name="stock" class="form-control" value="<?= $row['stock'] ?>">
                             <input type="hidden" name="id" value="<?= $row['id'] ?>">
                         </div>
                         <div class="mt-2">
-                            <a href="?page=role" class="btn btn-danger">Batal</a>
+                            <a href="?page=barang" class="btn btn-danger">Batal</a>
                             <button type="submit" name="button_update" class="btn btn-success">Simpan</button>
                         </div>
                     </form>
@@ -69,9 +78,9 @@ if (isset($_GET['id'])) {
         </section>
         <?php
     } else {
-        echo "<meta http-equiv='refresh' content='0;url=?page=kelas'>";
+        echo "<meta http-equiv='refresh' content='0;url=?page=barang'>";
     }
 } else {
-    echo "<meta http-equiv='refresh' content='0;url=?page=kelas'>";
+    echo "<meta http-equiv='refresh' content='0;url=?page=barang'>";
 }
 ?>
