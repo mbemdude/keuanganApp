@@ -64,6 +64,22 @@
                                 <p>Status</p>
                             </a>
                         </li>
+                        <li class="nav-header">
+                            <i class="bi bi-person-badge-fill"></i>
+                             Admin
+                        </li>
+                        <li class="nav-item"> 
+                            <a href="?page=role" class="nav-link"> 
+                                <i class="nav-icon bi bi-person-fill-gear"></i>
+                                <p>Role</p>
+                            </a>
+                        </li>
+                        <li class="nav-item"> 
+                            <a href="?page=user" class="nav-link"> 
+                                <i class="nav-icon bi bi-person-plus-fill"></i>
+                                <p>User</p>
+                            </a>
+                        </li>
                     </ul> 
                     <!--end::Sidebar Menu-->
                 </nav>
