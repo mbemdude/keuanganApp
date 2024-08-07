@@ -83,6 +83,18 @@ if(isset($_GET['page'])) {
         case 'hapus-role':
             file_exists('pages/admin/role/delete.php') ? include 'pages/admin/role/delete.php' : include 'pages/404.php';
             break;
+        case 'user':
+            file_exists('pages/admin/user/read.php') ? include 'pages/admin/user/read.php' : include 'pages/404.php';
+            break;
+        case 'tambah-user':
+            file_exists('pages/admin/user/add.php') ? include 'pages/admin/user/add.php' : include 'pages/404.php';
+            break;
+        case 'edit-user':
+            file_exists('pages/admin/user/update.php') ? include 'pages/admin/user/update.php' : include 'pages/404.php';
+            break;
+        case 'hapus-user':
+            file_exists('pages/admin/user/delete.php') ? include 'pages/admin/user/delete.php' : include 'pages/404.php';
+            break;
         default:
             include 'pages/404.php';
     }
