@@ -1,7 +1,32 @@
 <?php
 session_start();
 include 'database/database.php';
-include 'settings/function.php'
+include 'config/function.php';
+
+if (isset($_POST['qr_code'])) {
+    ob_start(); // Mulai output buffering
+    $kode = $_POST['qr_code'];
+
+    $database = new Database();
+    $db = $database->getConnection();
+
+    $query = "SELECT us.*, s.nama FROM uang_saku us JOIN siswa s ON us.siswa_id = s.id WHERE s.nis = :nis";
+    $stmt = $db->prepare($query);
+    $stmt->bindParam(':nis', $kode);
+    $stmt->execute();
+
+    if ($stmt->rowCount() > 0) {
+        $siswa = $stmt->fetch(PDO::FETCH_ASSOC);
+        $_SESSION['siswa'] = $siswa;
+        header("Location: ?page=belanja");
+        exit;
+    } else {
+        $_SESSION['error'] = "Siswa tidak ditemukan!";
+        header("Location: ?page=transaksi.php");
+        exit;
+    }
+    ob_end_flush();
+}
 ?>
 
 <!DOCTYPE html>
@@ -22,6 +47,9 @@ include 'settings/function.php'
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.css" integrity="sha256-4MX+61mt9NVvvuPjUWdUdyfZfxSB1/Rf9WtqRHgG5S0=" crossorigin="anonymous"><!-- jsvectormap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css" integrity="sha256-+uGLJmmTKOqBr+2E6KDYs/NRsHxSkONXFHUL0fy2O/4=" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.3/css/dataTables.bootstrap5.css">
+
+    <!-- scanner -->
+    <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
 </head> <!--end::Head--> <!--begin::Body-->
 
 <body class="layout-fixed sidebar-expand-lg bg-body-tertiary"> 

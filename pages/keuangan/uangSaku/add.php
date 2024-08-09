@@ -63,7 +63,7 @@ if (isset($_POST['button_create'])) {
                     <input type="text" name="saldo" class="form-control">
                 </div>
                 <div class="mt-2">
-                    <a href="?page=siswa" class="btn btn-danger">Batal</a>
+                    <a href="?page=uang-saku" class="btn btn-danger">Batal</a>
                     <button type="submit" name="button_create" class="btn btn-success">Simpan</button>
                 </div>
             </form>

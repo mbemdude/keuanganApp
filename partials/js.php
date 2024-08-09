@@ -5,7 +5,31 @@
     <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.3.0/browser/overlayscrollbars.browser.es6.min.js" integrity="sha256-H2VM7BKda+v2Z4+DRy69uknwxjyDRhszjXFhsL4gD3w=" crossorigin="anonymous"></script> <!--end::Third Party Plugin(OverlayScrollbars)--><!--begin::Required Plugin(popperjs for Bootstrap 5)-->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha256-whL0tQWoY1Ku1iskqPFvmZ+CHsvmRWx/PIoEvIeWh4I=" crossorigin="anonymous"></script> <!--end::Required Plugin(popperjs for Bootstrap 5)--><!--begin::Required Plugin(Bootstrap 5)-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha256-YMa+wAM6QkVyz999odX7lPRxkoYAan8suedu4k2Zur8=" crossorigin="anonymous"></script> <!--end::Required Plugin(Bootstrap 5)--><!--begin::Required Plugin(AdminLTE)-->
-    <script src="assets/dist/js/adminlte.js"></script> <!--end::Required Plugin(AdminLTE)--><!--begin::OverlayScrollbars Configure-->
+    <script src="assets/dist/js/adminlte.js"></script> <!--end::Required Plugin(AdminLTE)-->
+
+    <!-- qr scanner -->
+    <!-- Pastikan URL ini benar untuk memuat pustaka html5-qrcode -->
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    <script>
+        function onScanSuccess(decodedText, decodedResult) {
+            // Handle the result here (decodedText)
+            console.log(`Code scanned = ${decodedText}`, decodedResult);
+            document.getElementById('qr_code').value = decodedText;
+            document.getElementById('qr-form').submit();
+        }
+
+        function onScanFailure(error) {
+            // Handle scan failure, usually better to ignore and keep scanning.
+            console.warn(`Code scan error = ${error}`);
+        }
+
+        let html5QrcodeScanner = new Html5QrcodeScanner(
+            "qr-reader", { fps: 10, qrbox: { width: 250, height: 250 } });
+        html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+    </script>
+    <!-- qr scanner end -->
+
+    <!--begin::OverlayScrollbars Configure-->
     <script>
         $(document).ready( function () {
             $('#myTable').DataTable({
