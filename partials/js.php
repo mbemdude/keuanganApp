@@ -8,18 +8,17 @@
     <script src="assets/dist/js/adminlte.js"></script> <!--end::Required Plugin(AdminLTE)-->
 
     <!-- qr scanner -->
-    <!-- Pastikan URL ini benar untuk memuat pustaka html5-qrcode -->
     <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
     <script>
         function onScanSuccess(decodedText, decodedResult) {
-            // Handle the result here (decodedText)
             console.log(`Code scanned = ${decodedText}`, decodedResult);
             document.getElementById('qr_code').value = decodedText;
             document.getElementById('qr-form').submit();
+            document.getElementById('barcode').value = decodedText;
+            document.getElementById('barcode-form').submit();
         }
 
         function onScanFailure(error) {
-            // Handle scan failure, usually better to ignore and keep scanning.
             console.warn(`Code scan error = ${error}`);
         }
 

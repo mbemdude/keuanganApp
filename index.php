@@ -3,6 +3,7 @@ session_start();
 include 'database/database.php';
 include 'config/function.php';
 
+// kasir start
 if (isset($_POST['qr_code'])) {
     ob_start(); // Mulai output buffering
     $kode = $_POST['qr_code'];
@@ -10,7 +11,7 @@ if (isset($_POST['qr_code'])) {
     $database = new Database();
     $db = $database->getConnection();
 
-    $query = "SELECT us.*, s.nama FROM uang_saku us JOIN siswa s ON us.siswa_id = s.id WHERE s.nis = :nis";
+    $query = "SELECT us.*, s.nama, k.kelas FROM uang_saku us JOIN siswa s ON us.siswa_id = s.id JOIN kelas k ON S.kelas_id=k.id WHERE s.nis = :nis";
     $stmt = $db->prepare($query);
     $stmt->bindParam(':nis', $kode);
     $stmt->execute();
@@ -27,6 +28,39 @@ if (isset($_POST['qr_code'])) {
     }
     ob_end_flush();
 }
+// kasir end
+
+// belanja start
+// if (!isset($_SESSION['cart'])) {
+//     $_SESSION['cart'] = [];
+// }
+
+// if (isset($_POST['scan_barcode'])) {
+//     $barcode = $_POST['barcode'];
+    
+//     $database = new Database();
+//     $db = $database->getConnection();
+
+//     $query = "SELECT * FROM barang WHERE kode_barang = :kode_barang";
+//     $stmt = $db->prepare($query);
+//     $stmt->bindParam(':kode_barang', $barcode);
+//     $stmt->execute();
+
+//     if ($stmt->rowCount() > 0) {
+//         $barang = $stmt->fetch(PDO::FETCH_ASSOC);
+//         $_SESSION['cart'][] = [
+//             'nama_barang' => $barang['nama'],
+//             'jumlah' => 1
+//         ];
+//     } else {
+//         $_SESSION['error'] = "Barang tidak ditemukan!";
+//     }
+
+//     header("Location: ?page=belanja");
+//     exit;
+// }
+// // belanja end
+
 ?>
 
 <!DOCTYPE html>
