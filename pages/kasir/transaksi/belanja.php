@@ -195,9 +195,9 @@ if (isset($_POST['button_create'])) {
 
             newItemRow.innerHTML = `
                 <td>${nama_barang}<input type="hidden" name="barang_id[]" value="${barang_id}"></td>
-                <td>${jumlah}<input type="hidden" name="jumlah[]" value="${jumlah}"></td>
+                <td><input type="number" class="form-control qty-input" name="jumlah[]" value="${jumlah}" data-harga="${harga}"></td>
                 <td>${harga}<input type="hidden" name="harga[]" value="${harga}"></td>
-                <td>${total}</td>
+                <td class="total-price">${total}</td>
                 <td><button type="button" class="btn btn-danger btn-sm remove-item">Hapus</button></td>
             `;
 
@@ -212,8 +212,15 @@ if (isset($_POST['button_create'])) {
             newItemRow.querySelector('.remove-item').addEventListener('click', function() {
                 newItemRow.remove();
             });
+
+            // Add event listener to the new qty input field
+            newItemRow.querySelector('.qty-input').addEventListener('input', function() {
+                const qty = this.value;
+                const harga = this.getAttribute('data-harga');
+                const total = qty * harga;
+                newItemRow.querySelector('.total-price').textContent = total;
+            });
         }
     });
-
 
 </script>
