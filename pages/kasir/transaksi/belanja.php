@@ -163,6 +163,28 @@ if (isset($_POST['button_create'])) {
 </section>
 
 <script>
+    // Fungsi untuk menambahkan item ke tabel
+    function addItemToTable(barang_id, nama_barang, harga, jumlah, total) {
+        const container = document.getElementById('items-container');
+        const newItemRow = document.createElement('tr');
+
+        newItemRow.innerHTML = `
+            <td>${nama_barang}<input type="hidden" name="barang_id[]" value="${barang_id}"></td>
+            <td>${jumlah}<input type="hidden" name="jumlah[]" value="${jumlah}"></td>
+            <td>${harga}<input type="hidden" name="harga[]" value="${harga}"></td>
+            <td>${total}</td>
+            <td><button type="button" class="btn btn-danger btn-sm remove-item">Hapus</button></td>
+        `;
+
+        container.appendChild(newItemRow);
+
+        // Add event listener to the new remove button
+        newItemRow.querySelector('.remove-item').addEventListener('click', function() {
+            newItemRow.remove();
+        });
+    }
+
+    // Event listener untuk tombol "Tambah Barang"
     document.getElementById('add-item').addEventListener('click', function() {
         const barangSelect = document.getElementById('barang_id');
         const selectedBarang = barangSelect.options[barangSelect.selectedIndex];
@@ -173,28 +195,23 @@ if (isset($_POST['button_create'])) {
         const total = jumlah * harga;
 
         if (barang_id && jumlah && harga) {
-            const container = document.getElementById('items-container');
-            const newItemRow = document.createElement('tr');
-
-            newItemRow.innerHTML = `
-                <td>${nama_barang}<input type="hidden" name="barang_id[]" value="${barang_id}"></td>
-                <td>${jumlah}<input type="hidden" name="jumlah[]" value="${jumlah}"></td>
-                <td>${harga}<input type="hidden" name="harga[]" value="${harga}"></td>
-                <td>${total}</td>
-                <td><button type="button" class="btn btn-danger btn-sm remove-item">Hapus</button></td>
-            `;
-
-            container.appendChild(newItemRow);
-
-            // Reset form input after adding item
+            addItemToTable(barang_id, nama_barang, harga, jumlah, total);
+            
+            // Reset form input setelah menambahkan item
             barangSelect.value = '';
             document.getElementById('jumlah').value = '';
             document.getElementById('harga').value = '';
+        } else {
+            alert('Mohon lengkapi semua informasi barang.');
+        }
+    });
 
-            // Add event listener to the new remove button
-            newItemRow.querySelector('.remove-item').addEventListener('click', function() {
-                newItemRow.remove();
-            });
+    // Trigger klik tombol "Tambah Barang" saat memilih barang
+    document.getElementById('barang_id').addEventListener('change', function() {
+        const barangSelect = this;
+        if (barangSelect.value) {
+            // Programmatically click the "Tambah Barang" button
+            document.getElementById('add-item').click();
         }
     });
 </script>
