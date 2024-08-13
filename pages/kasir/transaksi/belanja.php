@@ -106,12 +106,12 @@ if (isset($_POST['button_create'])) {
                     $database = new Database();
                     $db = $database->getConnection();
 
-                    $selectBarangSQL = "SELECT * FROM barang";
+                    $selectBarangSQL = "SELECT id, kode_barang, nama_barang, harga FROM barang";
                     $stmtBarang = $db->prepare($selectBarangSQL);
                     $stmtBarang->execute();
 
                     while ($rowBarang = $stmtBarang->fetch(PDO::FETCH_ASSOC)){
-                        echo "<option value='{$rowBarang['id']}' data-harga='{$rowBarang['harga']}'>{$rowBarang['nama_barang']}</option>";
+                        echo "<option value='{$rowBarang['id']}' data-nama='{$rowBarang['nama_barang']}' data-harga='{$rowBarang['harga']}'>{$rowBarang['kode_barang']}</option>";
                     }
                     ?>
                 </select>
@@ -167,7 +167,7 @@ if (isset($_POST['button_create'])) {
         const barangSelect = document.getElementById('barang_id');
         const selectedBarang = barangSelect.options[barangSelect.selectedIndex];
         const barang_id = selectedBarang.value;
-        const nama_barang = selectedBarang.text;
+        const nama_barang = selectedBarang.getAttribute('data-nama');
         const jumlah = document.getElementById('jumlah').value;
         const harga = selectedBarang.getAttribute('data-harga');
         const total = jumlah * harga;
