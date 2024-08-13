@@ -111,7 +111,7 @@ if (isset($_POST['button_create'])) {
                     $stmtBarang->execute();
 
                     while ($rowBarang = $stmtBarang->fetch(PDO::FETCH_ASSOC)){
-                        echo "<option value='{$rowBarang['id']}' data-nama='{$rowBarang['nama_barang']}' data-harga='{$rowBarang['harga']}'>{$rowBarang['kode_barang']}</option>";
+                        echo "<option value='{$rowBarang['id']}' data-nama='{$rowBarang['nama_barang']}' data-harga='{$rowBarang['harga']}'>{$rowBarang['kode_barang']}-{$rowBarang['nama_barang']}</option>";
                     }
                     ?>
                 </select>
