@@ -90,7 +90,7 @@ if (isset($_POST['button_create'])) {
             <form method="POST">
                 <div class="form-group">
                     <input type="hidden" name="tanggal" value="<?php echo date("Y/m/d H:i:s") ?>">
-                    <label for="uang_saku_id">Nama</label>
+                    <label for="uang_saku_id">Nama Santri</label>
                     <select name="uang_saku_id" class="form-select">
                         <option value="">- Pilih -</option>
                         <?php 

@@ -24,10 +24,9 @@ if (isset($_POST['button_create'])) {
         $totalHarga = 0;
 
         // Proses setiap barang
-        for ($i = 0; $i < count($_POST['barang_id']); $i++) {
-            $barang_id = $_POST['barang_id'][$i];
-            $jumlah = (int)$_POST['jumlah'][$i];
-            $harga = (float)$_POST['harga'][$i];
+        foreach ($_POST['barang_id'] as $index => $barang_id) {
+            $jumlah = (int)$_POST['jumlah'][$index];
+            $harga = (float)$_POST['harga'][$index];
 
             // Cek stok barang
             $stokSql = "SELECT stock FROM barang WHERE id = :barang_id";
@@ -61,14 +60,14 @@ if (isset($_POST['button_create'])) {
             $stmtUpdateSaldo->execute();
 
             // Simpan transaksi
-            for ($i = 0; $i < count($_POST['barang_id']); $i++) {
+            foreach ($_POST['barang_id'] as $index => $barang_id) {
                 $insertSql = "INSERT INTO transaksi (tanggal, uang_saku_id, barang_id, jumlah, harga, user_id) VALUES (:tanggal, :uang_saku_id, :barang_id, :jumlah, :harga, :user_id)";
                 $stmt = $db->prepare($insertSql);
                 $stmt->bindParam(':tanggal', $_POST['tanggal']);
                 $stmt->bindParam(':uang_saku_id', $_POST['uang_saku_id']);
-                $stmt->bindParam(':barang_id', $_POST['barang_id'][$i]);
-                $stmt->bindParam(':jumlah', $_POST['jumlah'][$i]);
-                $stmt->bindParam(':harga', $_POST['harga'][$i]);
+                $stmt->bindParam(':barang_id', $barang_id);
+                $stmt->bindParam(':jumlah', $_POST['jumlah'][$index]);
+                $stmt->bindParam(':harga', $_POST['harga'][$index]);
                 $stmt->bindParam(':user_id', $_POST['user_id']);
                 $stmt->execute();
             }
@@ -89,15 +88,19 @@ if (isset($_POST['button_create'])) {
 }
 ?>
 
-<div class="container mt-5">
-        <h2>Input Transaksi</h2>
+<section class="content">
+    <div class="card mx-3">
+        <div class="card-header">
+            <h3 class="card-title">Transaksi, <span class="fw-bold"><?php echo $siswa['nama'] ?></span></h3>
+        </div>
+        <div class="card-body">
         <form method="POST">
             <input type="hidden" name="tanggal" value="<?php echo date("Y/m/d H:i:s") ?>">
             <input type="hidden" name="uang_saku_id" value="<?php echo $siswa['id']; ?>">
 
             <div class="form-group">
                 <label for="barang_id">Barang</label>
-                <select name="barang_id[]" id="barang_id" class="form-select" required>
+                <select id="barang_id" class="form-select">
                     <option value="">- Pilih -</option>
                     <?php 
                     $database = new Database();
@@ -113,67 +116,85 @@ if (isset($_POST['button_create'])) {
                     ?>
                 </select>
                 <label for="jumlah">Qty</label>
-                <input type="number" name="jumlah[]" class="form-control" required>
-                <input type="hidden" name="harga[]" class="form-control">
+                <input type="number" id="jumlah" class="form-control">
+                <input type="hidden" id="harga" class="form-control">
                 <label for="user_id">Petugas</label>
-                <input type="text" name="user_id" class="form-select">
+                <select name="user_id" class="form-select" required>
+                    <option value="">- Pilih -</option>
+                    <?php 
+                    $database = new Database();
+                    $db = $database->getConnection();
+
+                    $selectUserSQL = "SELECT * FROM user";
+                    $stmtUser = $db->prepare($selectUserSQL);
+                    $stmtUser->execute();
+
+                    while ($rowUser = $stmtUser->fetch(PDO::FETCH_ASSOC)){
+                        echo "<option value='{$rowUser['id']}'>{$rowUser['nama']}</option>";
+                    }
+                    ?>
+                </select>
             </div>
 
             <button type="button" id="add-item" class="btn btn-secondary mt-3">Tambah Barang</button>
 
-            <div id="items-container"></div>
+            <table class="table mt-3">
+                <thead>
+                    <tr>
+                        <th>Nama Barang</th>
+                        <th>Qty</th>
+                        <th>Harga</th>
+                        <th>Total</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="items-container">
+                    <!-- Items akan ditambahkan di sini -->
+                </tbody>
+            </table>
 
             <div class="mt-3">
                 <a href="?page=transaksi" class="btn btn-danger">Batal</a>
                 <button type="submit" name="button_create" class="btn btn-success">Simpan</button>
             </div>
         </form>
+        </div>
     </div>
+</section>
 
-    <script>
-        document.getElementById('add-item').addEventListener('click', function() {
+<script>
+    document.getElementById('add-item').addEventListener('click', function() {
+        const barangSelect = document.getElementById('barang_id');
+        const selectedBarang = barangSelect.options[barangSelect.selectedIndex];
+        const barang_id = selectedBarang.value;
+        const nama_barang = selectedBarang.text;
+        const jumlah = document.getElementById('jumlah').value;
+        const harga = selectedBarang.getAttribute('data-harga');
+        const total = jumlah * harga;
+
+        if (barang_id && jumlah && harga) {
             const container = document.getElementById('items-container');
-            const newItem = document.createElement('div');
-            newItem.classList.add('form-group');
-            newItem.innerHTML = 
-               ` <div class="form-group">
-                    <label for="barang_id">Barang</label>
-                    <select name="barang_id[]" class="form-select" required>
-                        <option value="">- Pilih -</option>
-                        <?php 
-                        $database = new Database();
-                        $db = $database->getConnection();
+            const newItemRow = document.createElement('tr');
 
-                        $selectBarangSQL = "SELECT * FROM barang";
-                        $stmtBarang = $db->prepare($selectBarangSQL);
-                        $stmtBarang->execute();
+            newItemRow.innerHTML = `
+                <td>${nama_barang}<input type="hidden" name="barang_id[]" value="${barang_id}"></td>
+                <td>${jumlah}<input type="hidden" name="jumlah[]" value="${jumlah}"></td>
+                <td>${harga}<input type="hidden" name="harga[]" value="${harga}"></td>
+                <td>${total}</td>
+                <td><button type="button" class="btn btn-danger btn-sm remove-item">Hapus</button></td>
+            `;
 
-                        while ($rowBarang = $stmtBarang->fetch(PDO::FETCH_ASSOC)){
-                            echo "<option value='{$rowBarang['id']}' data-harga='{$rowBarang['harga']}'>{$rowBarang['nama_barang']}</option>";
-                        }
-                        ?>
-                    </select>
-                    <label for="jumlah">Qty</label>
-                    <input type="number" name="jumlah[]" class="form-control" required>
-                    <input type="hidden" name="harga[]" class="form-control">
-                </div>`
-            ;
-            container.appendChild(newItem);
+            container.appendChild(newItemRow);
 
-            // Update harga saat barang dipilih
-            container.querySelectorAll('select[name="barang_id[]"]').forEach(select => {
-                select.addEventListener('change', function() {
-                    const harga = this.options[this.selectedIndex].getAttribute('data-harga');
-                    this.parentElement.querySelector('input[name="harga[]"]').value = harga;
-                });
+            // Reset form input after adding item
+            barangSelect.value = '';
+            document.getElementById('jumlah').value = '';
+            document.getElementById('harga').value = '';
+
+            // Add event listener to the new remove button
+            newItemRow.querySelector('.remove-item').addEventListener('click', function() {
+                newItemRow.remove();
             });
-        });
-
-        // Update harga saat barang dipilih
-        document.querySelectorAll('select[name="barang_id[]"]').forEach(select => {
-            select.addEventListener('change', function() {
-                const harga = this.options[this.selectedIndex].getAttribute('data-harga');
-                this.parentElement.querySelector('input[name="harga[]"]').value = harga;
-            });
-        });
-    </script>
+        }
+    });
+</script>
