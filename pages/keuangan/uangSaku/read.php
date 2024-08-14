@@ -37,7 +37,7 @@
                     <tr>
                       <th>No</th>
                       <th>Nama</th>
-                      <th>Saldo</th>
+                      <th>Uang Saku</th>
                       <th>Aksi</th>
                     </tr>
                   </thead>
@@ -70,7 +70,7 @@
                     <tr>
                       <th>No</th>
                       <th>Nama</th>
-                      <th>Saldo</th>
+                      <th>Uang Saku</th>
                       <th>Aksi</th>
                     </tr>
                   </tfoot>

@@ -115,8 +115,8 @@ if (isset($_POST['button_create'])) {
                     }
                     ?>
                 </select>
-                <label for="jumlah">Qty</label>
-                <input type="number" id="jumlah" class="form-control">
+                <!-- <label for="jumlah">Qty</label>
+                <input type="number" id="jumlah" class="form-control"> -->
                 <input type="hidden" id="harga" class="form-control">
                 <label for="user_id">Petugas</label>
                 <select name="user_id" class="form-select" required>
