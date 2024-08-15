@@ -101,7 +101,7 @@ if (isset($_POST['button_create'])) {
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label for="barang_id">Barang</label>
-                        <select id="barang_id" class="form-select">
+                        <select id="barang_id" class="form-select" autofocus>
                             <option value="">- Pilih -</option>
                             <?php 
                             $database = new Database();
@@ -165,33 +165,33 @@ if (isset($_POST['button_create'])) {
 </section>
 
 <script>
-    document.getElementById('barang_id').addEventListener('change', function() {
-        const barangSelect = document.getElementById('barang_id');
-        const selectedBarang = barangSelect.options[barangSelect.selectedIndex];
-        const barang_id = selectedBarang.value;
-        const nama_barang = selectedBarang.getAttribute('data-nama');
-        const harga = selectedBarang.getAttribute('data-harga');
+    let inputTimer; // Timer untuk debounce
+    const debounceDelay = 500; // Waktu debounce dalam milidetik (sesuaikan jika perlu)
 
-        if (barang_id) {
-            // Set default qty to 1
-            document.getElementById('jumlah').value = 1;
-            document.getElementById('harga').value = harga;
+    document.getElementById('barang_id').addEventListener('input', function(event) {
+        clearTimeout(inputTimer); // Hapus timer sebelumnya jika ada
 
-            // Trigger click on add-item button
-            document.getElementById('add-item').click();
-        }
+        inputTimer = setTimeout(() => {
+            const value = event.target.value.trim();
+            if (value) {
+                // Proses data barcode di sini
+                addItem(value);
+            }
+        }, debounceDelay);
     });
 
-    document.getElementById('add-item').addEventListener('click', function() {
+    function addItem(barcode) {
         const barangSelect = document.getElementById('barang_id');
-        const selectedBarang = barangSelect.options[barangSelect.selectedIndex];
-        const barang_id = selectedBarang.value;
-        const nama_barang = selectedBarang.getAttribute('data-nama');
-        const jumlah = document.getElementById('jumlah').value;
-        const harga = selectedBarang.getAttribute('data-harga');
-        const total = jumlah * harga;
+        const selectedBarang = [...barangSelect.options].find(option => option.value === barcode);
 
-        if (barang_id && jumlah && harga) {
+        if (selectedBarang) {
+            const barang_id = selectedBarang.value;
+            const nama_barang = selectedBarang.getAttribute('data-nama');
+            const harga = selectedBarang.getAttribute('data-harga');
+            const jumlah = document.getElementById('jumlah').value || 1; // Default qty = 1
+
+            const total = jumlah * harga;
+
             const container = document.getElementById('items-container');
             const newItemRow = document.createElement('tr');
 
@@ -205,17 +205,17 @@ if (isset($_POST['button_create'])) {
 
             container.appendChild(newItemRow);
 
-            // Reset form input after adding item
+            // Reset form input setelah menambahkan item
             barangSelect.value = '';
             document.getElementById('jumlah').value = '';
             document.getElementById('harga').value = '';
 
-            // Add event listener to the new remove button
+            // Tambahkan event listener untuk tombol hapus
             newItemRow.querySelector('.remove-item').addEventListener('click', function() {
                 newItemRow.remove();
             });
 
-            // Add event listener to the new qty input field
+            // Tambahkan event listener untuk input qty
             newItemRow.querySelector('.qty-input').addEventListener('input', function() {
                 let qty = this.value;
                 const harga = this.getAttribute('data-harga');
@@ -230,6 +230,5 @@ if (isset($_POST['button_create'])) {
                 newItemRow.querySelector('.total-price').textContent = total;
             });
         }
-    });
-
+    }
 </script>
