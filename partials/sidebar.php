@@ -40,6 +40,12 @@
                                         <p>Uang Saku</p>
                                     </a> 
                                 </li>
+                                <li class="nav-item"> 
+                                    <a href="?page=uang-saku" class="nav-link"> 
+                                        <i class="nav-icon bi bi-credit-card-fill"></i>
+                                        <p>Uang Saku</p>
+                                    </a> 
+                                </li>
                             </ul>
                         </li>
                         <li class="nav-item"> 

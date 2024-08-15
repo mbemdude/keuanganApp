@@ -97,65 +97,67 @@ if (isset($_POST['button_create'])) {
         <form method="POST">
             <input type="hidden" name="tanggal" value="<?php echo date("Y/m/d H:i:s") ?>">
             <input type="hidden" name="uang_saku_id" value="<?php echo $siswa['id']; ?>">
-
-            <div class="form-group">
-                <label for="barang_id">Barang</label>
-                <select id="barang_id" class="form-select">
-                    <option value="">- Pilih -</option>
-                    <?php 
-                    $database = new Database();
-                    $db = $database->getConnection();
-
-                    $selectBarangSQL = "SELECT id, kode_barang, nama_barang, harga FROM barang";
-                    $stmtBarang = $db->prepare($selectBarangSQL);
-                    $stmtBarang->execute();
-
-                    while ($rowBarang = $stmtBarang->fetch(PDO::FETCH_ASSOC)){
-                        echo "<option value='{$rowBarang['id']}' data-nama='{$rowBarang['nama_barang']}' data-harga='{$rowBarang['harga']}'>{$rowBarang['kode_barang']}-{$rowBarang['nama_barang']}</option>";
-                    }
-                    ?>
-                </select>
-                <!-- <label for="jumlah">Qty</label>
-                <input type="number" id="jumlah" class="form-control"> -->
-                <input type="hidden" id="harga" class="form-control">
-                <label for="user_id">Petugas</label>
-                <select name="user_id" class="form-select" required>
-                    <option value="">- Pilih -</option>
-                    <?php 
-                    $database = new Database();
-                    $db = $database->getConnection();
-
-                    $selectUserSQL = "SELECT * FROM user";
-                    $stmtUser = $db->prepare($selectUserSQL);
-                    $stmtUser->execute();
-
-                    while ($rowUser = $stmtUser->fetch(PDO::FETCH_ASSOC)){
-                        echo "<option value='{$rowUser['id']}'>{$rowUser['nama']}</option>";
-                    }
-                    ?>
-                </select>
-            </div>
-
-            <button type="button" id="add-item" class="btn btn-secondary mt-3">Tambah Barang</button>
-
-            <table class="table mt-3">
-                <thead>
-                    <tr>
-                        <th>Nama Barang</th>
-                        <th>Qty</th>
-                        <th>Harga</th>
-                        <th>Total</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody id="items-container">
-                    <!-- Items akan ditambahkan di sini -->
-                </tbody>
-            </table>
-
-            <div class="mt-3">
-                <a href="?page=transaksi" class="btn btn-danger">Batal</a>
-                <button type="submit" name="button_create" class="btn btn-success">Simpan</button>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="barang_id">Barang</label>
+                        <select id="barang_id" class="form-select">
+                            <option value="">- Pilih -</option>
+                            <?php 
+                            $database = new Database();
+                            $db = $database->getConnection();
+        
+                            $selectBarangSQL = "SELECT id, kode_barang, nama_barang, harga FROM barang";
+                            $stmtBarang = $db->prepare($selectBarangSQL);
+                            $stmtBarang->execute();
+        
+                            while ($rowBarang = $stmtBarang->fetch(PDO::FETCH_ASSOC)){
+                                echo "<option value='{$rowBarang['id']}' data-nama='{$rowBarang['nama_barang']}' data-harga='{$rowBarang['harga']}'>{$rowBarang['kode_barang']}-{$rowBarang['nama_barang']}</option>";
+                            }
+                            ?>
+                        </select>
+                        <label for="jumlah" hidden>Qty</label>
+                        <input type="number" id="jumlah" class="form-control" hidden>
+                        <input type="hidden" id="harga" class="form-control">
+                        <label for="user_id">Petugas</label>
+                        <select name="user_id" class="form-select" required>
+                            <option value="">- Pilih -</option>
+                            <?php 
+                            $database = new Database();
+                            $db = $database->getConnection();
+        
+                            $selectUserSQL = "SELECT * FROM user";
+                            $stmtUser = $db->prepare($selectUserSQL);
+                            $stmtUser->execute();
+        
+                            while ($rowUser = $stmtUser->fetch(PDO::FETCH_ASSOC)){
+                                echo "<option value='{$rowUser['id']}'>{$rowUser['nama']}</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <button type="button" id="add-item" class="btn btn-secondary mt-3">Tambah Barang</button>
+                    <div class="mt-3">
+                        <a href="?page=transaksi" class="btn btn-danger">Batal</a>
+                        <button type="submit" name="button_create" class="btn btn-success">Simpan</button>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <table class="table mt-3">
+                        <thead>
+                            <tr>
+                                <th>Nama Barang</th>
+                                <th>Qty</th>
+                                <th>Harga</th>
+                                <th>Total</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="items-container">
+                            <!-- Items akan ditambahkan di sini -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </form>
         </div>
@@ -215,8 +217,15 @@ if (isset($_POST['button_create'])) {
 
             // Add event listener to the new qty input field
             newItemRow.querySelector('.qty-input').addEventListener('input', function() {
-                const qty = this.value;
+                let qty = this.value;
                 const harga = this.getAttribute('data-harga');
+
+                // Jika qty kurang dari 1, set kembali menjadi 1
+                if (qty < 1) {
+                    qty = 1;
+                    this.value = 1;  // Update value di input field
+                }
+
                 const total = qty * harga;
                 newItemRow.querySelector('.total-price').textContent = total;
             });
