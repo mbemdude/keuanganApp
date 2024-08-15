@@ -91,7 +91,9 @@ if (isset($_POST['button_create'])) {
 <section class="content">
     <div class="card mx-3">
         <div class="card-header">
-            <h3 class="card-title">Transaksi, <span class="fw-bold"><?php echo $siswa['nama'] ?></span></h3>
+            <p>Nama  : <span class="fw-bold"><?php echo $siswa['nama'] ?></span></p>
+            <p>Kelas : <span class="fw-bold"><?php echo $siswa['kelas'] ?></span></p>
+            <p>Saldo : <span class="fw-bold"><?php echo rupiah($siswa['saldo']) ?></span></p>
         </div>
         <div class="card-body">
         <form method="POST">
