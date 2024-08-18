@@ -5,7 +5,7 @@
                     <img src="assets/dist/assets/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image opacity-75 shadow"> 
                     <!--end::Brand Image--> 
                     <!--begin::Brand Text--> 
-                    <span class="brand-text fw-light">AdminLTE 4</span> 
+                    <span class="brand-text fw-light">Yayasan Sa'adah</span>
                     <!--end::Brand Text--> 
                 </a> <!--end::Brand Link-->
             </div> <!--end::Sidebar Brand--> 
@@ -43,7 +43,7 @@
                                 <li class="nav-item"> 
                                     <a href="?page=uang-saku" class="nav-link"> 
                                         <i class="nav-icon bi bi-credit-card-fill"></i>
-                                        <p>Uang Saku</p>
+                                        <p>Pembayaran</p>
                                     </a> 
                                 </li>
                             </ul>
