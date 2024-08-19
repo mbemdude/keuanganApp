@@ -41,7 +41,7 @@
                                     </a> 
                                 </li>
                                 <li class="nav-item"> 
-                                    <a href="?page=uang-saku" class="nav-link"> 
+                                    <a href="?page=pembayaran" class="nav-link"> 
                                         <i class="nav-icon bi bi-credit-card-fill"></i>
                                         <p>Pembayaran</p>
                                     </a> 

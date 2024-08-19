@@ -31,6 +31,17 @@ if(isset($_GET['page'])) {
             break;
         case 'hapus-uang-saku':
             file_exists('pages/keuangan/uangSaku/delete.php') ? include 'pages/keuangan/uangSaku/delete.php' : include 'pages/404.php';
+        case 'pembayaran':
+            file_exists('pages/keuangan/uangSaku/read.php') ? include 'pages/keuangan/uangSaku/read.php' : include 'pages/404.php';
+            break;
+        case 'tambah-pembayaran':
+            file_exists('pages/keuangan/uangSaku/add.php') ? include 'pages/keuangan/uangSaku/add.php' : include 'pages/404.php';
+            break;
+        case 'edit-pembayaran':
+            file_exists('pages/keuangan/uangSaku/update.php') ? include 'pages/keuangan/uangSaku/update.php' : include 'pages/404.php';
+            break;
+        case 'hapus-pembayaran':
+            file_exists('pages/keuangan/uangSaku/delete.php') ? include 'pages/keuangan/uangSaku/delete.php' : include 'pages/404.php';
             break;
         case 'barang':
             file_exists('pages/kasir/barang/read.php') ? include 'pages/kasir/barang/read.php' : include 'pages/404.php';
