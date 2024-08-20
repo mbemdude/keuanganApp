@@ -36,24 +36,24 @@
                             <ul class="nav nav-treeview">
                                 <li class="nav-item"> 
                                     <a href="?page=uang-saku" class="nav-link"> 
-                                        <i class="nav-icon bi bi-credit-card-fill"></i>
+                                        <i class="nav-icon bi bi-wallet2"></i>
                                         <p>Uang Saku</p>
                                     </a> 
                                 </li>
                                 <li class="nav-item"> 
-                                    <a href="?page=pembayaran" class="nav-link"> 
-                                        <i class="nav-icon bi bi-credit-card-fill"></i>
+                                    <a href="?page=tarif-pembayaran" class="nav-link"> 
+                                        <i class="nav-icon bi bi-receipt-cutoff"></i>
                                         <p>Tarif Pembayaran</p>
                                     </a> 
                                 </li>
                                 <li class="nav-item"> 
-                                    <a href="?page=pembayaran" class="nav-link"> 
+                                    <a href="?page=tagihan-siswa" class="nav-link"> 
                                         <i class="nav-icon bi bi-credit-card-fill"></i>
                                         <p>Tagihan Siswa</p>
                                     </a> 
                                 </li>
                                 <li class="nav-item"> 
-                                    <a href="?page=pembayaran" class="nav-link"> 
+                                    <a href="?page=transaksi-keuangan" class="nav-link"> 
                                         <i class="nav-icon bi bi-credit-card-fill"></i>
                                         <p>Transaksi Keuangan</p>
                                     </a> 
@@ -129,7 +129,7 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item"> 
-                                    <a href="?page=jenjang" class="nav-link"> 
+                                    <a href="?page=jenis-pembayaran" class="nav-link"> 
                                         <i class="nav-icon bi bi-file-earmark-fill"></i>
                                         <p>Jenis Pembayaran</p>
                                     </a>
