@@ -56,7 +56,7 @@
                     ?>
                     <tr>
                       <th scope="row"><?php echo $no++ ?></th>
-                      <td><?php echo$row['jenis-pembayaran'] ?></td>
+                      <td><?php echo$row['jenis_pembayaran'] ?></td>
                       <td>
                         <a href="?page=edit-jenis-pembayaran&id=<?php echo $row['id'] ?>" class="btn btn-warning"><i class="bi bi-pen"></i></a>
                         <a href="?page=hapus-jenis-pembayaran&id=<?php echo $row['id'] ?>" class="btn btn-danger"><i class="bi bi-trash"></i></a>
