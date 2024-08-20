@@ -69,9 +69,9 @@ if (isset($_GET['id'])) {
         </section>
         <?php
     } else {
-        echo "<meta http-equiv='refresh' content='0;url=?page=kelas'>";
+        echo "<meta http-equiv='refresh' content='0;url=?page=jenjang'>";
     }
 } else {
-    echo "<meta http-equiv='refresh' content='0;url=?page=kelas'>";
+    echo "<meta http-equiv='refresh' content='0;url=?page=jenjang'>";
 }
 ?>
