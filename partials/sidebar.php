@@ -43,7 +43,19 @@
                                 <li class="nav-item"> 
                                     <a href="?page=pembayaran" class="nav-link"> 
                                         <i class="nav-icon bi bi-credit-card-fill"></i>
-                                        <p>Pembayaran</p>
+                                        <p>Tarif Pembayaran</p>
+                                    </a> 
+                                </li>
+                                <li class="nav-item"> 
+                                    <a href="?page=pembayaran" class="nav-link"> 
+                                        <i class="nav-icon bi bi-credit-card-fill"></i>
+                                        <p>Tagihan Siswa</p>
+                                    </a> 
+                                </li>
+                                <li class="nav-item"> 
+                                    <a href="?page=pembayaran" class="nav-link"> 
+                                        <i class="nav-icon bi bi-credit-card-fill"></i>
+                                        <p>Transaksi Keuangan</p>
                                     </a> 
                                 </li>
                             </ul>
@@ -76,7 +88,7 @@
                             <a href="#" class="nav-link"> 
                                 <i class="nav-icon bi bi-archive-fill"></i>
                                 <p>
-                                    Data Utama
+                                    Master Data Admin
                                     <i class="nav-arrow bi bi-chevron-right"></i>
                                 </p>
                             </a>
@@ -97,6 +109,29 @@
                                     <a href="?page=status" class="nav-link"> 
                                         <i class="nav-icon bi bi-file-earmark-fill"></i>
                                         <p>Status</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item"> 
+                                    <a href="?page=tahun-ajaran" class="nav-link"> 
+                                        <i class="nav-icon bi bi-file-earmark-fill"></i>
+                                        <p>Tahun Ajaran</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"> 
+                            <a href="#" class="nav-link"> 
+                                <i class="nav-icon bi bi-archive-fill"></i>
+                                <p>
+                                    Master Data Keuangan
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item"> 
+                                    <a href="?page=jenjang" class="nav-link"> 
+                                        <i class="nav-icon bi bi-file-earmark-fill"></i>
+                                        <p>Jenis Pembayaran</p>
                                     </a>
                                 </li>
                             </ul>

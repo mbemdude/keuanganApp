@@ -20,6 +20,8 @@ if(isset($_GET['page'])) {
         case 'hapus-siswa':
             file_exists('pages/siswa/delete.php') ? include 'pages/siswa/delete.php' : include 'pages/404.php';
             break;
+            
+            // keuangan section start
         case 'uang-saku':
             file_exists('pages/keuangan/uangSaku/read.php') ? include 'pages/keuangan/uangSaku/read.php' : include 'pages/404.php';
             break;
@@ -32,17 +34,20 @@ if(isset($_GET['page'])) {
         case 'hapus-uang-saku':
             file_exists('pages/keuangan/uangSaku/delete.php') ? include 'pages/keuangan/uangSaku/delete.php' : include 'pages/404.php';
         case 'pembayaran':
-            file_exists('pages/keuangan/uangSaku/read.php') ? include 'pages/keuangan/uangSaku/read.php' : include 'pages/404.php';
+            file_exists('pages/keuangan/pembayaran/read.php') ? include 'pages/keuangan/pembayaran/read.php' : include 'pages/404.php';
             break;
         case 'tambah-pembayaran':
-            file_exists('pages/keuangan/uangSaku/add.php') ? include 'pages/keuangan/uangSaku/add.php' : include 'pages/404.php';
+            file_exists('pages/keuangan/pembayaran/add.php') ? include 'pages/keuangan/pembayaran/add.php' : include 'pages/404.php';
             break;
         case 'edit-pembayaran':
-            file_exists('pages/keuangan/uangSaku/update.php') ? include 'pages/keuangan/uangSaku/update.php' : include 'pages/404.php';
+            file_exists('pages/keuangan/pembayaran/update.php') ? include 'pages/keuangan/pembayaran/update.php' : include 'pages/404.php';
             break;
         case 'hapus-pembayaran':
-            file_exists('pages/keuangan/uangSaku/delete.php') ? include 'pages/keuangan/uangSaku/delete.php' : include 'pages/404.php';
+            file_exists('pages/keuangan/pembayaran/delete.php') ? include 'pages/keuangan/pembayaran/delete.php' : include 'pages/404.php';
             break;
+            // keuangan section end
+
+            // kasir section start
         case 'barang':
             file_exists('pages/kasir/barang/read.php') ? include 'pages/kasir/barang/read.php' : include 'pages/404.php';
             break;
@@ -76,6 +81,9 @@ if(isset($_GET['page'])) {
         case 'belanja':
             file_exists('pages/kasir/transaksi/belanja.php') ? include 'pages/kasir/transaksi/belanja.php' : include 'pages/404.php';
             break;
+            // kasir section end
+
+            // masterdata section start
         case 'jenjang':
             file_exists('pages/masterdata/jenjang/read.php') ? include 'pages/masterdata/jenjang/read.php' : include 'pages/404.php';
             break;
@@ -112,6 +120,33 @@ if(isset($_GET['page'])) {
         case 'hapus-status':
             file_exists('pages/masterdata/status/delete.php') ? include 'pages/masterdata/status/delete.php' : include 'pages/404.php';
             break;
+        case 'jenis-pembayaran':
+            file_exists('pages/masterdata/jenisPembayaran/read.php') ? include 'pages/masterdata/jenisPembayaran/read.php' : include 'pages/404.php';
+            break;
+        case 'tambah-jenis-pembayaran':
+            file_exists('pages/masterdata/jenisPembayaran/add.php') ? include 'pages/masterdata/jenisPembayaran/add.php' : include 'pages/404.php';
+            break;
+        case 'edit-jenis-pembayaran':
+            file_exists('pages/masterdata/jenisPembayaran/update.php') ? include 'pages/masterdata/jenisPembayaran/update.php' : include 'pages/404.php';
+            break;
+        case 'hapus-jenis-pembayaran':
+            file_exists('pages/masterdata/jenisPembayaran/delete.php') ? include 'pages/masterdata/jenisPembayaran/delete.php' : include 'pages/404.php';
+            break;
+        case 'tahun-ajaran':
+            file_exists('pages/masterdata/tahunAjaran/read.php') ? include 'pages/masterdata/tahunAjaran/read.php' : include 'pages/404.php';
+            break;
+        case 'tambah-tahun-ajaran':
+            file_exists('pages/masterdata/tahunAjaran/add.php') ? include 'pages/masterdata/tahunAjaran/add.php' : include 'pages/404.php';
+            break;
+        case 'edit-tahun-ajaran':
+            file_exists('pages/masterdata/tahunAjaran/update.php') ? include 'pages/masterdata/tahunAjaran/update.php' : include 'pages/404.php';
+            break;
+        case 'hapus-tahun-ajaran':
+            file_exists('pages/masterdata/tahunAjaran/delete.php') ? include 'pages/masterdata/tahunAjaran/delete.php' : include 'pages/404.php';
+            break;
+            // masterdata section end
+
+            // admin section start
         case 'role':
             file_exists('pages/admin/role/read.php') ? include 'pages/admin/role/read.php' : include 'pages/404.php';
             break;
@@ -136,6 +171,7 @@ if(isset($_GET['page'])) {
         case 'hapus-user':
             file_exists('pages/admin/user/delete.php') ? include 'pages/admin/user/delete.php' : include 'pages/404.php';
             break;
+            // admin section end
         default:
             include 'pages/404.php';
     }
