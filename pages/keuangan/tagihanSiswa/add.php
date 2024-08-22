@@ -4,31 +4,44 @@ if (isset($_POST['button_create'])) {
     $database = new Database();
     $db = $database->getConnection();
 
+    // Array untuk menyimpan data tagihan
+    $tagihanData = [
+        ['tarif_pembayaran_id' => 1, 'jumlah_tagihan' => $_POST['jumlah_tagihan1']],
+        ['tarif_pembayaran_id' => 2, 'jumlah_tagihan' => $_POST['jumlah_tagihan2']],
+        ['tarif_pembayaran_id' => 3, 'jumlah_tagihan' => $_POST['jumlah_tagihan3']],
+    ];
+
     // Prepare the insert statement
-    $insertSql = "INSERT INTO tagihan_siswa (siswa_id, tarif_pembayaran_id, tanggal_tagihan, jumlah_tagihan, tunggakan, tanggal_tunggakan) VALUES (:siswa_id, :tarif_pembayaran_id, :tanggal_tagihan, :jumlah_tagihan, :tunggakan, :tanggal_tunggakan)";
+    $insertSql = "INSERT INTO tagihan_siswa (siswa_id, tarif_pembayaran_id, tanggal_tagihan, jumlah_tagihan, tunggakan, tanggal_tunggakan) 
+                  VALUES (:siswa_id, :tarif_pembayaran_id, :tanggal_tagihan, :jumlah_tagihan, :tunggakan, :tanggal_tunggakan)";
     $stmt = $db->prepare($insertSql);
-    
-    // Bind parameters
-    $stmt->bindParam(':siswa_id', $_POST['siswa_id']);
-    $stmt->bindParam(':tarif_pembayaran_id', $_POST['tarif_pembayaran_id']);
-    $stmt->bindParam(':tanggal_tagihan', $_POST['tanggal_tagihan']);
-    $stmt->bindParam(':jumlah_tagihan', $_POST['jumlah_tagihan']);
-    $stmt->bindParam(':tunggakan', $_POST['tunggakan']);
-    $stmt->bindParam(':tanggal_tunggakan', $_POST['tanggal_tunggakan']);
-    
-    // Execute the statement and handle result
-    if ($stmt->execute()) {
-        $_SESSION['hasil'] = true;
-        $_SESSION['pesan'] = "Berhasil simpan data";
-    } else {
-        $_SESSION['hasil'] = false;
-        $_SESSION['pesan'] = "Gagal simpan data";
+
+    // Iterasi melalui setiap tagihan dan lakukan insert
+    foreach ($tagihanData as $data) {
+        // Bind parameters
+        $stmt->bindParam(':siswa_id', $_POST['siswa_id']);
+        $stmt->bindParam(':tarif_pembayaran_id', $data['tarif_pembayaran_id']);
+        $stmt->bindParam(':tanggal_tagihan', $_POST['tanggal_tagihan']);
+        $stmt->bindParam(':jumlah_tagihan', $data['jumlah_tagihan']);
+        $stmt->bindParam(':tunggakan', $_POST['tunggakan']);
+        $stmt->bindParam(':tanggal_tunggakan', $_POST['tanggal_tunggakan']);
+
+        // Execute the statement and check if successful
+        if (!$stmt->execute()) {
+            $_SESSION['hasil'] = false;
+            $_SESSION['pesan'] = "Gagal simpan data";
+            echo "<meta http-equiv='refresh' content='0;url=?page=tagihan-siswa'>";
+            exit();
+        }
     }
-    header("Location: ?page=tagihan-siswa");
+
+    $_SESSION['hasil'] = true;
+    $_SESSION['pesan'] = "Berhasil simpan data";
+    echo "<meta http-equiv='refresh' content='0;url=?page=tagihan-siswa'>";
     exit();
 }
-?>
 
+?>
 <form method="POST" id="form-tagihan">
     <div class="form-group">
         <label for="siswa_id">Nama</label>
@@ -52,15 +65,22 @@ if (isset($_POST['button_create'])) {
         <select name="tarif_pembayaran_id" id="tarif_pembayaran_id" class="form-select">
             <option value="">- Pilih -</option>
             <?php 
-            $selectTarifSQL = "SELECT tipe, tahun_ajaran_id, GROUP_CONCAT(id) as tarif_ids, GROUP_CONCAT(nominal) as nominals, GROUP_CONCAT(jenis_pembayaran_id) as jenis_pembayarans 
-                                FROM tarif_pembayaran 
-                                GROUP BY tipe, tahun_ajaran_id";
+            $selectTarifSQL = "
+                SELECT 
+                    tp.tipe, 
+                    ta.tahun_ajaran, 
+                    j.jenjang, 
+                    GROUP_CONCAT(CONCAT_WS(':', tp.jenis_pembayaran_id, tp.nominal)) AS pembayaran 
+                FROM tarif_pembayaran tp
+                JOIN tahun_ajaran ta ON tp.tahun_ajaran_id = ta.id
+                JOIN jenjang j ON tp.jenjang_id = j.id
+                GROUP BY tp.tipe, ta.tahun_ajaran, j.jenjang ORDER BY ta.tahun_ajaran, j.jenjang ASC";
             $stmtTarif = $db->prepare($selectTarifSQL);
             $stmtTarif->execute();
 
             while ($rowTarif = $stmtTarif->fetch(PDO::FETCH_ASSOC)){
-                echo "<option value='{$rowTarif['tarif_ids']}' data-nominals='{$rowTarif['nominals']}' data-jenis='{$rowTarif['jenis_pembayarans']}'>
-                        Tipe {$rowTarif['tipe']} | Tahun Ajaran {$rowTarif['tahun_ajaran_id']}
+                echo "<option value='{$rowTarif['tipe']}' data-pembayaran='{$rowTarif['pembayaran']}'>
+                        Tipe {$rowTarif['tipe']} | Tahun Ajaran {$rowTarif['tahun_ajaran']} | {$rowTarif['jenjang']}
                       </option>";
             }
             ?>
@@ -93,22 +113,26 @@ if (isset($_POST['button_create'])) {
 
 <script>
 document.getElementById('tarif_pembayaran_id').addEventListener('change', function() {
-    var nominals = this.options[this.selectedIndex].getAttribute('data-nominals').split(',');
-    var jenis = this.options[this.selectedIndex].getAttribute('data-jenis').split(',');
+    var pembayaran = this.options[this.selectedIndex].getAttribute('data-pembayaran');
+    var pembayaranArray = pembayaran.split(',');
 
-    // Reset all fields
+    // Reset all fields before setting new values
     document.getElementById('jumlah_tagihan1').value = '';
     document.getElementById('jumlah_tagihan2').value = '';
     document.getElementById('jumlah_tagihan3').value = '';
 
-    for (var i = 0; i < jenis.length; i++) {
-        if (jenis[i] == 1) { // Uang Pangkal
-            document.getElementById('jumlah_tagihan1').value = nominals[i];
-        } else if (jenis[i] == 2) { // Daftar Ulang
-            document.getElementById('jumlah_tagihan2').value = nominals[i];
-        } else if (jenis[i] == 3) { // SPP
-            document.getElementById('jumlah_tagihan3').value = nominals[i];
+    pembayaranArray.forEach(function(item) {
+        var parts = item.split(':');
+        var jenis = parts[0];
+        var nominal = parts[1];
+
+        if (jenis == 1) { // Uang Pangkal
+            document.getElementById('jumlah_tagihan1').value = nominal;
+        } else if (jenis == 2) { // Daftar Ulang
+            document.getElementById('jumlah_tagihan2').value = nominal;
+        } else if (jenis == 3) { // SPP
+            document.getElementById('jumlah_tagihan3').value = nominal;
         }
-    }
+    });
 });
 </script>
