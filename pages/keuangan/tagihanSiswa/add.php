@@ -29,7 +29,6 @@ if (isset($_POST['button_create'])) {
 }
 ?>
 
-
 <form method="POST" id="form-tagihan">
     <div class="form-group">
         <label for="siswa_id">Nama</label>
@@ -48,28 +47,44 @@ if (isset($_POST['button_create'])) {
             }
             ?>
         </select>
+
         <label for="tarif_pembayaran_id">Jenis Pembayaran</label>
         <select name="tarif_pembayaran_id" id="tarif_pembayaran_id" class="form-select">
             <option value="">- Pilih -</option>
             <?php 
-            $selectTarifSQL = "SELECT * FROM tarif_pembayaran";
+            $selectTarifSQL = "SELECT tipe, tahun_ajaran_id, GROUP_CONCAT(id) as tarif_ids, GROUP_CONCAT(nominal) as nominals, GROUP_CONCAT(jenis_pembayaran_id) as jenis_pembayarans 
+                                FROM tarif_pembayaran 
+                                GROUP BY tipe, tahun_ajaran_id";
             $stmtTarif = $db->prepare($selectTarifSQL);
             $stmtTarif->execute();
 
             while ($rowTarif = $stmtTarif->fetch(PDO::FETCH_ASSOC)){
-                echo "<option value='{$rowTarif['id']}' data-nominal='{$rowTarif['nominal']}'>{$rowTarif['tipe']} | {$rowTarif['jenis_pembayaran_id']}</option>";
+                echo "<option value='{$rowTarif['tarif_ids']}' data-nominals='{$rowTarif['nominals']}' data-jenis='{$rowTarif['jenis_pembayarans']}'>
+                        Tipe {$rowTarif['tipe']} | Tahun Ajaran {$rowTarif['tahun_ajaran_id']}
+                      </option>";
             }
             ?>
         </select>
+
         <label for="tanggal_tagihan">Tanggal Tagihan</label>
         <input type="date" name="tanggal_tagihan" class="form-control">
-        <label for="jumlah_tagihan">Jumlah Tagihan</label>
-        <input type="text" name="jumlah_tagihan" id="jumlah_tagihan" class="form-control" readonly>
+
+        <label for="jumlah_tagihan1">Jumlah Tagihan Uang Pangkal</label>
+        <input type="text" name="jumlah_tagihan1" id="jumlah_tagihan1" class="form-control" readonly>
+
+        <label for="jumlah_tagihan2">Jumlah Tagihan Daftar Ulang</label>
+        <input type="text" name="jumlah_tagihan2" id="jumlah_tagihan2" class="form-control" readonly>
+
+        <label for="jumlah_tagihan3">Jumlah Tagihan SPP</label>
+        <input type="text" name="jumlah_tagihan3" id="jumlah_tagihan3" class="form-control" readonly>
+
         <label for="tunggakan">Tunggakan</label>
         <input type="text" name="tunggakan" class="form-control">
+
         <label for="tanggal_tunggakan">Tanggal Tunggakan</label>
         <input type="date" name="tanggal_tunggakan" class="form-control">
     </div>
+    
     <div class="mt-2">
         <a href="?page=tagihan-siswa" class="btn btn-danger">Batal</a>
         <button type="submit" name="button_create" class="btn btn-success">Simpan</button>
@@ -78,7 +93,22 @@ if (isset($_POST['button_create'])) {
 
 <script>
 document.getElementById('tarif_pembayaran_id').addEventListener('change', function() {
-    var nominal = this.options[this.selectedIndex].getAttribute('data-nominal');
-    document.getElementById('jumlah_tagihan').value = nominal;
+    var nominals = this.options[this.selectedIndex].getAttribute('data-nominals').split(',');
+    var jenis = this.options[this.selectedIndex].getAttribute('data-jenis').split(',');
+
+    // Reset all fields
+    document.getElementById('jumlah_tagihan1').value = '';
+    document.getElementById('jumlah_tagihan2').value = '';
+    document.getElementById('jumlah_tagihan3').value = '';
+
+    for (var i = 0; i < jenis.length; i++) {
+        if (jenis[i] == 1) { // Uang Pangkal
+            document.getElementById('jumlah_tagihan1').value = nominals[i];
+        } else if (jenis[i] == 2) { // Daftar Ulang
+            document.getElementById('jumlah_tagihan2').value = nominals[i];
+        } else if (jenis[i] == 3) { // SPP
+            document.getElementById('jumlah_tagihan3').value = nominals[i];
+        }
+    }
 });
 </script>
