@@ -28,7 +28,7 @@
         <div class="col-12">
         <div class="card">
             <div class="card-header">
-            <a href="?page=tambah-pembayaran" class="btn btn-success">Tambah Data <i class="bi bi-plus-circle-fill"></i></a>
+            <a href="?page=tambah-tagihan-siswa" class="btn btn-success">Tambah Data <i class="bi bi-plus-circle-fill"></i></a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -37,7 +37,10 @@
                 <tr>
                     <th>No</th>
                     <th>Nama</th>
-                    <th>Uang Saku</th>
+                    <th>Total Tagihan</th>
+                    <th>Tipe Pembayaran</th>
+                    <th>Tanggal Tagihan</th>
+                    <th>Tunggakann</th>
                     <th>Aksi</th>
                 </tr>
                 </thead>
@@ -46,7 +49,7 @@
                     $database = new Database();
                     $db = $database->getConnection();
                     
-                    $selectSql = "SELECT US.*, S.nama FROM uang_saku US LEFT JOIN siswa S ON US.siswa_id=S.id";
+                    $selectSql = "SELECT ts.siswa_id, s.nama, SUM(ts.jumlah_tagihan) AS total_tagihan, tp.tipe, ts.tanggal_tagihan, ts.tunggakan FROM tagihan_siswa ts JOIN siswa s ON ts.siswa_id = s.id JOIN tarif_pembayaran tp ON ts.tarif_pembayaran_id = tp.id GROUP BY s.nama ORDER BY s.nama ASC, ts.tanggal_tagihan DESC";
                     $stmt = $db->prepare($selectSql);
                     $stmt->execute();
                     $row_data = $stmt->rowCount();
@@ -57,11 +60,14 @@
                 <tr>
                     <th scope="row"><?php echo $no++ ?></th>
                     <td><?php echo $row['nama'] ?></td>
-                    <td><?php echo rupiah($row['saldo']) ?></td>
+                    <td><?php echo rupiah($row['total_tagihan']) ?></td>
+                    <td><?php echo $row['tipe'] ?></td>
+                    <td><?php echo $row['tanggal_tagihan'] ?></td>
+                    <td><?php echo rupiah($row['tunggakan']) ?></td>
                     <td>
-                    <a href="?page=show-pembayaran&id=<?php echo $row['id']?>" class="btn btn-info"><i class="bi bi-eye"></i></a>
-                    <a href="?page=edit-pembayaran&id=<?php echo $row['id']?>" class="btn btn-warning"><i class="bi bi-pen"></i></a>
-                    <a href="?page=hapus-pembayaran&id=<?php echo $row['id']?>" class="btn btn-danger"><i class="bi bi-trash"></i></a>
+                    <a href="?page=show-pembayaran&siswa_id=<?php echo $row['siswa_id']?>" class="btn btn-info"><i class="bi bi-eye"></i></a>
+                    <a href="?page=edit-pembayaran&siswa_id=<?php echo $row['siswa_id']?>" class="btn btn-warning"><i class="bi bi-pen"></i></a>
+                    <a href="?page=hapus-pembayaran&siswa_id=<?php echo $row['siswa_id']?>" class="btn btn-danger"><i class="bi bi-trash"></i></a>
                     </td>
                 </tr>
                 <?php } ?>
@@ -70,7 +76,10 @@
                 <tr>
                     <th>No</th>
                     <th>Nama</th>
-                    <th>Uang Saku</th>
+                    <th>Total Tagihan</th>
+                    <th>Tipe Pembayaran</th>
+                    <th>Tanggal Tagihan</th>
+                    <th>Tunggakann</th>
                     <th>Aksi</th>
                 </tr>
                 </tfoot>
