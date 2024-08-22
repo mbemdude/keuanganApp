@@ -48,7 +48,7 @@
                                 </li>
                                 <li class="nav-item"> 
                                     <a href="?page=tagihan-siswa" class="nav-link"> 
-                                        <i class="nav-icon bi bi-credit-card-fill"></i>
+                                        <i class="nav-icon bi bi-cash"></i>
                                         <p>Tagihan Siswa</p>
                                     </a> 
                                 </li>
