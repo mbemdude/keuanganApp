@@ -1,48 +1,83 @@
 <?php
-if (isset($_POST['import'])) {
-    $fileName = $_FILES['file']['tmp_name'];
+require 'vendor/autoload.php';
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
-    if ($_FILES['file']['size'] > 0) {
-        $file = fopen($fileName, "r");
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
+    $file = $_FILES['file']['tmp_name'];
+    $ext = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
 
-        // Jika CSV
-        while (($column = fgetcsv($file, 10000, ",")) !== FALSE) {
-            $sqlInsert = "INSERT into your_table (column1, column2, column3)
-                   values ('" . $column[0] . "','" . $column[1] . "','" . $column[2] . "')";
-            $result = mysqli_query($conn, $sqlInsert);
+    $database = new Database();
+    $db = $database->getConnection();
 
-            if (!empty($result)) {
-                echo "CSV Data Imported into the Database";
-            } else {
-                echo "Problem in Importing CSV Data";
+    if ($ext === 'csv') {
+        // Jika file adalah CSV
+        $handle = fopen($file, 'r');
+        if ($handle !== FALSE) {
+            // Melewati header file CSV
+            fgetcsv($handle, 1000, ",");
+
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                $kode = $data[0];
+                $nis = $data[1];
+                $nama = $data[2];
+                $jenjang_id = $data[3];
+                $kelas_id = $data[4];
+                $status_id = $data[5];
+
+                $query = "INSERT INTO siswa (kode, nis, nama, jenjang_id, kelas_id, status_id) VALUES (?, ?, ?, ?, ?, ?)";
+                $stmt = $db->prepare($query);
+                $stmt->execute([$kode, $nis, $nama, $jenjang_id, $kelas_id, $status_id]);
             }
+            fclose($handle);
         }
-        fclose($file);
+    } elseif (in_array($ext, ['xls', 'xlsx'])) {
+        // Jika file adalah Excel
+        $spreadsheet = IOFactory::load($file);
+        $worksheet = $spreadsheet->getActiveSheet();
 
-        // Jika Excel
-        require 'vendor/autoload.php';
-        use PhpOffice\PhpSpreadsheet\IOFactory;
+        foreach ($worksheet->getRowIterator() as $rowIndex => $row) {
+            // Melewati header di baris pertama
+            if ($rowIndex == 1) continue;
 
-        $spreadsheet = IOFactory::load($fileName);
-        $sheet = $spreadsheet->getActiveSheet();
-        $rows = $sheet->toArray();
+            $kode = $worksheet->getCell("A$rowIndex")->getValue();
+            $nis = $worksheet->getCell("B$rowIndex")->getValue();
+            $nama = $worksheet->getCell("C$rowIndex")->getValue();
+            $jenjang_id = $worksheet->getCell("D$rowIndex")->getValue();
+            $kelas_id = $worksheet->getCell("E$rowIndex")->getValue();
+            $status_id = $worksheet->getCell("F$rowIndex")->getValue();
 
-        foreach ($rows as $row) {
-            $sqlInsert = "INSERT into your_table (column1, column2, column3)
-                   values ('" . $row[0] . "','" . $row[1] . "','" . $row[2] . "')";
-            $result = mysqli_query($conn, $sqlInsert);
-
-            if (!empty($result)) {
-                echo "Excel Data Imported into the Database";
-            } else {
-                echo "Problem in Importing Excel Data";
-            }
+            $query = "INSERT INTO siswa (kode, nis, nama, jenjang_id, kelas_id, status_id) VALUES (?, ?, ?, ?, ?, ?)";
+            $stmt = $db->prepare($query);
+            $stmt->execute([$kode, $nis, $nama, $jenjang_id, $kelas_id, $status_id]);
         }
+    } else {
+        echo "Format file tidak didukung.";
     }
+    $_SESSION['hasil'] = true;
+    $_SESSION['pesan'] = "Berhasil import data";
+    echo "<meta http-equiv='refresh' content='0;url=?page=siswa'>";
+    exit();
+} else {
+    echo "File tidak ditemukan atau tidak valid.";
 }
 ?>
 
-<form action="import.php" method="POST" enctype="multipart/form-data">
-    <input type="file" name="file" accept=".csv, .xlsx, .xls">
-    <button type="submit" name="import">Import</button>
-</form>
+<section class="content">
+    <div class="card mx-3">
+        <div class="card-header">
+            <h3 class="card-title">Impor Data Tagihan Siswa</h3>
+        </div>
+        <div class="card-body">
+            <form action="" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="file">Pilih File CSV atau Excel</label>
+                    <input type="file" id="file" name="file" class="form-control" accept=".csv, .xls, .xlsx" required>
+                </div>
+                <div class="mt-2">
+                    <a href="?page=tagihan-siswa" class="btn btn-danger">Batal</a>
+                    <button type="submit" class="btn btn-success">Impor Data</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

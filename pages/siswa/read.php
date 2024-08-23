@@ -30,6 +30,7 @@
             <div class="card">
               <div class="card-header">
                 <a href="?page=tambah-siswa" class="btn btn-success">Tambah Data <i class="bi bi-plus-circle-fill"></i></a>
+                <a href="?page=import-siswa" class="btn btn-success">Import Data <i class="bi bi-database-fill-add"></i></a>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -40,6 +41,7 @@
                       <th>Kode</th>
                       <th>NIS</th>
                       <th>Nama</th>
+                      <th>Kelas</th>
                       <th>Jenjang</th>
                       <th>Aksi</th>
                     </tr>
@@ -49,7 +51,7 @@
                       $database = new Database();
                       $db = $database->getConnection();
                       
-                      $selectSql = "SELECT S.*, J.jenjang FROM siswa S LEFT JOIN jenjang J ON S.jenjang_id=J.id";
+                      $selectSql = "SELECT s.*, k.kelas, j.jenjang FROM siswa s LEFT JOIN jenjang j ON S.jenjang_id=J.id JOIN kelas k ON s.kelas_id=k.id";
                       $stmt = $db->prepare($selectSql);
                       $stmt->execute();
                       $row_data = $stmt->rowCount();
@@ -62,6 +64,7 @@
                       <td><?php echo$row['kode'] ?></td>
                       <td><?php echo$row['nis'] ?></td>
                       <td><?php echo$row['nama'] ?></td>
+                      <td><?php echo$row['kelas'] ?></td>
                       <td><?php echo$row['jenjang'] ?></td>
                       <td>
                         <a href="?page=show-siswa&id=<?php echo $row['id'] ?>" class="btn btn-info"><i class="bi bi-eye"></i></a>
@@ -77,6 +80,7 @@
                       <th>Kode</th>
                       <th>NIS</th>
                       <th>Nama</th>
+                      <th>Kelas</th>
                       <th>Jenjang</th>
                       <th>Aksi</th>
                     </tr>

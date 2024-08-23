@@ -20,6 +20,9 @@ if(isset($_GET['page'])) {
         case 'hapus-siswa':
             file_exists('pages/siswa/delete.php') ? include 'pages/siswa/delete.php' : include 'pages/404.php';
             break;
+        case 'import-siswa':
+            file_exists('pages/siswa/import.php') ? include 'pages/siswa/import.php' : include 'pages/404.php';
+            break;
             
             // keuangan section start
         case 'uang-saku':
