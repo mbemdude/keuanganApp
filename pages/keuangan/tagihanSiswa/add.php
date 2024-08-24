@@ -12,8 +12,8 @@ if (isset($_POST['button_create'])) {
     ];
 
     // Prepare the insert statement
-    $insertSql = "INSERT INTO tagihan_siswa (siswa_id, tarif_pembayaran_id, tanggal_tagihan, jumlah_tagihan, tunggakan, tanggal_tunggakan) 
-                  VALUES (:siswa_id, :tarif_pembayaran_id, :tanggal_tagihan, :jumlah_tagihan, :tunggakan, :tanggal_tunggakan)";
+    $insertSql = "INSERT INTO tagihan_siswa (siswa_id, tarif_pembayaran_id, tanggal_tagihan, jumlah_tagihan) 
+                  VALUES (:siswa_id, :tarif_pembayaran_id, :tanggal_tagihan, :jumlah_tagihan)";
     $stmt = $db->prepare($insertSql);
 
     // Iterasi melalui setiap tagihan dan lakukan insert
@@ -23,8 +23,6 @@ if (isset($_POST['button_create'])) {
         $stmt->bindParam(':tarif_pembayaran_id', $data['tarif_pembayaran_id']);
         $stmt->bindParam(':tanggal_tagihan', $_POST['tanggal_tagihan']);
         $stmt->bindParam(':jumlah_tagihan', $data['jumlah_tagihan']);
-        $stmt->bindParam(':tunggakan', $_POST['tunggakan']);
-        $stmt->bindParam(':tanggal_tunggakan', $_POST['tanggal_tunggakan']);
 
         // Execute the statement and check if successful
         if (!$stmt->execute()) {
@@ -97,12 +95,6 @@ if (isset($_POST['button_create'])) {
 
         <label for="jumlah_tagihan3">Jumlah Tagihan SPP</label>
         <input type="text" name="jumlah_tagihan3" id="jumlah_tagihan3" class="form-control" readonly>
-
-        <label for="tunggakan">Tunggakan</label>
-        <input type="text" name="tunggakan" class="form-control">
-
-        <label for="tanggal_tunggakan">Tanggal Tunggakan</label>
-        <input type="date" name="tanggal_tunggakan" class="form-control">
     </div>
     
     <div class="mt-2">
