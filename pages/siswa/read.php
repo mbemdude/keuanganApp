@@ -30,8 +30,9 @@
             <div class="card">
               <div class="card-header">
                 <a href="?page=tambah-siswa" class="btn btn-success">Tambah Data <i class="bi bi-plus-circle-fill"></i></a>
-                <a href="?page=import-siswa" class="btn btn-success">Import Data <i class="bi bi-database-fill-up"></i></a>
-                <a href="?page=export-siswa" class="btn btn-success">export Data <i class="bi bi-database-fill-down"></i></a>
+                <a href="?page=import-siswa" class="btn btn-warning">Import Data <i class="bi bi-database-fill-up"></i></a>
+                <a href="?page=export-siswa" class="btn btn-success">Export Data <i class="bi bi-database-fill-down"></i></a>
+                <a href="?page=hapus-semua-siswa" class="btn btn-danger">Hapus Semua Data <i class="bi bi-trash-fill"></i></a>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
