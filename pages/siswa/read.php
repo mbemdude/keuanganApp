@@ -30,7 +30,8 @@
             <div class="card">
               <div class="card-header">
                 <a href="?page=tambah-siswa" class="btn btn-success">Tambah Data <i class="bi bi-plus-circle-fill"></i></a>
-                <a href="?page=import-siswa" class="btn btn-success">Import Data <i class="bi bi-database-fill-add"></i></a>
+                <a href="?page=import-siswa" class="btn btn-success">Import Data <i class="bi bi-database-fill-up"></i></a>
+                <a href="?page=export-siswa" class="btn btn-success">export Data <i class="bi bi-database-fill-down"></i></a>
               </div>
               <!-- /.card-header -->
               <div class="card-body">

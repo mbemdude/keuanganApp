@@ -1,66 +1,8 @@
 <?php
+ob_start();
 session_start();
 include 'database/database.php';
 include 'config/function.php';
-
-// kasir start
-if (isset($_POST['qr_code'])) {
-    ob_start(); // Mulai output buffering
-    $kode = $_POST['qr_code'];
-
-    $database = new Database();
-    $db = $database->getConnection();
-
-    $query = "SELECT us.*, s.nama, k.kelas FROM uang_saku us JOIN siswa s ON us.siswa_id = s.id JOIN kelas k ON S.kelas_id=k.id WHERE s.nis = :nis";
-    $stmt = $db->prepare($query);
-    $stmt->bindParam(':nis', $kode);
-    $stmt->execute();
-
-    if ($stmt->rowCount() > 0) {
-        $siswa = $stmt->fetch(PDO::FETCH_ASSOC);
-        $_SESSION['siswa'] = $siswa;
-        header("Location: ?page=belanja");
-        exit;
-    } else {
-        $_SESSION['error'] = "Siswa tidak ditemukan!";
-        header("Location: ?page=transaksi.php");
-        exit;
-    }
-    ob_end_flush();
-}
-// kasir end
-
-// belanja start
-// if (!isset($_SESSION['cart'])) {
-//     $_SESSION['cart'] = [];
-// }
-
-// if (isset($_POST['scan_barcode'])) {
-//     $barcode = $_POST['barcode'];
-    
-//     $database = new Database();
-//     $db = $database->getConnection();
-
-//     $query = "SELECT * FROM barang WHERE kode_barang = :kode_barang";
-//     $stmt = $db->prepare($query);
-//     $stmt->bindParam(':kode_barang', $barcode);
-//     $stmt->execute();
-
-//     if ($stmt->rowCount() > 0) {
-//         $barang = $stmt->fetch(PDO::FETCH_ASSOC);
-//         $_SESSION['cart'][] = [
-//             'nama_barang' => $barang['nama'],
-//             'jumlah' => 1
-//         ];
-//     } else {
-//         $_SESSION['error'] = "Barang tidak ditemukan!";
-//     }
-
-//     header("Location: ?page=belanja");
-//     exit;
-// }
-// // belanja end
-
 ?>
 
 <!DOCTYPE html>
@@ -90,12 +32,13 @@ if (isset($_POST['qr_code'])) {
     <!--begin::App Wrapper-->
     <div class="app-wrapper"> 
         <!--begin::Header-->
-        <?php include 'partials/navbar.php' ?>
+        <?php include 'partials/navbar.php'; ?>
         <!--end::Header-->
 
         <!--begin::Sidebar-->
-        <?php include 'partials/sidebar.php' ?>
+        <?php include 'partials/sidebar.php'; ?>
         <!--end::Sidebar--> 
+        
         <!--begin::App Main-->
         <main class="app-main"> 
             <!--begin::App Content Header-->
@@ -110,9 +53,7 @@ if (isset($_POST['qr_code'])) {
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-end">
                                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">
-                                    Dashboard
-                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
                             </ol>
                         </div>
                     </div> 
@@ -120,19 +61,24 @@ if (isset($_POST['qr_code'])) {
                 </div> <!--end::Container-->
             </div> <!--end::App Content Header--> 
             <!--begin::App Content-->
-            <div class="app-content"> <!--begin::Container-->
-                <div class="container-fluid"> <!--begin::Row-->
-                    <?php include 'routes.php' ?>
+            <div class="app-content"> 
+                <!--begin::Container-->
+                <div class="container-fluid"> 
+                    <!--begin::Row-->
+                    <?php include 'routes.php'; ?>
                 </div> <!--end::Container-->
             </div> <!--end::App Content-->
         </main> <!--end::App Main--> 
         <!--begin::Footer-->
-        <?php include 'partials/footer.php' ?>
+        <?php include 'partials/footer.php'; ?>
         <!--end::Footer-->
     </div> <!--end::App Wrapper--> 
     <!--begin::Script--> 
-    <?php include 'partials/js.php' ?>
-     <!--end::Script-->
+    <?php include 'partials/js.php'; ?>
+    <!--end::Script-->
 </body><!--end::Body-->
-
 </html>
+
+<?php
+ob_end_flush();
+?>
