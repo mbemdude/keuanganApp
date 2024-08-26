@@ -55,6 +55,9 @@ if(isset($_GET['page'])) {
         case 'hapus-tarif-pembayaran':
             file_exists('pages/keuangan/tarifPembayaran/delete.php') ? include 'pages/keuangan/tarifPembayaran/delete.php' : include 'pages/404.php';
             break;
+        case 'hapus-semua-tarif-pembayaran':
+            file_exists('pages/keuangan/tarifPembayaran/deleteAll.php') ? include 'pages/keuangan/tarifPembayaran/deleteAll.php' : include 'pages/404.php';
+            break;
         case 'tagihan-siswa':
             file_exists('pages/keuangan/tagihanSiswa/read.php') ? include 'pages/keuangan/tagihanSiswa/read.php' : include 'pages/404.php';
             break;
