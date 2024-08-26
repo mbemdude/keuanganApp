@@ -86,3 +86,16 @@
     <!-- <script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/js/jsvectormap.min.js" integrity="sha256-/t1nN2956BT869E6H4V1dnt0X5pAQHPytli+1nTZm2Y=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/maps/world.js" integrity="sha256-XPpPaZlU8S/HWf7FZLAncLg2SAkP8ScUTII89x9D3lY=" crossorigin="anonymous"></script>  -->
     <!-- jsvectormap -->
+
+    <!-- modal delete start -->
+    <script>
+        function confirmDelete(url) {
+            // Set the href attribute of the confirm delete button to the URL passed
+            document.getElementById('confirmDeleteBtn').setAttribute('href', url);
+            // Show the modal
+            var confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+            confirmModal.show();
+        }
+    </script>
+
+    <!-- modal delete end -->

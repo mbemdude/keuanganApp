@@ -29,7 +29,7 @@
             <div class="card">
               <div class="card-header">
                 <a href="?page=tambah-uang-saku" class="btn btn-success">Tambah Data <i class="bi bi-plus-circle-fill"></i></a>
-                <a href="?page=hapus-semua-uang-saku" class="btn btn-danger">Hapus Semua Data <i class="bi bi-trash-fill"></i></a>
+                <a href="#" onclick="confirmDelete('?page=hapus-semua-uang-saku')" class="btn btn-danger">Hapus Semua Data <i class="bi bi-trash-fill"></i></a>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -62,7 +62,7 @@
                       <td>
                         <a href="?page=show-uang-saku&id=<?php echo $row['id']?>" class="btn btn-info"><i class="bi bi-eye"></i></a>
                         <a href="?page=edit-uang-saku&id=<?php echo $row['id']?>" class="btn btn-warning"><i class="bi bi-pen"></i></a>
-                        <a href="?page=hapus-uang-saku&id=<?php echo $row['id']?>" class="btn btn-danger"><i class="bi bi-trash"></i></a>
+                        <a href="#" onclick="confirmDelete('?page=hapus-uang-saku&id=<?php echo $row['id']?>')" class="btn btn-danger"><i class="bi bi-trash"></i></a>
                       </td>
                     </tr>
                     <?php } ?>

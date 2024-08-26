@@ -29,7 +29,7 @@
         <div class="card">
             <div class="card-header">
             <a href="?page=tambah-tarif-pembayaran" class="btn btn-success">Tambah Data <i class="bi bi-plus-circle-fill"></i></a>
-            <a href="?page=hapus-semua-tarif-pembayaran" class="btn btn-danger">Tambah Data <i class="bi bi-trash-fill"></i></a>
+            <a href="#" onclick="('?page=hapus-semua-tarif-pembayaran')" class="btn btn-danger">Tambah Data <i class="bi bi-trash-fill"></i></a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -80,7 +80,7 @@
                     <td>
                         <a href="?page=show-tarif-pembayaran&id=<?php echo $row['id']?>" class="btn btn-info"><i class="bi bi-eye"></i></a>
                         <a href="?page=edit-tarif-pembayaran&jenjang_id=<?php echo $row['jenjang_id']?>&tahun_ajaran_id=<?php echo $row['tahun_ajaran_id']?>&tipe=<?php echo $row['tipe']?>" class="btn btn-warning"><i class="bi bi-pen"></i></a>
-                        <a href="?page=hapus-tarif-pembayaran&jenjang_id=<?php echo $row['jenjang_id']?>&tahun_ajaran_id=<?php echo $row['tahun_ajaran_id']?>&tipe=<?php echo $row['tipe']?>" class="btn btn-danger"><i class="bi bi-trash"></i></a>
+                        <a href="#" onclick="confirmDelete('?page=hapus-tarif-pembayaran&jenjang_id=<?php echo $row['jenjang_id']?>&tahun_ajaran_id=<?php echo $row['tahun_ajaran_id']?>&tipe=<?php echo $row['tipe']?>')" class="btn btn-danger"><i class="bi bi-trash"></i></a>
                     </td>
                 </tr>
                 <?php } ?>

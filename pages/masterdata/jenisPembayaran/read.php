@@ -30,7 +30,7 @@
             <div class="card">
               <div class="card-header">
                 <a href="?page=tambah-jenis-pembayaran" class="btn btn-success">Tambah Data <i class="bi bi-plus-circle-fill"></i></a>
-                <a href="?page=hapus-semua-jenis-pembayaran" class="btn btn-danger">Hapus Semua Data <i class="bi bi-trash-fill"></i></a>
+                <a href="#" onclick="confrimDelete('?page=hapus-semua-jenis-pembayaran')" class="btn btn-danger">Hapus Semua Data <i class="bi bi-trash-fill"></i></a>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -60,7 +60,7 @@
                       <td><?php echo$row['jenis_pembayaran'] ?></td>
                       <td>
                         <a href="?page=edit-jenis-pembayaran&id=<?php echo $row['id'] ?>" class="btn btn-warning"><i class="bi bi-pen"></i></a>
-                        <a href="?page=hapus-jenis-pembayaran&id=<?php echo $row['id'] ?>" class="btn btn-danger"><i class="bi bi-trash"></i></a>
+                        <a href="#" onclick="confirmDelete('?page=hapus-jenis-pembayaran&id=<?php echo $row['id'] ?>')" class="btn btn-danger"><i class="bi bi-trash"></i></a>
                       </td>
                     </tr>
                     <?php } ?>
