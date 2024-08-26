@@ -3,10 +3,10 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-function resetSiswaTable() {
+function resetStatusTable() {
     $database = new Database();
     $db = $database->getConnection();
-    $tableName = 'siswa';
+    $tableName = 'status';
     $deleteSql = "DELETE FROM $tableName";
     $resetAutoIncrementSql = "ALTER TABLE $tableName AUTO_INCREMENT = 1";
 
@@ -20,7 +20,7 @@ function resetSiswaTable() {
         $stmt->execute();
 
         $_SESSION['hasil'] = true;
-        $_SESSION['pesan'] = "Semua data siswa berhasil dihapus.";
+        $_SESSION['pesan'] = "Semua data status berhasil dihapus.";
     } catch (Exception $e) {
         // Rollback transaksi jika ada kesalahan
         $db->rollBack();
@@ -29,8 +29,8 @@ function resetSiswaTable() {
     }
 }
 
-resetSiswaTable();
+resetStatusTable();
 
-header("Location: ?page=siswa");
+header("Location: ?page=status");
 exit();
 ?>
