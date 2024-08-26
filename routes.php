@@ -73,17 +73,23 @@ if(isset($_GET['page'])) {
         case 'hapus-semua-tagihan-siswa':
             file_exists('pages/keuangan/tagihanSiswa/deleteAll.php') ? include 'pages/keuangan/tagihanSiswa/deleteAll.php' : include 'pages/404.php';
             break;
-        case 'pembayaran':
-            file_exists('pages/keuangan/pembayaran/read.php') ? include 'pages/keuangan/pembayaran/read.php' : include 'pages/404.php';
+        case 'transaksi-keuangan':
+            file_exists('pages/keuangan/transaksiKeuangan/read.php') ? include 'pages/keuangan/transaksiKeuangan/read.php' : include 'pages/404.php';
             break;
-        case 'tambah-pembayaran':
-            file_exists('pages/keuangan/pembayaran/add.php') ? include 'pages/keuangan/pembayaran/add.php' : include 'pages/404.php';
+        case 'tambah-transaksi-keuangan':
+            file_exists('pages/keuangan/transaksiKeuangan/add.php') ? include 'pages/keuangan/transaksiKeuangan/add.php' : include 'pages/404.php';
             break;
-        case 'edit-pembayaran':
-            file_exists('pages/keuangan/pembayaran/update.php') ? include 'pages/keuangan/pembayaran/update.php' : include 'pages/404.php';
+        case 'edit-transaksi-keuangan':
+            file_exists('pages/keuangan/transaksiKeuangan/update.php') ? include 'pages/keuangan/transaksiKeuangan/update.php' : include 'pages/404.php';
             break;
-        case 'hapus-pembayaran':
-            file_exists('pages/keuangan/pembayaran/delete.php') ? include 'pages/keuangan/pembayaran/delete.php' : include 'pages/404.php';
+        case 'hapus-transaksi-keuangan':
+            file_exists('pages/keuangan/transaksiKeuangan/delete.php') ? include 'pages/keuangan/transaksiKeuangan/delete.php' : include 'pages/404.php';
+            break;
+        case 'hapus-semua-transaksi-keuangan':
+            file_exists('pages/keuangan/transaksiKeuangan/delete.php') ? include 'pages/keuangan/transaksiKeuangan/delete.php' : include 'pages/404.php';
+            break;
+        case 'import-transaksi-keuangan':
+            file_exists('pages/keuangan/transaksiKeuangan/import.php') ? include 'pages/keuangan/transaksiKeuangan/import.php' : include 'pages/404.php';
             break;
             // keuangan section end
 

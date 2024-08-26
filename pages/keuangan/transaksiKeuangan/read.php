@@ -28,7 +28,9 @@
         <div class="col-12">
         <div class="card">
             <div class="card-header">
-            <a href="?page=tambah-pembayaran" class="btn btn-success">Tambah Data <i class="bi bi-plus-circle-fill"></i></a>
+            <a href="?page=tambah-transaksi-keuangan" class="btn btn-success">Tambah Data <i class="bi bi-plus-circle-fill"></i></a>
+            <a href="?page=import-transaksi-keuangan" class="btn btn-info">Import & Export Data <i class="bi bi-database-fill-gear"></i></a>
+            <a href="#" onclick="confirmDelete('?page=tambah-pembayaran')" class="btn btn-danger">Hapus Semua Data <i class="bi bi-trash-fill"></i></a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -36,8 +38,9 @@
                 <thead>
                 <tr>
                     <th>No</th>
-                    <th>Nama</th>
-                    <th>Uang Saku</th>
+                    <th>Nama Yang Dituju</th>
+                    <th>Nominal Pembayaran</th>
+                    <th>Tanggal Transaksi</th>
                     <th>Aksi</th>
                 </tr>
                 </thead>
@@ -46,7 +49,7 @@
                     $database = new Database();
                     $db = $database->getConnection();
                     
-                    $selectSql = "SELECT US.*, S.nama FROM uang_saku US LEFT JOIN siswa S ON US.siswa_id=S.id";
+                    $selectSql = "SELECT tk.*, s.nama FROM transaksi_keuangan tk JOIN tagihan_siswa ts ON tk.tagihan_siswa_id = ts.id JOIN siswa s ON ts.siswa_id = s.id";
                     $stmt = $db->prepare($selectSql);
                     $stmt->execute();
                     $row_data = $stmt->rowCount();
@@ -57,11 +60,11 @@
                 <tr>
                     <th scope="row"><?php echo $no++ ?></th>
                     <td><?php echo $row['nama'] ?></td>
-                    <td><?php echo rupiah($row['saldo']) ?></td>
+                    <td><?php echo rupiah($row['jumlah']) ?></td>
+                    <td><?php echo $row['tanggal_transaksi'] ?></td>
                     <td>
-                    <a href="?page=show-pembayaran&id=<?php echo $row['id']?>" class="btn btn-info"><i class="bi bi-eye"></i></a>
-                    <a href="?page=edit-pembayaran&id=<?php echo $row['id']?>" class="btn btn-warning"><i class="bi bi-pen"></i></a>
-                    <a href="?page=hapus-pembayaran&id=<?php echo $row['id']?>" class="btn btn-danger"><i class="bi bi-trash"></i></a>
+                        <a href="?page=edit-pembayaran&id=<?php echo $row['id']?>" class="btn btn-warning"><i class="bi bi-pen"></i></a>
+                        <a href="#" onclick="confirmDelete('?page=hapus-pembayaran&id=<?php echo $row['id']?>')" class="btn btn-danger"><i class="bi bi-trash"></i></a>
                     </td>
                 </tr>
                 <?php } ?>
@@ -69,8 +72,9 @@
                 <tfoot>
                 <tr>
                     <th>No</th>
-                    <th>Nama</th>
-                    <th>Uang Saku</th>
+                    <th>Nama Yang Dituju</th>
+                    <th>Nominal Pembayaran</th>
+                    <th>Tanggal Transaksi</th>
                     <th>Aksi</th>
                 </tr>
                 </tfoot>
