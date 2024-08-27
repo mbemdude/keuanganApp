@@ -86,7 +86,7 @@ if(isset($_GET['page'])) {
             file_exists('pages/keuangan/transaksiKeuangan/delete.php') ? include 'pages/keuangan/transaksiKeuangan/delete.php' : include 'pages/404.php';
             break;
         case 'hapus-semua-transaksi-keuangan':
-            file_exists('pages/keuangan/transaksiKeuangan/delete.php') ? include 'pages/keuangan/transaksiKeuangan/delete.php' : include 'pages/404.php';
+            file_exists('pages/keuangan/transaksiKeuangan/deleteAll.php') ? include 'pages/keuangan/transaksiKeuangan/deleteAll.php' : include 'pages/404.php';
             break;
         case 'import-transaksi-keuangan':
             file_exists('pages/keuangan/transaksiKeuangan/import.php') ? include 'pages/keuangan/transaksiKeuangan/import.php' : include 'pages/404.php';

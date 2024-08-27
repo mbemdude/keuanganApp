@@ -5,36 +5,95 @@ if (isset($_POST['button_create'])) {
     $database = new Database();
     $db = $database->getConnection();
 
-    // Mengubah validasi agar sesuai dengan logika untuk mencegah duplikat
-    $validationSql = "SELECT * FROM transaksi_keuangan WHERE tagihan_siswa_id = :tagihan_siswa_id AND tanggal_transaksi = :tanggal_transaksi";
+    // Memulai transaksi
+    $db->beginTransaction();
+
+    // Validasi transaksi duplikat
+    $validationSql = "SELECT * FROM transaksi_keuangan WHERE id = :id";
     $stmtValidation = $db->prepare($validationSql);
-    $stmtValidation->bindParam(':tagihan_siswa_id', $_POST['tagihan_siswa_id']);
-    $stmtValidation->bindParam(':tanggal_transaksi', $_POST['tanggal_transaksi']);
+    $stmtValidation->bindParam(':id', $_POST['id']);
     $stmtValidation->execute();
 
     if ($stmtValidation->rowCount() > 0) {
         $_SESSION['hasil'] = false;
         $_SESSION['pesan'] = "Data transaksi sudah ada untuk tanggal ini";
     } else {
-        // Insert data ke database
+        $jumlahBayar = $_POST['jumlah'];
+        $tagihanSiswaId = $_POST['tagihan_siswa_id'];
+
+        // Ambil siswa_id dari tabel tagihan_siswa berdasarkan tagihan_siswa_id
+        $selectSiswaSql = "SELECT siswa_id FROM tagihan_siswa WHERE id = :tagihan_siswa_id";
+        $stmtSelectSiswa = $db->prepare($selectSiswaSql);
+        $stmtSelectSiswa->bindParam(':tagihan_siswa_id', $tagihanSiswaId);
+        $stmtSelectSiswa->execute();
+        $siswa = $stmtSelectSiswa->fetch(PDO::FETCH_ASSOC);
+        $siswaId = $siswa['siswa_id'];
+
+        // Ambil semua tagihan siswa yang belum lunas berdasarkan siswa_id dan urutkan berdasarkan jenis_pembayaran_id
+        $selectTagihanSql = "SELECT ts.id, ts.jumlah_tagihan, tp.jenis_pembayaran_id 
+                             FROM tagihan_siswa ts 
+                             JOIN tarif_pembayaran tp ON ts.tarif_pembayaran_id = tp.id 
+                             WHERE ts.siswa_id = :siswa_id AND ts.jumlah_tagihan > 0 
+                             ORDER BY tp.jenis_pembayaran_id ASC";
+        $stmtSelectTagihan = $db->prepare($selectTagihanSql);
+        $stmtSelectTagihan->bindParam(':siswa_id', $siswaId);
+        $stmtSelectTagihan->execute();
+        $tagihanSiswaRows = $stmtSelectTagihan->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($tagihanSiswaRows as $row) {
+            if ($jumlahBayar <= 0) {
+                break; // Jika tidak ada lagi jumlah yang harus dibayar, keluar dari loop
+            }
+
+            $id = $row['id'];
+            $jumlahTagihan = $row['jumlah_tagihan'];
+
+            // Hitung pengurangan tagihan
+            if ($jumlahBayar >= $jumlahTagihan) {
+                $jumlahBayar -= $jumlahTagihan;
+                $jumlahTagihan = 0;
+            } else {
+                $jumlahTagihan -= $jumlahBayar;
+                $jumlahBayar = 0;
+            }
+
+            // Update tagihan siswa dengan jumlah tagihan yang baru
+            $updateTagihanSql = "UPDATE tagihan_siswa SET jumlah_tagihan = :jumlah_tagihan WHERE id = :id AND siswa_id = :siswa_id";
+            $stmtUpdateTagihan = $db->prepare($updateTagihanSql);
+            $stmtUpdateTagihan->bindParam(':jumlah_tagihan', $jumlahTagihan);
+            $stmtUpdateTagihan->bindParam(':id', $id);
+            $stmtUpdateTagihan->bindParam(':siswa_id', $siswaId);
+
+            if (!$stmtUpdateTagihan->execute()) {
+                $db->rollBack(); // Rollback jika update gagal
+                $_SESSION['hasil'] = false;
+                $_SESSION['pesan'] = "Gagal mengurangi tagihan siswa";
+                echo "<meta http-equiv='refresh' content='0;url=?page=transaksi-keuangan'>";
+                exit;
+            }
+        }
+
+        // Insert data ke transaksi_keuangan jika semua update berhasil
         $insertSql = "INSERT INTO transaksi_keuangan (tagihan_siswa_id, jumlah, tanggal_transaksi) VALUES (:tagihan_siswa_id, :jumlah, :tanggal_transaksi)";
         $stmt = $db->prepare($insertSql);
         $stmt->bindParam(':tagihan_siswa_id', $_POST['tagihan_siswa_id']);
         $stmt->bindParam(':jumlah', $_POST['jumlah']);
         $stmt->bindParam(':tanggal_transaksi', $_POST['tanggal_transaksi']);
-        
+
         if ($stmt->execute()) {
+            $db->commit(); // Commit jika semua operasi berhasil
             $_SESSION['hasil'] = true;
-            $_SESSION['pesan'] = "Berhasil simpan data";
+            $_SESSION['pesan'] = "Berhasil simpan data dan mengurangi tagihan siswa";
         } else {
+            $db->rollBack(); // Rollback jika insert transaksi gagal
             $_SESSION['hasil'] = false;
             $_SESSION['pesan'] = "Gagal simpan data";
         }
     }
     
     // Redirect untuk menampilkan pesan di halaman yang sama
-    echo "<meta http-equiv='refresh' content='0;url=?page=siswa'>";
-    exit; // Tambahkan exit agar kode di bawah tidak dieksekusi setelah redirect
+    echo "<meta http-equiv='refresh' content='0;url=?page=transaksi-keuangan'>";
+    exit;
 }
 ?>
 
@@ -53,7 +112,7 @@ if (isset($_POST['button_create'])) {
                         $database = new Database();
                         $db = $database->getConnection();
 
-                        $selectTagihanSiswaSQL = "SELECT ts.id, s.nama FROM tagihan_siswa ts JOIN siswa s ON ts.siswa_id = s.id";
+                        $selectTagihanSiswaSQL = "SELECT ts.id, s.nama FROM tagihan_siswa ts JOIN siswa s ON ts.siswa_id = s.id GROUP BY s.nama";
                         $stmtTagihanSiswa = $db->prepare($selectTagihanSiswaSQL);
                         $stmtTagihanSiswa->execute();
 
@@ -68,7 +127,7 @@ if (isset($_POST['button_create'])) {
                     <input type="date" name="tanggal_transaksi" class="form-control" required>
                 </div>
                 <div class="mt-2">
-                    <a href="?page=siswa" class="btn btn-danger">Batal</a>
+                    <a href="?page=transaksi-keuangan" class="btn btn-danger">Batal</a>
                     <button type="submit" name="button_create" class="btn btn-success">Simpan</button>
                 </div>
             </form>

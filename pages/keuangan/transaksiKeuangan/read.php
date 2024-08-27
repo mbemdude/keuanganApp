@@ -30,7 +30,7 @@
             <div class="card-header">
             <a href="?page=tambah-transaksi-keuangan" class="btn btn-success">Tambah Data <i class="bi bi-plus-circle-fill"></i></a>
             <a href="?page=import-transaksi-keuangan" class="btn btn-info">Import & Export Data <i class="bi bi-database-fill-gear"></i></a>
-            <a href="#" onclick="confirmDelete('?page=tambah-pembayaran')" class="btn btn-danger">Hapus Semua Data <i class="bi bi-trash-fill"></i></a>
+            <a href="#" onclick="confirmDelete('?page=hapus-semua-transaksi-keuangan')" class="btn btn-danger">Hapus Semua Data <i class="bi bi-trash-fill"></i></a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -64,7 +64,7 @@
                     <td><?php echo $row['tanggal_transaksi'] ?></td>
                     <td>
                         <a href="?page=edit-pembayaran&id=<?php echo $row['id']?>" class="btn btn-warning"><i class="bi bi-pen"></i></a>
-                        <a href="#" onclick="confirmDelete('?page=hapus-pembayaran&id=<?php echo $row['id']?>')" class="btn btn-danger"><i class="bi bi-trash"></i></a>
+                        <a href="#" onclick="confirmDelete('?page=hapus-transaksi-keuangan&id=<?php echo $row['id']?>')" class="btn btn-danger"><i class="bi bi-trash"></i></a>
                     </td>
                 </tr>
                 <?php } ?>
