@@ -73,6 +73,23 @@ if (isset($_POST['button_create'])) {
             }
         }
 
+        // Jika ada sisa dari pembayaran setelah semua tagihan dibayar, masukkan ke saldo siswa
+        if ($jumlahBayar > 0) {
+            // Update saldo siswa
+            $updateSaldoSql = "UPDATE uang_saku SET saldo = saldo + :jumlah_bayar WHERE siswa_id = :siswa_id";
+            $stmtUpdateSaldo = $db->prepare($updateSaldoSql);
+            $stmtUpdateSaldo->bindParam(':jumlah_bayar', $jumlahBayar);
+            $stmtUpdateSaldo->bindParam(':siswa_id', $siswaId);
+
+            if (!$stmtUpdateSaldo->execute()) {
+                $db->rollBack(); // Rollback jika update saldo gagal
+                $_SESSION['hasil'] = false;
+                $_SESSION['pesan'] = "Gagal menambahkan sisa pembayaran ke saldo siswa";
+                echo "<meta http-equiv='refresh' content='0;url=?page=transaksi-keuangan'>";
+                exit;
+            }
+        }
+
         // Insert data ke transaksi_keuangan jika semua update berhasil
         $insertSql = "INSERT INTO transaksi_keuangan (tagihan_siswa_id, jumlah, tanggal_transaksi) VALUES (:tagihan_siswa_id, :jumlah, :tanggal_transaksi)";
         $stmt = $db->prepare($insertSql);
