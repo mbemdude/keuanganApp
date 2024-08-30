@@ -147,7 +147,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
     }
     $_SESSION['hasil'] = true;
     $_SESSION['pesan'] = "Berhasil import data";
-    echo "<meta http-equiv='refresh' content='0;url=?page=tagihan-siswa'>";
+    echo "<meta http-equiv='refresh' content='0;url=?page=transaksi-keuangan'>";
     exit();
 }
 ?>
