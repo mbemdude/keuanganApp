@@ -73,6 +73,9 @@ if(isset($_GET['page'])) {
         case 'hapus-semua-tagihan-siswa':
             file_exists('pages/keuangan/tagihanSiswa/deleteAll.php') ? include 'pages/keuangan/tagihanSiswa/deleteAll.php' : include 'pages/404.php';
             break;
+        case 'import-tagihan-siswa':
+            file_exists('pages/keuangan/tagihanSiswa/import.php') ? include 'pages/keuangan/tagihanSiswa/import.php' : include 'pages/404.php';
+            break;
         case 'transaksi-keuangan':
             file_exists('pages/keuangan/transaksiKeuangan/read.php') ? include 'pages/keuangan/transaksiKeuangan/read.php' : include 'pages/404.php';
             break;
