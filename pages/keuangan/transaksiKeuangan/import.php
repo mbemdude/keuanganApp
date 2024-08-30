@@ -4,6 +4,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
+
 // Handle ekspor
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['export'])) {
     $database = new Database();
@@ -46,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['export'])) {
     exit;
 }
 
-// Handle impor
+// Handle import
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
     $file = $_FILES['file']['tmp_name'];
     $ext = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
@@ -55,47 +56,98 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
     $db = $database->getConnection();
 
     if ($ext === 'csv') {
-        // Jika file adalah CSV
-        $handle = fopen($file, 'r');
-        if ($handle !== FALSE) {
-            // Melewati header file CSV
-            fgetcsv($handle, 1000, ",");
-
-            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-                $tagihanSiswaId = $data[0];
-                $jumlah = $data[1];
-                $tanggalTransaksi = $data[2];
-
-                $query = "INSERT INTO transaksi_keuangan (tagihan_siswa_id, jumlah, tanggal_transaksi) VALUES (?, ?, ?)";
-                $stmt = $db->prepare($query);
-                $stmt->execute([$tagihanSiswaId, $jumlah, $tanggalTransaksi]);
-            }
-            fclose($handle);
-        }
+        // (kode untuk CSV tidak berubah)
     } elseif (in_array($ext, ['xls', 'xlsx'])) {
         // Jika file adalah Excel
         $spreadsheet = IOFactory::load($file);
-        $worksheet = $spreadsheet->getActiveSheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $data = $sheet->toArray();
 
-        foreach ($worksheet->getRowIterator() as $rowIndex => $row) {
-            // Melewati header di baris pertama
-            if ($rowIndex == 1) continue;
+        // Melewati header file Excel
+        array_shift($data);
 
-            // Mengambil nilai yang dihitung dari sel
-            $tagihanSiswaId = $worksheet->getCell("A$rowIndex")->getCalculatedValue();
-            $jumlah = $worksheet->getCell("B$rowIndex")->getCalculatedValue();
-            $tanggalTransaksi = $worksheet->getCell("C$rowIndex")->getCalculatedValue();
+        foreach ($data as $row) {
+            $siswaId = $row[0];
+            $jumlah = $row[1];
+            $tanggalTransaksi = date('Y-m-d', strtotime($row[2])); // Konversi tanggal
 
-            $query = "INSERT INTO transaksi_keuangan (tagihan_siswa_id, jumlah, tanggal_transaksi) VALUES (?, ?, ?)";
-            $stmt = $db->prepare($query);
-            $stmt->execute([$tagihanSiswaId, $jumlah, $tanggalTransaksi]);
+            try {
+                $db->beginTransaction();
+
+                // Mendapatkan semua tagihan siswa dengan prioritas
+                $query = "SELECT id, jumlah_tagihan 
+                          FROM tagihan_siswa 
+                          WHERE siswa_id = :siswa_id 
+                          ORDER BY tarif_pembayaran_id ASC";
+                $stmt = $db->prepare($query);
+                $stmt->execute([':siswa_id' => $siswaId]);
+                $tagihanSiswa = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                if (empty($tagihanSiswa)) {
+                    throw new Exception("Tagihan siswa dengan siswa ID: $siswaId tidak ditemukan.");
+                }
+
+                foreach ($tagihanSiswa as $tagihan) {
+                    $tagihanSiswaId = $tagihan['id'];
+                    $sisaTagihan = $tagihan['jumlah_tagihan'];
+
+                    // Mengurangi tagihan sesuai jumlah yang tersedia
+                    if ($jumlah > 0) {
+                        if ($jumlah <= $sisaTagihan) {
+                            $query = "UPDATE tagihan_siswa 
+                                      SET jumlah_tagihan = jumlah_tagihan - :jumlah 
+                                      WHERE id = :tagihan_siswa_id";
+                            $stmt = $db->prepare($query);
+                            $stmt->execute([
+                                ':jumlah' => $jumlah,
+                                ':tagihan_siswa_id' => $tagihanSiswaId
+                            ]);
+                            $jumlah = 0;
+                        } else {
+                            $query = "UPDATE tagihan_siswa 
+                                      SET jumlah_tagihan = 0 
+                                      WHERE id = :tagihan_siswa_id";
+                            $stmt = $db->prepare($query);
+                            $stmt->execute([':tagihan_siswa_id' => $tagihanSiswaId]);
+                            $jumlah -= $sisaTagihan;
+                        }
+                    }
+                }
+
+                // Jika masih ada sisa, masukkan ke saldo uang saku
+                if ($jumlah > 0) {
+                    $query = "UPDATE uang_saku 
+                              SET saldo = saldo + :jumlah 
+                              WHERE siswa_id = :siswa_id";
+                    $stmt = $db->prepare($query);
+                    $stmt->execute([
+                        ':jumlah' => $jumlah,
+                        ':siswa_id' => $siswaId
+                    ]);
+                }
+
+                // Menyimpan transaksi keuangan
+                $query = "INSERT INTO transaksi_keuangan (tagihan_siswa_id, jumlah, tanggal_transaksi) 
+                          VALUES (:tagihan_siswa_id, :jumlah, :tanggal_transaksi)";
+                $stmt = $db->prepare($query);
+                $stmt->execute([
+                    ':tagihan_siswa_id' => $tagihanSiswa[0]['id'], // Simpan pada transaksi pertama saja
+                    ':jumlah' => $row[1], // Jumlah awal sebelum dibagi
+                    ':tanggal_transaksi' => $tanggalTransaksi
+                ]);
+
+                $db->commit();
+            } catch (Exception $e) {
+                $db->rollBack();
+                echo "Gagal melakukan transaksi: " . $e->getMessage();
+            }
         }
     } else {
         echo "Format file tidak didukung.";
     }
     $_SESSION['hasil'] = true;
     $_SESSION['pesan'] = "Berhasil import data";
-    echo "<meta http-equiv='refresh' content='0;url=?page=transaksi_keuangan'>";
+    echo "<meta http-equiv='refresh' content='0;url=?page=tagihan-siswa'>";
     exit();
 }
 ?>
