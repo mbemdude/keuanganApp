@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['export'])) {
     $database = new Database();
     $db = $database->getConnection();
 
-    $query = "SELECT id, kode, nis, nama, jenjang_id, kelas_id, status_id FROM siswa";
+    $query = "SELECT s.*, j.jenjang, k.kelas, st.status FROM siswa JOIN jenjang j ON s.jenjang_id = j.id JOIN kelas k ON s.kelas_id = k.id JOIN status st ON s.status_id = st.id";
     $stmt = $db->prepare($query);
     $stmt->execute();
     $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -22,9 +22,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['export'])) {
     $sheet->setCellValue('B1', 'Kode');
     $sheet->setCellValue('C1', 'NIS');
     $sheet->setCellValue('D1', 'Nama');
-    $sheet->setCellValue('E1', 'Jenjang ID');
-    $sheet->setCellValue('F1', 'Kelas ID');
-    $sheet->setCellValue('G1', 'Status ID');
+    $sheet->setCellValue('E1', 'Jenjang');
+    $sheet->setCellValue('F1', 'Kelas');
+    $sheet->setCellValue('G1', 'Status');
 
     // Menulis data siswa ke file Excel
     $rowNumber = 2;
@@ -33,9 +33,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['export'])) {
         $sheet->setCellValue('B' . $rowNumber, $row['kode']);
         $sheet->setCellValue('C' . $rowNumber, $row['nis']);
         $sheet->setCellValue('D' . $rowNumber, $row['nama']);
-        $sheet->setCellValue('E' . $rowNumber, $row['jenjang_id']);
-        $sheet->setCellValue('F' . $rowNumber, $row['kelas_id']);
-        $sheet->setCellValue('G' . $rowNumber, $row['status_id']);
+        $sheet->setCellValue('E' . $rowNumber, $row['jenjang']);
+        $sheet->setCellValue('F' . $rowNumber, $row['kelas']);
+        $sheet->setCellValue('G' . $rowNumber, $row['status']);
         $rowNumber++;
     }
 
