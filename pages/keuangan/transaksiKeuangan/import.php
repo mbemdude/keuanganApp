@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['export'])) {
     $database = new Database();
     $db = $database->getConnection();
 
-    $query = "SELECT tagihan_siswa_id, jumlah, tanggal_transaksi FROM transaksi_keuangan";
+    $query = "SELECT tk.tagihan_siswa_id, s.nama, tk.jumlah, tk.tanggal_transaksi FROM transaksi_keuangan tk JOIN tagihan_siswa ts ON tk.tagihan_siswa_id = ts.id JOIN siswa s ON ts.siswa_id = s.id";
     $stmt = $db->prepare($query);
     $stmt->execute();
     $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -20,15 +20,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['export'])) {
 
     // Menulis header ke file Excel
     $sheet->setCellValue('A1', 'Tagihan Siswa ID');
-    $sheet->setCellValue('B1', 'Nominal Pembayaran');
-    $sheet->setCellValue('C1', 'Tanggal Transaksi');
+    $sheet->setCellValue('B1', 'Nama Yang Dituju');
+    $sheet->setCellValue('C1', 'Nominal Pembayaran');
+    $sheet->setCellValue('D1', 'Tanggal Transaksi');
 
     // Menulis data siswa ke file Excel
     $rowNumber = 2;
     foreach ($data as $row) {
         $sheet->setCellValue('A' . $rowNumber, $row['tagihan_siswa_id']);
-        $sheet->setCellValue('B' . $rowNumber, $row['jumlah']);
-        $sheet->setCellValue('C' . $rowNumber, $row['tanggal_transaksi']);
+        $sheet->setCellValue('B' . $rowNumber, $row['nama']);
+        $sheet->setCellValue('C' . $rowNumber, $row['jumlah']);
+        $sheet->setCellValue('D' . $rowNumber, $row['tanggal_transaksi']);
         $rowNumber++;
     }
 
@@ -36,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['export'])) {
     ob_end_clean();
 
     $writer = new Xlsx($spreadsheet);
-    $filename = 'data_siswa.xlsx';
+    $filename = 'data_transaksi_keuangan.xlsx';
 
     // Mengatur header untuk mendownload file
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');

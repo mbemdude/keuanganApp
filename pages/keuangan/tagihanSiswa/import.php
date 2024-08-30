@@ -9,7 +9,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['export'])) {
     $database = new Database();
     $db = $database->getConnection();
 
-    $query = "SELECT siswa_id, tarif_pembayaran_id, tanggal_tagihan, jumlah_tagihan FROM tagihan_siswa";
+    $query = "SELECT s.nama, 
+    MAX(CASE WHEN tb.jenis_pembayaran_id = '1' THEN ts.jumlah_tagihan END) AS uang_pangkal, 
+    MAX(CASE WHEN tb.jenis_pembayaran_id = '2' THEN ts.jumlah_tagihan END) AS daftar_ulang, 
+    MAX(CASE WHEN tb.jenis_pembayaran_id = '3' THEN ts.jumlah_tagihan END) AS spp, 
+    tb.tipe, ts.tanggal_tagihan, k.kelas, j.jenjang FROM tagihan_siswa ts 
+    JOIN siswa s ON ts.siswa_id=s.id JOIN kelas k ON s.kelas_id = k.id JOIN jenjang j ON s.jenjang_id = j.id 
+    JOIN tarif_pembayaran tb ON ts.tarif_pembayaran_id=tb.id JOIN jenis_pembayaran tpb ON tb.jenis_pembayaran_id=tpb.id 
+    GROUP BY s.nama, tb.tipe";
     $stmt = $db->prepare($query);
     $stmt->execute();
     $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -18,18 +25,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['export'])) {
     $sheet = $spreadsheet->getActiveSheet();
 
     // Menulis header ke file Excel
-    $sheet->setCellValue('A1', 'Siswa ID');
-    $sheet->setCellValue('B1', 'Tarif Pembayaran ID');
-    $sheet->setCellValue('C1', 'Tanggal Tagihan');
-    $sheet->setCellValue('D1', 'Nominal Tagihan');
+    $sheet->setCellValue('A1', 'Nama');
+    $sheet->setCellValue('B1', 'Kelas');
+    $sheet->setCellValue('C1', 'Jenjang');
+    $sheet->setCellValue('D1', 'Uang Pangkal');
+    $sheet->setCellValue('E1', 'Daftar Ulang');
+    $sheet->setCellValue('F1', 'SPP');
+    $sheet->setCellValue('G1', 'Tipe');
+    $sheet->setCellValue('H1', 'Tanggal Tagihan');
 
     // Menulis data siswa ke file Excel
     $rowNumber = 2;
     foreach ($data as $row) {
-        $sheet->setCellValue('A' . $rowNumber, $row['siswa_id']);
-        $sheet->setCellValue('B' . $rowNumber, $row['tarif_pembayaran_id']);
-        $sheet->setCellValue('C' . $rowNumber, $row['tanggal_tagihan']);
-        $sheet->setCellValue('D' . $rowNumber, $row['jumlah_tagihan']);
+        $sheet->setCellValue('A' . $rowNumber, $row['nama']);
+        $sheet->setCellValue('B' . $rowNumber, $row['kelas']);
+        $sheet->setCellValue('C' . $rowNumber, $row['jenjang']);
+        $sheet->setCellValue('D' . $rowNumber, $row['uang_pangkal']);
+        $sheet->setCellValue('E' . $rowNumber, $row['daftar_ulang']);
+        $sheet->setCellValue('F' . $rowNumber, $row['spp']);
+        $sheet->setCellValue('G' . $rowNumber, $row['tipe']);
+        $sheet->setCellValue('H' . $rowNumber, $row['tanggal_tagihan']);
         $rowNumber++;
     }
 
