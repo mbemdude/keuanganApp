@@ -159,7 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
         <div class="col-lg-6 col-sm-12">
             <div class="card mx-3">
                 <div class="card-header">
-                    <h3 class="card-title">Ekspor/Impor Data Siswa</h3>
+                    <h3 class="card-title">Ekspor / Impor Data Transaksi Keuangan</h3>
                 </div>
                 <div class="card-body">
                     <form action="" method="post" class="mb-4">
@@ -184,17 +184,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
         <div class="col-lg-6 col-sm-12">
             <div class="card mx-3">
                 <div class="card-header">
-                    Cara Penggunaan Import
+                    <h3 class="card-title">Cara Penggunaan Impor</h3>
                 </div>
                 <div class="card-body">
                 <ul>
-                        <li>Pastikan format file Import bertipekan csv, xls, atau xlsx</li>
-                        <li>Pastikan data yang diimport jika ada mengambil data dari tempat lain, data tersebut sudah terinputkan</li>
+                        <li>Pastikan format file Impor bertipekan csv, xls, atau xlsx</li>
+                        <li>Pastikan data yang di impor jika ada mengambil data dari tempat lain, data tersebut sudah terinputkan</li>
                         <ul>
                             <li>Contoh, kita memiliki 3 baris data siswa A, B, C masing masing siswa memiliki kunci utama yaitu berupa id. Id disini berupa angka yang otomatis bertambah sendiri jika ada inputan baru</li>
                         </ul>
-                        <li>Untuk import transaksi keuangan, pastikan data uang saku dan tagihan siswa sudah diinputkan karena akan berpengaruh untuk pengupdate-an data</li>
-                        <li>Lebih mudahnya bisa download contoh import data dibawah ini</li>
+                        <li>Untuk impor transaksi keuangan, pastikan data uang saku dan tagihan siswa sudah diinputkan karena akan berpengaruh untuk pengupdate-an data</li>
+                        <li>Lebih mudahnya bisa download contoh impor data dibawah ini</li>
                         <a href="assets/sample/test_import_transaksi_keuangan.xlsx" class="btn btn-primary">Download Sample</a>
                     </ul>
                 </div>
