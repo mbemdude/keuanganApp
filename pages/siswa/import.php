@@ -22,9 +22,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['export'])) {
     $sheet->setCellValue('B1', 'Kode');
     $sheet->setCellValue('C1', 'NIS');
     $sheet->setCellValue('D1', 'Nama');
-    $sheet->setCellValue('E1', 'Jenjang');
-    $sheet->setCellValue('F1', 'Kelas');
-    $sheet->setCellValue('G1', 'Status');
+    $sheet->setCellValue('E1', 'Alamat');
+    $sheet->setCellValue('F1', 'Jenis Kelamin');
+    $sheet->setCellValue('G1', 'Jenjang');
+    $sheet->setCellValue('H1', 'Kelas');
+    $sheet->setCellValue('I1', 'Status');
 
     // Menulis data siswa ke file Excel
     $rowNumber = 2;
@@ -33,9 +35,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['export'])) {
         $sheet->setCellValue('B' . $rowNumber, $row['kode']);
         $sheet->setCellValue('C' . $rowNumber, $row['nis']);
         $sheet->setCellValue('D' . $rowNumber, $row['nama']);
-        $sheet->setCellValue('E' . $rowNumber, $row['jenjang']);
-        $sheet->setCellValue('F' . $rowNumber, $row['kelas']);
-        $sheet->setCellValue('G' . $rowNumber, $row['status']);
+        $sheet->setCellValue('E' . $rowNumber, $row['alamat']);
+        $sheet->setCellValue('F' . $rowNumber, $row['jenis_kelamin']);
+        $sheet->setCellValue('G' . $rowNumber, $row['jenjang']);
+        $sheet->setCellValue('H' . $rowNumber, $row['kelas']);
+        $sheet->setCellValue('I' . $rowNumber, $row['status']);
         $rowNumber++;
     }
 
@@ -70,16 +74,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
             fgetcsv($handle, 1000, ",");
 
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-                $kode = $data[0];
-                $nis = $data[1];
-                $nama = $data[2];
-                $jenjang_id = $data[3];
-                $kelas_id = $data[4];
-                $status_id = $data[5];
+                $kode           = $data[0];
+                $nis            = $data[1];
+                $nama           = $data[2];
+                $alamat         = $data[3];
+                $jenis_kelamin  = $data[4];
+                $jenjang_id     = $data[5];
+                $kelas_id       = $data[6];
+                $status_id      = $data[7];
 
-                $query = "INSERT INTO siswa (kode, nis, nama, jenjang_id, kelas_id, status_id) VALUES (?, ?, ?, ?, ?, ?)";
+                $query = "INSERT INTO siswa (kode, nis, nama, alamat, jenis_kelamin, jenjang_id, kelas_id, status_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
                 $stmt = $db->prepare($query);
-                $stmt->execute([$kode, $nis, $nama, $jenjang_id, $kelas_id, $status_id]);
+                $stmt->execute([$kode, $nis, $nama, $alamat, $jenis_kelamin, $jenjang_id, $kelas_id, $status_id]);
             }
             fclose($handle);
         }
@@ -96,13 +103,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
             $kode = $worksheet->getCell("A$rowIndex")->getCalculatedValue();
             $nis = $worksheet->getCell("B$rowIndex")->getCalculatedValue();
             $nama = $worksheet->getCell("C$rowIndex")->getCalculatedValue();
-            $jenjang_id = $worksheet->getCell("D$rowIndex")->getCalculatedValue();
-            $kelas_id = $worksheet->getCell("E$rowIndex")->getCalculatedValue();
-            $status_id = $worksheet->getCell("F$rowIndex")->getCalculatedValue();
+            $alamat = $worksheet->getCell("D$rowIndex")->getCalculatedValue();
+            $jenis_kelamin = $worksheet->getCell("E$rowIndex")->getCalculatedValue();
+            $jenjang_id = $worksheet->getCell("F$rowIndex")->getCalculatedValue();
+            $kelas_id = $worksheet->getCell("G$rowIndex")->getCalculatedValue();
+            $status_id = $worksheet->getCell("H$rowIndex")->getCalculatedValue();
 
-            $query = "INSERT INTO siswa (kode, nis, nama, jenjang_id, kelas_id, status_id) VALUES (?, ?, ?, ?, ?, ?)";
+            $query = "INSERT INTO siswa (kode, nis, nama, alamat, jenis_kelamin, jenjang_id, kelas_id, status_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $stmt = $db->prepare($query);
-            $stmt->execute([$kode, $nis, $nama, $jenjang_id, $kelas_id, $status_id]);
+            $stmt->execute([$kode, $nis, $nama, $alamat, $jenis_kelamin, $jenjang_id, $kelas_id, $status_id]);
         }
     } else {
         echo "Format file tidak didukung.";
