@@ -109,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
             $kelas_id = $worksheet->getCell("G$rowIndex")->getCalculatedValue();
             $status_id = $worksheet->getCell("H$rowIndex")->getCalculatedValue();
 
-            $query = "INSERT INTO siswa (kode, nis, nama, alamat, jenis_kelamin, jenjang_id, kelas_id, status_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $query = "INSERT INTO siswa (kode, nis, nama, alamat, jenis_kelamin, jenjang_id, kelas_id, status_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             $stmt = $db->prepare($query);
             $stmt->execute([$kode, $nis, $nama, $alamat, $jenis_kelamin, $jenjang_id, $kelas_id, $status_id]);
         }
