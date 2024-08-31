@@ -2,14 +2,40 @@
     border: 2px solid #000;
     padding: 10px;
     border-radius: 8px;
-    max-width: 100%;      
-    display: flex;
+    max-width: 50%;
     justify-content: center;
     align-items: center;
     background-color: #f8f8f8;
+    position: relative;
+    display: inline-block;
 }
 
 .img-fluid {
     max-width: 100%;
     height: auto;
+}
+
+.siswa-img {
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    transition: 0.3s;
+}
+
+.image-container:hover .siswa-img {
+    opacity: 0.8;
+}
+
+.btn-change-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    z-index: 10;
+}
+
+.image-container:hover .btn-change-image {
+    display: block;
 }
