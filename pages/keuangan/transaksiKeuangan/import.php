@@ -155,27 +155,50 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
 ?>
 
 <section class="content">
-    <div class="card mx-3">
-        <div class="card-header">
-            <h3 class="card-title">Ekspor/Impor Data Siswa</h3>
+    <div class="row">
+        <div class="col-lg-6 col-sm-12">
+            <div class="card mx-3">
+                <div class="card-header">
+                    <h3 class="card-title">Ekspor/Impor Data Siswa</h3>
+                </div>
+                <div class="card-body">
+                    <form action="" method="post" class="mb-4">
+                        <div class="form-group">
+                            <input type="hidden" name="export" value="1">
+                            <button type="submit" class="btn btn-success">Ekspor Data (XLSX)</button>
+                        </div>
+                    </form>
+                    <form action="" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="file">Pilih File CSV atau Excel</label>
+                            <input type="file" id="file" name="file" class="form-control" accept=".csv, .xls, .xlsx" required>
+                        </div>
+                        <div class="mt-2">
+                            <a href="?page=tagihan-siswa" class="btn btn-danger">Batal</a>
+                            <button type="submit" class="btn btn-success">Impor Data</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="card-body">
-            <form action="" method="post" class="mb-4">
-                <div class="form-group">
-                    <input type="hidden" name="export" value="1">
-                    <button type="submit" class="btn btn-success">Ekspor Data (XLSX)</button>
+        <div class="col-lg-6 col-sm-12">
+            <div class="card mx-3">
+                <div class="card-header">
+                    Cara Penggunaan Import
                 </div>
-            </form>
-            <form action="" method="post" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label for="file">Pilih File CSV atau Excel</label>
-                    <input type="file" id="file" name="file" class="form-control" accept=".csv, .xls, .xlsx" required>
+                <div class="card-body">
+                <ul>
+                        <li>Pastikan format file Import bertipekan csv, xls, atau xlsx</li>
+                        <li>Pastikan data yang diimport jika ada mengambil data dari tempat lain, data tersebut sudah terinputkan</li>
+                        <ul>
+                            <li>Contoh, kita memiliki 3 baris data siswa A, B, C masing masing siswa memiliki kunci utama yaitu berupa id. Id disini berupa angka yang otomatis bertambah sendiri jika ada inputan baru</li>
+                        </ul>
+                        <li>Untuk import transaksi keuangan, pastikan data uang saku dan tagihan siswa sudah diinputkan karena akan berpengaruh untuk pengupdate-an data</li>
+                        <li>Lebih mudahnya bisa download contoh import data dibawah ini</li>
+                        <a href="assets/sample/test_import_transaksi_keuangan.xlsx" class="btn btn-primary">Download Sample</a>
+                    </ul>
                 </div>
-                <div class="mt-2">
-                    <a href="?page=tagihan-siswa" class="btn btn-danger">Batal</a>
-                    <button type="submit" class="btn btn-success">Impor Data</button>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 </section>
