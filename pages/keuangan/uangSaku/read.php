@@ -61,7 +61,6 @@
                       <td><?php echo $row['nama'] ?></td>
                       <td><?php echo rupiah($row['saldo']) ?></td>
                       <td>
-                        <a href="?page=show-uang-saku&id=<?php echo $row['id']?>" class="btn btn-info"><i class="bi bi-eye"></i></a>
                         <a href="?page=edit-uang-saku&id=<?php echo $row['id']?>" class="btn btn-warning"><i class="bi bi-pen"></i></a>
                         <a href="#" onclick="confirmDelete('?page=hapus-uang-saku&id=<?php echo $row['id']?>')" class="btn btn-danger"><i class="bi bi-trash"></i></a>
                       </td>

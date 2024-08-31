@@ -65,9 +65,8 @@
                     <td><?php echo $row['tipe'] ?></td>
                     <td><?php echo $row['tanggal_tagihan'] ?></td>
                     <td>
-                    <a href="?page=show-pembayaran&siswa_id=<?php echo $row['siswa_id']?>" class="btn btn-info"><i class="bi bi-eye"></i></a>
-                    <a href="?page=edit-pembayaran&siswa_id=<?php echo $row['siswa_id']?>" class="btn btn-warning"><i class="bi bi-pen"></i></a>
-                    <a href="#" onclick="confrimDelete('?page=hapus-tagihan-siswa&siswa_id=<?php echo $row['siswa_id']?>')" class="btn btn-danger"><i class="bi bi-trash"></i></a>
+                        <a href="?page=edit-pembayaran&siswa_id=<?php echo $row['siswa_id']?>" class="btn btn-warning"><i class="bi bi-pen"></i></a>
+                        <a href="#" onclick="confrimDelete('?page=hapus-tagihan-siswa&siswa_id=<?php echo $row['siswa_id']?>')" class="btn btn-danger"><i class="bi bi-trash"></i></a>
                     </td>
                 </tr>
                 <?php } ?>
