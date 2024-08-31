@@ -43,6 +43,9 @@ if(isset($_GET['page'])) {
         case 'hapus-semua-uang-saku':
             file_exists('pages/keuangan/uangSaku/deleteAll.php') ? include 'pages/keuangan/uangSaku/deleteAll.php' : include 'pages/404.php';
             break;
+        case 'import-uang-saku':
+            file_exists('pages/keuangan/uangSaku/import.php') ? include 'pages/keuangan/uangSaku/import.php' : include 'pages/404.php';
+            break;
         case 'tarif-pembayaran':
             file_exists('pages/keuangan/tarifPembayaran/read.php') ? include 'pages/keuangan/tarifPembayaran/read.php' : include 'pages/404.php';
             break;
