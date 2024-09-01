@@ -151,7 +151,7 @@ if(isset($_GET['page'])) {
         case 'hapus-jenjang':
             file_exists('pages/masterdata/jenjang/delete.php') ? include 'pages/masterdata/jenjang/delete.php' : include 'pages/404.php';
             break;
-        case 'hapus=-semua-jenjang':
+        case 'hapus-semua-jenjang':
             file_exists('pages/masterdata/jenjang/deleteAll.php') ? include 'pages/masterdata/jenjang/deleteAll.php' : include 'pages/404.php';
             break;
         case 'kelas':
@@ -181,7 +181,7 @@ if(isset($_GET['page'])) {
         case 'hapus-status':
             file_exists('pages/masterdata/status/delete.php') ? include 'pages/masterdata/status/delete.php' : include 'pages/404.php';
             break;
-        case 'hapus-status':
+        case 'hapus-semua-status':
             file_exists('pages/masterdata/status/deleteAll.php') ? include 'pages/masterdata/status/deleteAll.php' : include 'pages/404.php';
             break;
         case 'jenis-pembayaran':
