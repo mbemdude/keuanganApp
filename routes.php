@@ -81,9 +81,10 @@ $routes = [
     'hapus-jenis-pembayaran' => 'pages/masterdata/jenisPembayaran/delete.php',
 ];
 
-// Check if page parameter exists and load corresponding file or 404
-if (isset($_GET['page']) && array_key_exists($_GET['page'], $routes)) {
-    $path = $routes[$_GET['page']];
+// Check if page parameter exists and load corresponding file or default to home
+$page = $_GET['page'] ?? 'home'; // Default to 'home' if 'page' is not set
+if (array_key_exists($page, $routes)) {
+    $path = $routes[$page];
     file_exists($path) ? include $path : include 'pages/404.php';
 } else {
     include 'pages/404.php';
