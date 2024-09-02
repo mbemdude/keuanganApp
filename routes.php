@@ -79,6 +79,19 @@ $routes = [
     'tambah-jenis-pembayaran' => 'pages/masterdata/jenisPembayaran/add.php',
     'edit-jenis-pembayaran' => 'pages/masterdata/jenisPembayaran/update.php',
     'hapus-jenis-pembayaran' => 'pages/masterdata/jenisPembayaran/delete.php',
+
+    // Administrator section
+    'role' => 'pages/admin/role/read.php',
+    'tambah-role' => 'pages/admin/role/add.php',
+    'edit-role' => 'pages/admin/role/update.php',
+    'hapus-role' => 'pages/admin/role/delete.php',
+    
+    'user' => 'pages/admin/user/read.php',
+    'tambah-user' => 'pages/admin/user/add.php',
+    'edit-user' => 'pages/admin/user/update.php',
+    'hapus-user' => 'pages/admin/user/delete.php',
+    'hapus-semua-user' => 'pages/admin/user/deleteAll.php',
+
 ];
 
 // Check if page parameter exists and load corresponding file or default to home
