@@ -19,7 +19,7 @@ if (isset($_POST['button_create'])) {
         <?php
     } else {
         $insertSql = "INSERT INTO users (nama, nip, jenis_kelamin, username, password, role_id) VALUES (:nama, :nip, :jenis_kelamin, :username, :password, :role_id)";
-        $hashedPassword = md5($_POST['password']);
+        $hashedPassword = password_hash($_POST['password'], PASSWORD_BCRYPT);
         $stmt = $db->prepare($insertSql);
         $stmt->bindParam(':nama', $_POST['nama']);
         $stmt->bindParam(':nip', $_POST['nip']);
@@ -61,7 +61,7 @@ if (isset($_POST['button_create'])) {
                     <label for="username">Username</label>
                     <input type="text" name="username" class="form-control">
                     <label for="password">Password</label>
-                    <input type="text" name="password" class="form-control">
+                    <input type="password" name="password" class="form-control">
                     <label for="role_id">Role</label>
                     <select name="role_id" class="form-select">
                         <option value="">- Pilih -</option>
