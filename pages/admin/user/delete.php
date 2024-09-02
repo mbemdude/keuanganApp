@@ -5,7 +5,7 @@ if (isset($_GET['id'])) {
     $database = new Database();
     $db = $database->getConnection();
 
-    $deleteSql = "DELETE FROM user WHERE id = ?";
+    $deleteSql = "DELETE FROM users WHERE id = ?";
     $stmt = $db->prepare($deleteSql);
     $stmt->bindParam(1, $_GET['id']);
     if($stmt->execute()) {

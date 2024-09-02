@@ -4,7 +4,7 @@ if (isset($_POST['button_create'])) {
     $database = new Database();
     $db = $database->getConnection();
 
-    $validationSql = "SELECT * FROM user WHERE nip = :nip";
+    $validationSql = "SELECT * FROM users WHERE nip = :nip";
     $stmtValidation = $db->prepare($validationSql);
     $stmtValidation->bindParam(':nip', $_POST['nip']);
     $stmtValidation->execute();
@@ -18,10 +18,14 @@ if (isset($_POST['button_create'])) {
         </div>
         <?php
     } else {
-        $insertSql = "INSERT INTO user (nama, nip, role_id) VALUES (:nama, :nip, :role_id)";
+        $insertSql = "INSERT INTO users (nama, nip, jenis_kelamin, username, password, role_id) VALUES (:nama, :nip, :jenis_kelamin, :username, :password, :role_id)";
+        $hashedPassword = md5($_POST['password']);
         $stmt = $db->prepare($insertSql);
         $stmt->bindParam(':nama', $_POST['nama']);
         $stmt->bindParam(':nip', $_POST['nip']);
+        $stmt->bindParam(':jenis_kelamin', $_POST['jenis_kelamin']);
+        $stmt->bindParam(':username', $_POST['username']);
+        $stmt->bindParam(':password', $hashedPassword);
         $stmt->bindParam(':role_id', $_POST['role_id']);
         
         if ($stmt->execute()) {
@@ -48,6 +52,16 @@ if (isset($_POST['button_create'])) {
                     <input type="text" name="nama" class="form-control">
                     <label for="nip">NIP</label>
                     <input type="text" name="nip" class="form-control">
+                    <label for="jenis_kelamin">Jenis Kelamin</label>
+                    <select name="jenis_kelamin" class="form-select">
+                        <option value=""> - Pilih - </option>
+                        <option value="L">Laki-laki</option>
+                        <option value="P">Perempuan</option>
+                    </select>
+                    <label for="username">Username</label>
+                    <input type="text" name="username" class="form-control">
+                    <label for="password">Password</label>
+                    <input type="text" name="password" class="form-control">
                     <label for="role_id">Role</label>
                     <select name="role_id" class="form-select">
                         <option value="">- Pilih -</option>

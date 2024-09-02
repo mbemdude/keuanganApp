@@ -23,13 +23,14 @@
     ?>
 
 <!-- Content -->
-    <section class="content">
+<section class="content">
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
             <div class="card">
               <div class="card-header">
                 <a href="?page=tambah-user" class="btn btn-success">Tambah Data <i class="bi bi-plus-circle-fill"></i></a>
+                <a href="#" onclick="confirmDelete('?page=hapus-semua-user')" class="btn btn-danger">Hapus Semua Data <i class="bi bi-trash-fill"></i></a>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -48,7 +49,7 @@
                       $database = new Database();
                       $db = $database->getConnection();
                       
-                      $selectSql = "SELECT U.*, R.role FROM user U LEFT JOIN role R ON U.role_id=R.id";
+                      $selectSql = "SELECT u.*, r.role FROM users u JOIN role r ON u.role_id = r.id";
                       $stmt = $db->prepare($selectSql);
                       $stmt->execute();
                       $row_data = $stmt->rowCount();
@@ -64,7 +65,9 @@
                       <td>
                         <a href="?page=show-user&id=<?php echo $row['id'] ?>" class="btn btn-info"><i class="bi bi-eye"></i></a>
                         <a href="?page=edit-user&id=<?php echo $row['id'] ?>" class="btn btn-warning"><i class="bi bi-pen"></i></a>
-                        <a href="?page=hapus-user&id=<?php echo $row['id'] ?>" class="btn btn-danger"><i class="bi bi-trash"></i></a>
+                        <a href="#" class="btn btn-danger" onclick="confirmDelete('?page=hapus-user&id=<?php echo $row['id']; ?>')">
+                            <i class="bi bi-trash"></i>
+                        </a>
                       </td>
                     </tr>
                     <?php } ?>
@@ -75,7 +78,7 @@
                       <th>Nama</th>
                       <th>NIP</th>
                       <th>Role</th>
-                      <th>Aksi</th>>
+                      <th>Aksi</th>
                     </tr>
                   </tfoot>
                 </table>

@@ -5,7 +5,7 @@ if (isset($_GET['id'])) {
 
     // Find data
     $id = $_GET['id'];
-    $findSql = "SELECT * FROM user WHERE id = :id";
+    $findSql = "SELECT * FROM users WHERE id = :id";
     $stmt = $db->prepare($findSql);
     $stmt->bindParam(':id', $id);
     $stmt->execute();
@@ -14,7 +14,7 @@ if (isset($_GET['id'])) {
     if (isset($row['id'])) {
         if (isset($_POST['button_update'])) {
             // Validasi
-            $validationSql = "SELECT * FROM user WHERE nip = :nip AND id != :id";
+            $validationSql = "SELECT * FROM users WHERE nip = :nip AND id != :id";
             $stmtValidation = $db->prepare($validationSql);
             $stmtValidation->bindParam(':nip', $_POST['nip']);
             $stmtValidation->bindParam(':id', $_POST['id']);
@@ -30,10 +30,14 @@ if (isset($_GET['id'])) {
                 <?php
             } else {
                 // Update Query
-                $updateSql = "UPDATE user SET nama = :nama, nip = :nip, role_id = :role_id WHERE id = :id";
+                $updateSql = "UPDATE users SET nama = :nama, nip = :nip, jenis_kelamin = :jenis_kelamin, username = :username, password = :password, role_id = :role_id WHERE id = :id";
+                $hashedPassword = password_hash($_POST['password'], PASSWORD_BCRYPT);
                 $stmt = $db->prepare($updateSql);
                 $stmt->bindParam(':nip', $_POST['nip']);
                 $stmt->bindParam(':nama', $_POST['nama']);
+                $stmt->bindParam(':jenis_kelamin', $_POST['jenis_kelamin']);
+                $stmt->bindParam(':username', $_POST['username']);
+                $stmt->bindParam(':password', $$hashedPassword);
                 $stmt->bindParam(':role_id', $_POST['role_id']);
                 $stmt->bindParam(':id', $_POST['id']);
 
@@ -61,6 +65,16 @@ if (isset($_GET['id'])) {
                             <input type="text" name="nama" class="form-control" value="<?= $row['nama'] ?>">
                             <label for="nip">NIP</label>
                             <input type="text" name="nip" class="form-control" value="<?= $row['nip'] ?>">
+                            <label for="jenis_kelamin">Jenis Kelamin</label>
+                            <select name="jenis_kelamin" class="form-select">
+                                <option value=""> - Pilih -</option>
+                                <option value="L" <?= ($row['jenis_kelamin'] == 'L') ? 'selected' : ''; ?>>Laki-laki</option>
+                                <option value="P" <?= ($row['jenis_kelamin'] == 'P') ? 'selected' : ''; ?>>Perempuan</option>
+                            </select>
+                            <label for="username">Username</label>
+                            <input type="text" name="username" class="form-control" value="<?= $row['username'] ?>">
+                            <label for="password">Password</label>
+                            <input type="text" name="password" class="form-control" value="">
                             <label for="role_id">Role</label>
                             <select name="role_id" class="form-select">
                                 <option value="">- Pilih -</option>
