@@ -25,6 +25,7 @@
                                 <p>Siswa</p>
                             </a>
                         </li>
+                        <?php if($role == 'Admin' || $role == 'Keuangan'): ?>
                         <li class="nav-item"> 
                             <a href="#" class="nav-link"> 
                                 <i class="nav-icon bi bi-box-seam-fill"></i>
@@ -60,6 +61,9 @@
                                 </li>
                             </ul>
                         </li>
+                        <?php endif; ?>
+
+                        <?php if($role == 'Admin' || $role == 'Kasir'): ?>
                         <li class="nav-item"> 
                             <a href="#" class="nav-link"> 
                                 <i class="nav-icon bi bi-cart-fill"></i>
@@ -81,6 +85,9 @@
                                 </li>
                             </ul>
                         </li>
+                        <?php endif ?>
+                        
+                        <?php if($role == 'Admin'): ?>
                         <li class="nav-header">
                              <span>Master Data</span>
                         </li>
@@ -162,6 +169,7 @@
                                 </li>
                             </ul>
                         </li>
+                        <?php endif; ?>
                     </ul> 
                     <!--end::Sidebar Menu-->
                 </nav>

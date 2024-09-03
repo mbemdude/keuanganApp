@@ -19,8 +19,27 @@ if(!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit();
 }
+
 include 'database/database.php';
 include 'config/function.php';
+
+$database = new Database();
+$db = $database->getConnection();
+$user_id = $_SESSION['user_id'];
+
+$userSQL = "SELECT u.*, r.role FROM users u JOIN role r ON u.role_id = r.id WHERE u.id = :user_id";
+$stmt = $db->prepare($userSQL);
+$stmt->bindParam(':user_id', $user_id);
+$stmt->execute();
+$users = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if (!isset($users)) {
+    echo "User not found!";
+    exit();
+}
+
+$username = htmlspecialchars($users['nama']);
+$role = htmlspecialchars($users['role']);
 ?>
 
 <!DOCTYPE html>

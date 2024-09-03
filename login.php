@@ -15,17 +15,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
     // Query to check the user
-    $loginSql = "SELECT * FROM users WHERE username = :username";
+    $loginSql = "SELECT u.*, r.role FROM users u JOIN role r ON u.role_id = r.id WHERE u.username = :username";
     $stmt = $db->prepare($loginSql);
     $stmt->bindParam(':username', $username);
     $stmt->execute();
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-
     if (password_verify($password, $row['password'])) {
         session_regenerate_id(true); // Regenerate session ID to prevent fixation
         $_SESSION['user_id'] = $row['id'];
-        $_SESSION['user_role'] = $row['role_id'];
         header('Location: index.php');
         exit();
     } else {
