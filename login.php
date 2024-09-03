@@ -13,8 +13,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = htmlspecialchars(trim($_POST['username']));
     $password = trim($_POST['password']);
 
-    echo "Username: $username<br>";
-    echo "Password: $password<br>"; // Hati-hati, jangan tampilkan password di lingkungan produksi
 
     // Query to check the user
     $loginSql = "SELECT * FROM users WHERE username = :username";
@@ -23,22 +21,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->execute();
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Check if user exists and verify the password
-    if ($row) {
-        echo "User Found:<br>";
-        print_r($row); // Debugging: lihat data user
 
-        if (password_verify($password, $row['password'])) {
-            session_regenerate_id(true); // Regenerate session ID to prevent fixation
-            $_SESSION['user_id'] = $row['id'];
-            $_SESSION['user_role'] = $row['role_id'];
-            header('Location: index.php');
-            exit();
-        } else {
-            $errorMessage = "Invalid credentials. Please try again."; // Generic error message
-        }
+    if (password_verify($password, $row['password'])) {
+        session_regenerate_id(true); // Regenerate session ID to prevent fixation
+        $_SESSION['user_id'] = $row['id'];
+        $_SESSION['user_role'] = $row['role_id'];
+        header('Location: index.php');
+        exit();
     } else {
-        $errorMessage = "Invalid credentials. Please try again."; // Generic error message
+        $errorMessage = "Invalid credentials. Please try again.";
     }
 }
 $db = null;

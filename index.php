@@ -1,4 +1,18 @@
 <?php
+// Mengatur sesi login 
+ini_set('session.gc_maxlifetime', 3600);
+session_set_cookie_params(3600);
+
+session_set_cookie_params([
+    'lifetime' => 0,
+    'path' => '/',
+    'domain' => '',
+    'secure' => isset($_SERVER['HTTPS']),
+    'httponly' => true,
+    'samesite' => 'Lax'
+]);
+// Mengatur sesi login end
+
 ob_start();
 session_start();
 if(!isset($_SESSION['user_id'])) {
@@ -14,7 +28,7 @@ include 'config/function.php';
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>AdminLTE v4 | Dashboard</title><!--begin::Primary Meta Tags-->
+    <title>Yayasan Sa'adah Martapura | Dashboard</title><!--begin::Primary Meta Tags-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="title" content="AdminLTE v4 | Dashboard">
     <meta name="author" content="ColorlibHQ">

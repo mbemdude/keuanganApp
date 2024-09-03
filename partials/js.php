@@ -7,6 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha256-YMa+wAM6QkVyz999odX7lPRxkoYAan8suedu4k2Zur8=" crossorigin="anonymous"></script> <!--end::Required Plugin(Bootstrap 5)--><!--begin::Required Plugin(AdminLTE)-->
     <script src="assets/dist/js/adminlte.js"></script> <!--end::Required Plugin(AdminLTE)-->
 
+    
     <!-- qr scanner -->
     <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
     <script>
@@ -97,5 +98,35 @@
             confirmModal.show();
         }
     </script>
-
     <!-- modal delete end -->
+
+    <!-- Pengaturan sesi timeout -->
+    <script>
+        let inactivityTime = function () {
+            let time;
+            // Atur batas waktu ketidakaktifan dalam milidetik (1 jam)
+            const maxInactiveTime = 3600000;
+
+            // Fungsi untuk logout jika pengguna tidak aktif
+            const logout = () => {
+                alert("Sesi habis karena tidak ada aktivitas.");
+                window.location.href = 'logout.php'; // Sesuaikan dengan URL logout yang kamu punya
+            };
+
+            // Reset waktu jika ada aktivitas
+            const resetTimer = () => {
+                clearTimeout(time);
+                time = setTimeout(logout, maxInactiveTime);  // Logout jika tidak ada aktivitas
+            };
+
+            // Event Listener untuk mendeteksi aktivitas pengguna
+            window.onload = resetTimer;
+            document.onmousemove = resetTimer;
+            document.onkeypress = resetTimer;
+            document.onscroll = resetTimer;
+            document.onclick = resetTimer;
+        };
+
+        inactivityTime();
+    </script>
+    <!-- Pengaturan sesi timeout end -->
