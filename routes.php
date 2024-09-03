@@ -51,9 +51,10 @@ $routes = [
     'tambah-transaksi' => 'pages/kasir/transaksi/add.php',
     'edit-transaksi' => 'pages/kasir/transaksi/update.php',
     'hapus-transaksi' => 'pages/kasir/transaksi/delete.php',
+    'hapus-semua-transaksi' => 'pages/kasir/transaksi/deleteAll.php',
+    'export-transaksi' => 'pages/kasir/transaksi/export.php',
 
     'kasir' => 'pages/kasir/transaksi/kasir.php',
-    'kasir-hapusAll' => 'pages/kasir/transaksi/deleteAll.php',
     'belanja' => 'pages/kasir/transaksi/belanja.php',
 
     // Masterdata section
