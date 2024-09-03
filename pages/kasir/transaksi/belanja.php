@@ -128,7 +128,7 @@ if (isset($_POST['button_create'])) {
                             $database = new Database();
                             $db = $database->getConnection();
         
-                            $selectUserSQL = "SELECT * FROM user";
+                            $selectUserSQL = "SELECT * FROM users";
                             $stmtUser = $db->prepare($selectUserSQL);
                             $stmtUser->execute();
         

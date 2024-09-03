@@ -29,7 +29,7 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <a href="?page=tambah-transaksi" class="btn btn-success">Tambah Data <i class="bi bi-plus-circle-fill"></i></a>
+                <!-- <a href="?page=tambah-transaksi" class="btn btn-success">Tambah Data <i class="bi bi-plus-circle-fill"></i></a> -->
                 <a href="?page=kasir" class="btn btn-primary">Kasir <i class="bi bi-cart4"></i></a>
                 <a href="?page=kasir-hapusAll" class="btn btn-danger">Hapus Semua <i class="bi bi-trash"></i></a>
               </div>
@@ -54,7 +54,7 @@
                       $database = new Database();
                       $db = $database->getConnection();
                       
-                      $selectSql = "SELECT T.*, S.nama AS nama_siswa, B.nama_barang, B.harga, U.nama AS petugas FROM transaksi T LEFT JOIN uang_saku US ON T.uang_saku_id=US.id LEFT JOIN siswa S ON US.siswa_id=S.id LEFT JOIN barang B ON T.barang_id=B.id LEFT JOIN user U ON T.user_id=U.id";
+                      $selectSql = "SELECT t.*, s.nama AS nama_siswa, b.nama_barang, b.harga, u.nama AS petugas FROM transaksi t LEFT JOIN uang_saku us ON t.uang_saku_id = us.id LEFT JOIN siswa s ON us.siswa_id = s.id LEFT JOIN barang b ON t.barang_id = b.id LEFT JOIN users u ON t.user_id = u.id";
                       $stmt = $db->prepare($selectSql);
                       $stmt->execute();
                       $row_data = $stmt->rowCount();
