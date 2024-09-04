@@ -2,7 +2,7 @@
             <div class="sidebar-brand"> <!--begin::Brand Link--> 
                 <a href="?page=home" class="brand-link"> 
                     <!--begin::Brand Image--> 
-                    <img src="assets/dist/assets/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image opacity-75 shadow"> 
+                    <img src="assets/image/logoats3.png" alt="AdminLTE Logo" class="brand-image opacity-75 shadow"> 
                     <!--end::Brand Image--> 
                     <!--begin::Brand Text--> 
                     <span class="brand-text fw-light">Yayasan Sa'adah</span>
