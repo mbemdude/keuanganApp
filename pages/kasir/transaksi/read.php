@@ -31,7 +31,7 @@
               <div class="card-header">
                 <!-- <a href="?page=tambah-transaksi" class="btn btn-success">Tambah Data <i class="bi bi-plus-circle-fill"></i></a> -->
                 <a href="?page=kasir" class="btn btn-primary">Kasir <i class="bi bi-cart4"></i></a>
-                <a href="?page=export-transaksi" class="btn btn-success">Export Data <i class="bi bi-database-fill-down"></i></a>
+                <a href="?page=export-transaksi" class="btn btn-success">Export Data <i class="bi bi-database-fill-up"></i></a>
                 <a href="?page=hapus-semua-transaksi" class="btn btn-danger">Hapus Semua <i class="bi bi-trash"></i></a>
               </div>
               <!-- /.card-header -->
