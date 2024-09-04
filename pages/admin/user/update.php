@@ -75,6 +75,7 @@ if (isset($_GET['id'])) {
                             <input type="text" name="username" class="form-control" value="<?= $row['username'] ?>">
                             <label for="password">Password</label>
                             <input type="text" name="password" class="form-control" value="">
+                            <?php if($role == 'Admin'): ?>
                             <label for="role_id">Role</label>
                             <select name="role_id" class="form-select">
                                 <option value="">- Pilih -</option>
@@ -92,6 +93,7 @@ if (isset($_GET['id'])) {
                                 }
                                 ?>
                             </select>
+                            <?php endif; ?>
                             <input type="hidden" name="id" value="<?= $row['id'] ?>">
                         </div>
                         <div class="mt-2">
