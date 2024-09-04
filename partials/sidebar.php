@@ -19,12 +19,14 @@
                                 <p>Dashboard</p>
                             </a>
                         </li>
+                        <?php if($role == 'Admin' || $role == 'Keuangan' || $role == 'Operator'): ?>
                         <li class="nav-item"> 
                             <a href="?page=siswa" class="nav-link"> 
                                 <i class="nav-icon bi bi-people-fill"></i>
                                 <p>Siswa</p>
                             </a>
                         </li>
+                        <?php endif; ?>
                         <?php if($role == 'Admin' || $role == 'Keuangan'): ?>
                         <li class="nav-item"> 
                             <a href="#" class="nav-link"> 
