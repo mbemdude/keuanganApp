@@ -46,6 +46,8 @@ $routes = [
     'tambah-barang' => 'pages/kasir/barang/add.php',
     'edit-barang' => 'pages/kasir/barang/update.php',
     'hapus-barang' => 'pages/kasir/barang/delete.php',
+    'hapus-semua-barang' => 'pages/kasir/barang/deleteAll.php',
+    'import-barang' => 'pages/kasir/barang/import.php',
 
     'transaksi' => 'pages/kasir/transaksi/read.php',
     'tambah-transaksi' => 'pages/kasir/transaksi/add.php',

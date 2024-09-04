@@ -30,6 +30,8 @@
             <div class="card">
               <div class="card-header">
                 <a href="?page=tambah-barang" class="btn btn-success">Tambah Data <i class="bi bi-plus-circle-fill"></i></a>
+                <a href="?page=import-barang" class="btn btn-primary">Import Data <i class="bi bi-database-fill-down"></i></a>
+                <a href="?page=hapus-semua-barang" class="btn btn-danger">Hapus Semua Data <i class="bi bi-trash-fill"></i></a>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
