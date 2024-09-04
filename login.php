@@ -73,27 +73,13 @@ $db = null;
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-8 d-inline-flex align-items-center">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="flexCheckDefault">
-                                <label class="form-check-label" for="flexCheckDefault">Remember Me</label>
-                            </div>
-                        </div>
-                        <div class="col-4">
+                        <div class="mx-auto d-block">
                             <div class="d-grid gap-2">
                                 <button type="submit" class="btn btn-primary">Sign In</button>
                             </div>
                         </div>
                     </div>
                 </form>
-                <div class="container mt-2">
-                    <p class="mb-1">
-                        <a href="forgot-password.html">I forgot my password</a>
-                    </p>
-                    <p class="mb-0">
-                        <a href="register.html" class="text-center">Register a new membership</a>
-                    </p>
-                </div>
             </div>
         </div>
     </div>
