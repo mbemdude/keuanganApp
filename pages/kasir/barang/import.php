@@ -66,22 +66,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
         <div class="col-lg-6 col-sm-12">
             <div class="card mx-3">
                 <div class="card-header">
-                    <h3 class="card-title">Ekspor/Impor Data Siswa</h3>
+                    <h3 class="card-title">Impor Data Barang</h3>
                 </div>
                 <div class="card-body">
-                    <form action="" method="post" class="mb-4">
-                        <div class="form-group">
-                            <input type="hidden" name="export" value="1">
-                            <button type="submit" class="btn btn-success">Ekspor Data (XLSX)</button>
-                        </div>
-                    </form>
                     <form action="" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="file">Pilih File CSV atau Excel</label>
                             <input type="file" id="file" name="file" class="form-control" accept=".csv, .xls, .xlsx" required>
                         </div>
                         <div class="mt-2">
-                            <a href="?page=tagihan-siswa" class="btn btn-danger">Batal</a>
+                            <a href="?page=barang" class="btn btn-danger">Batal</a>
                             <button type="submit" class="btn btn-success">Impor Data</button>
                         </div>
                     </form>
