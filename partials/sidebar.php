@@ -76,8 +76,12 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item"> 
-                                    <a href="?page=barang" class="nav-link"> 
+                                    <a href="?page=barang-masuk" class="nav-link"> 
                                         <i class="nav-icon bi bi-box2-fill"></i>
+                                        <p>Barang Masuk</p>
+                                    </a> 
+                                    <a href="?page=barang" class="nav-link"> 
+                                        <i class="nav-icon bi bi-box-seam-fill"></i>
                                         <p>Stock Barang</p>
                                     </a> 
                                     <a href="?page=transaksi" class="nav-link"> 
