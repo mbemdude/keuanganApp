@@ -46,6 +46,6 @@ function resetTransaksiTable() {
 resetTransaksiTable();
 
 // Redirect setelah operasi selesai
-header("Location: ?page=barang");
+header("Location: ?page=barang-masuk");
 exit();
 ?>

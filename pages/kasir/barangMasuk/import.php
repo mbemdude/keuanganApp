@@ -4,6 +4,24 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
+// Fungsi untuk mengonversi format tanggal
+function convertToDate($dateValue, $format = 'Y-m-d H:i:s') {
+    if (is_numeric($dateValue)) {
+        // Jika tanggal dalam format angka Excel, konversi ke DateTime
+        $date = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($dateValue);
+    } else {
+        // Jika tanggal dalam format teks, konversi ke DateTime
+        $date = date_create_from_format('Y-m-d H:i:s', $dateValue);
+        if (!$date) {
+            // Jika format gagal, coba format lain, seperti d-m-Y atau m/d/Y
+            $date = date_create_from_format('d-m-Y H:i:s', $dateValue) ?: date_create($dateValue);
+        }
+    }
+
+    // Kembalikan format tanggal yang sesuai atau null jika gagal
+    return $date ? $date->format($format) : null;
+}
+
 // Handle impor
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
     $file = $_FILES['file']['tmp_name'];
@@ -16,20 +34,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
         // Jika file adalah CSV
         $handle = fopen($file, 'r');
         if ($handle !== FALSE) {
-            // Melewati header file CSV
-            fgetcsv($handle, 1000, ",");
+            fgetcsv($handle, 1000, ","); // Melewati header file CSV
 
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 $kode_barang        = $data[0];
                 $nama_barang        = $data[1];
                 $jumlah             = $data[2];
                 $harga_beli         = $data[3];
-                $tanggal_transaksi  = $data[4];
+                $tanggal_transaksi  = convertToDate($data[4]); // Konversi tanggal
 
-                $query = "INSERT INTO barang_masuk (kode_barang, nama_barang, jumlah, harga_beli, tanggal_transaksi) VALUES (?, ?, ?, ?, ?)";
+                // Proses pengecekan barang dan penyimpanan ke database tetap sama
+                $checkBarang = "SELECT id FROM barang WHERE kode_barang = ?";
+                $stmtCheck = $db->prepare($checkBarang);
+                $stmtCheck->execute([$kode_barang]);
+                $barang = $stmtCheck->fetch(PDO::FETCH_ASSOC);
 
+                if ($barang) {
+                    $barang_id = $barang['id'];
+                } else {
+                    $insertBarang = "INSERT INTO barang (kode_barang, nama_barang) VALUES (?, ?)";
+                    $stmtInsertBarang = $db->prepare($insertBarang);
+                    $stmtInsertBarang->execute([$kode_barang, $nama_barang]);
+                    $barang_id = $db->lastInsertId();
+                }
+
+                // Insert ke tabel barang_masuk
+                $query = "INSERT INTO barang_masuk (barang_id, jumlah, harga_beli, tanggal_transaksi) VALUES (?, ?, ?, ?)";
                 $stmt = $db->prepare($query);
-                $stmt->execute([$kode_barang, $nama_barang, $jumlah, $harga_beli, $tanggal_transaksi]);
+                $stmt->execute([$barang_id, $jumlah, $harga_beli, $tanggal_transaksi]);
             }
             fclose($handle);
         }
@@ -39,28 +71,44 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
         $worksheet = $spreadsheet->getActiveSheet();
 
         foreach ($worksheet->getRowIterator() as $rowIndex => $row) {
-            // Melewati header di baris pertama
-            if ($rowIndex == 1) continue;
+            if ($rowIndex == 1) continue; // Melewati header di baris pertama
 
-            // Mengambil nilai yang dihitung dari sel
             $kode_barang        = $worksheet->getCell("A$rowIndex")->getCalculatedValue();
             $nama_barang        = $worksheet->getCell("B$rowIndex")->getCalculatedValue();
             $jumlah             = $worksheet->getCell("C$rowIndex")->getCalculatedValue();
             $harga_beli         = $worksheet->getCell("D$rowIndex")->getCalculatedValue();
-            $tanggal_transaksi  = $worksheet->getCell("E$rowIndex")->getCalculatedValue();
+            $tanggal_transaksi  = convertToDate($worksheet->getCell("E$rowIndex")->getCalculatedValue()); // Konversi tanggal
 
-            $query = "INSERT INTO barang_masuk (kode_barang, nama_barang, jumlah, harga_beli, tanggal_transaksi) VALUES (?, ?, ?, ?, ?)";
+            // Proses pengecekan barang dan penyimpanan ke database tetap sama
+            $checkBarang = "SELECT id FROM barang WHERE kode_barang = ?";
+            $stmtCheck = $db->prepare($checkBarang);
+            $stmtCheck->execute([$kode_barang]);
+            $barang = $stmtCheck->fetch(PDO::FETCH_ASSOC);
+
+            if ($barang) {
+                $barang_id = $barang['id'];
+            } else {
+                $insertBarang = "INSERT INTO barang (kode_barang, nama_barang) VALUES (?, ?)";
+                $stmtInsertBarang = $db->prepare($insertBarang);
+                $stmtInsertBarang->execute([$kode_barang, $nama_barang]);
+                $barang_id = $db->lastInsertId();
+            }
+
+            // Insert ke tabel barang_masuk
+            $query = "INSERT INTO barang_masuk (barang_id, jumlah, harga_beli, tanggal_transaksi) VALUES (?, ?, ?, ?)";
             $stmt = $db->prepare($query);
-            $stmt->execute([$kode_barang, $nama_barang, $jumlah, $harga_beli, $tanggal_transaksi]);
+            $stmt->execute([$barang_id, $jumlah, $harga_beli, $tanggal_transaksi]);
         }
     } else {
         echo "Format file tidak didukung.";
     }
+
     $_SESSION['hasil'] = true;
     $_SESSION['pesan'] = "Berhasil import data";
-    echo "<meta http-equiv='refresh' content='0;url=?page=siswa'>";
+    echo "<meta http-equiv='refresh' content='0;url=?page=barang-masuk'>";
     exit();
 }
+
 ?>
 
 <section class="content">

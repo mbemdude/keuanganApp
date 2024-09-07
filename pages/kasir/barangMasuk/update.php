@@ -5,7 +5,7 @@ if (isset($_GET['id'])) {
 
     // Find data
     $id = $_GET['id'];
-    $findSql = "SELECT * FROM barang WHERE id = :id";
+    $findSql = "SELECT * FROM barang_masuk WHERE id = :id";
     $stmt = $db->prepare($findSql);
     $stmt->bindParam(':id', $id);
     $stmt->execute();
@@ -14,9 +14,8 @@ if (isset($_GET['id'])) {
     if (isset($row['id'])) {
         if (isset($_POST['button_update'])) {
             // Validasi
-            $validationSql = "SELECT * FROM barang WHERE kode_barang = :kode_barang AND id != :id";
+            $validationSql = "SELECT * FROM barang_masuk id != :id";
             $stmtValidation = $db->prepare($validationSql);
-            $stmtValidation->bindParam(':kode_barang', $_POST['kode_barang']);
             $stmtValidation->bindParam(':id', $_POST['id']);
             $stmtValidation->execute();
 
@@ -30,12 +29,11 @@ if (isset($_GET['id'])) {
                 <?php
             } else {
                 // Update Query
-                $updateSql = "UPDATE barang SET kode_barang = :kode_barang, nama_barang = :nama_barang, harga = :harga, stock = :stock WHERE id = :id";
+                $updateSql = "UPDATE barang_masuk SET barang_id = :barang_id, harga_beli = :harga_beli, jumlah = :jumlah, tanggal_transaksi = NOW() WHERE id = :id";
                 $stmt = $db->prepare($updateSql);
-                $stmt->bindParam(':kode_barang', $_POST['kode_barang']);
-                $stmt->bindParam(':nama_barang', $_POST['nama_barang']);
-                $stmt->bindParam(':harga', $_POST['harga']);
-                $stmt->bindParam(':stock', $_POST['stock']);
+                $stmt->bindParam(':barang_id', $_POST['barang_id']);
+                $stmt->bindParam(':harga_beli', $_POST['harga_beli']);
+                $stmt->bindParam(':jumlah', $_POST['jumlah']);
                 $stmt->bindParam(':id', $_POST['id']);
 
                 if ($stmt->execute()) {
@@ -58,14 +56,27 @@ if (isset($_GET['id'])) {
                 <div class="card-body">
                     <form method="POST">    
                         <div class="form-group">
-                            <label for="kode_barang">Kode Barang</label>
-                            <input type="text" name="kode_barang" class="form-control" value="<?= $row['kode_barang'] ?>">
-                            <label for="nama_barang">Nama Barang</label>
-                            <input type="text" name="nama_barang" class="form-control" value="<?= $row['nama_barang'] ?>">
-                            <label for="harga">Harga</label>
-                            <input type="text" name="harga" class="form-control" value="<?= $row['harga'] ?>">
-                            <label for="stock">Stock</label>
-                            <input type="text" name="stock" class="form-control" value="<?= $row['stock'] ?>">
+                            <label for="barang_id">Barang</label>
+                            <select name="barang_id" class="form-select">
+                                <option value=""> - Pilih -</option>
+                                <?php 
+                                $database = new Database();
+                                $db = $database->getConnection();
+
+                                $selectBarang = "SELECT * barang";
+                                $stmtBarang = $db->prepare($selectBarang);
+                                $stmtBarang->execute();
+
+                                while ($rowBarang = $stmtBarang->fetch(PDO::FETCH_ASSOC)) {
+                                    $selected = ($rowBarang['id'] == $row['barang_id'] ? 'selected' : '');
+                                    echo "<option value=\"" . $rowBarang['id'] . "\" $selected>" . $rowBarang['kode_barang'] | $rowBarang['nama_barang'] . "</option>";
+                                }
+                                ?>
+                            </select>
+                            <label for="harga_beli">Harga Beli</label>
+                            <input type="text" name="harga_beli" class="form-control" value="<?= $row['harga_beli'] ?>">
+                            <label for="jumlah">Jumlah / pckg</label>
+                            <input type="text" name="jumlah" class="form-control" value="<?= $row['jumlah'] ?>">
                             <input type="hidden" name="id" value="<?= $row['id'] ?>">
                         </div>
                         <div class="mt-2">
@@ -78,9 +89,9 @@ if (isset($_GET['id'])) {
         </section>
         <?php
     } else {
-        echo "<meta http-equiv='refresh' content='0;url=?page=barang'>";
+        echo "<meta http-equiv='refresh' content='0;url=?page=barang-masuk'>";
     }
 } else {
-    echo "<meta http-equiv='refresh' content='0;url=?page=barang'>";
+    echo "<meta http-equiv='refresh' content='0;url=?page=barang-masuk'>";
 }
 ?>

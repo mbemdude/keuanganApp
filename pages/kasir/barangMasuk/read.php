@@ -41,8 +41,9 @@
                       <th>No</th>
                       <th>Kode Barang</th>
                       <th>Nama Barang</th>
-                      <th>Harga</th>
-                      <th>Stock</th>
+                      <th>Jumlah</th>
+                      <th>Harga Beli/pckg</th>
+                      <th>Tanggal Transaksi</th>
                       <th>Aksi</th>
                     </tr>
                   </thead>
@@ -68,7 +69,7 @@
                       <td><?php echo $row['tanggal_transaksi'] ?></td>
                       <td>
                         <a href="?page=edit-barang-masuk&id=<?php echo $row['id'] ?>" class="btn btn-warning"><i class="bi bi-pen"></i></a>
-                        <a href="#" onclick="confirmDelete('?page=hapus-barang-masuk&id=<?php echo $row['id'] ?>')" class="btn btn-danger"><i class="bi bi-trash"></i></a>
+                        <a href="#" onclick="confirmDelete('page=hapus-barang-masuk')" class="btn btn-danger"><i class="bi bi-trash"></i></a>
                       </td>
                     </tr>
                     <?php } ?>
@@ -80,6 +81,7 @@
                       <th>Nama Barang</th>
                       <th>Jumlah</th>
                       <th>Harga Beli/pckg</th>
+                      <th>Tanggal Transaksi</th>
                       <th>Aksi</th>
                     </tr>
                   </tfoot>

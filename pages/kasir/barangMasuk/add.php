@@ -18,12 +18,12 @@ if (isset($_POST['button_create'])) {
         </div>
         <?php
     } else {
-        $insertSql = "INSERT INTO barang_masuk (barang_id, harga_beli, jumlah, tanggal_transaksi) VALUES (:barang_id, :harga_beli, :jumlah, :tanggal_transaksi)";
+        $insertSql = "INSERT INTO barang_masuk (barang_id, harga_beli, jumlah, tanggal_transaksi) 
+                      VALUES (:barang_id, :harga_beli, :jumlah, NOW())";
         $stmt = $db->prepare($insertSql);
         $stmt->bindParam(':barang_id', $_POST['barang_id']);
         $stmt->bindParam(':harga_beli', $_POST['harga_beli']);
         $stmt->bindParam(':jumlah', $_POST['jumlah']);
-        $stmt->bindParam(':tanggal_transaksi', $_POST['tanggal_transaksi']);
         
         if ($stmt->execute()) {
             $_SESSION['hasil'] = true;
@@ -45,15 +45,26 @@ if (isset($_POST['button_create'])) {
         <div class="card-body">
             <form method="POST">
                 <div class="form-group">
-                    <label for="barang_id">Kode Barang</label>
-                    <input type="text" name="barang_id" class="form-control">
-                    <label for="nama_barang">Nama Barang</label>
-                    <input type="text" name="nama_barang" class="form-control">
+                    <label for="barang_id">Barang</label>
+                    <select name="barang_id" class="form-select">
+                        <option value=""> - Pilih -</option>
+                        <?php 
+                        $database = new Database();
+                        $db = $database->getConnection();
+
+                        $selectBarang = "SELECT * barang";
+                        $stmtBarang = $db->prepare($selectBarang);
+                        $stmtBarang->execute();
+
+                        while ($rowBarang = $stmtBarang->fetch(PDO::FETCH_ASSOC)) {
+                            "<option value='{$rowBarang['id']}'>{$rowBarang['kode_barang']} | {$rowBarang['nama_barang']}</option>";
+                        }
+                        ?>
+                    </select>
                     <label for="harga_beli">Harga Beli/pckg</label>
                     <input type="text" name="harga_beli" class="form-control">
                     <label for="jumlah">Jumlah</label>
                     <input type="text" name="jumlah" class="form-control">
-                    <input type="datetime" name="" id="">
                 </div>
                 <div class="mt-2">
                     <a href="?page=barang-masuk" class="btn btn-danger">Batal</a>
