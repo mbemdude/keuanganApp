@@ -19,24 +19,28 @@ function resetTransaksiTable() {
 
     try {
         // Mulai transaksi
-        $db->beginTransaction();
+        if (!$db->inTransaction()) {  // Cek apakah transaksi sudah dimulai
+            $db->beginTransaction();
+        }
 
         // Menjalankan query untuk menghapus data
         $stmt = $db->prepare($deleteSql);
         $stmt->execute();
         
-        // Commit transaksi
+        // Commit transaksi penghapusan data
         $db->commit();
-        
-        // Menjalankan query untuk mereset auto-increment setelah commit
+
+        // Menjalankan query untuk mereset auto-increment di luar transaksi
         $stmt = $db->prepare($resetAutoIncrementSql);
         $stmt->execute();
 
         $_SESSION['hasil'] = true;
         $_SESSION['pesan'] = "Semua data barang masuk berhasil dihapus dan auto-increment telah direset.";
     } catch (Exception $e) {
-        // Rollback transaksi jika ada kesalahan
-        $db->rollBack();
+        // Jika terjadi error, rollback hanya jika transaksi aktif
+        if ($db->inTransaction()) {
+            $db->rollBack();
+        }
         $_SESSION['hasil'] = false;
         $_SESSION['pesan'] = "Terjadi kesalahan: " . $e->getMessage();
     }
