@@ -40,6 +40,13 @@ if (!isset($users)) {
 
 $username = htmlspecialchars($users['nama']);
 $role = htmlspecialchars($users['role']);
+
+$countUser = $db->query("SELECT COUNT(id) AS total_user FROM users");
+$totalUser = $countUser->fetch(PDO::FETCH_ASSOC)['total_user'];
+$countSiswa = $db->query("SELECT COUNT(id) AS total_siswa FROM siswa");
+$totalSiswa = $countSiswa->fetch(PDO::FETCH_ASSOC)['total_siswa'];
+$countTransaksi = $db->query("SELECT COUNT(id) AS transaksi_kasir FROM transaksi");
+$totalTransaksiKasir = $countTransaksi->fetch(PDO::FETCH_ASSOC)['transaksi_kasir'];
 ?>
 
 <!DOCTYPE html>
