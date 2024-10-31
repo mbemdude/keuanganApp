@@ -90,6 +90,11 @@ $routes = [
     'edit-jenis-pembayaran' => 'pages/masterdata/jenisPembayaran/update.php',
     'hapus-jenis-pembayaran' => 'pages/masterdata/jenisPembayaran/delete.php',
 
+    'tahun-ajaran' => 'pages/masterdata/tahunAjaran/read.php',
+    'tambah-tahun-ajaran' => 'pages/masterdata/tahunAjaran/add.php',
+    'edit-tahun-ajaran' => 'pages/masterdata/tahunAjaran/update.php',
+    'hapus-tahun-ajaran' => 'pages/masterdata/tahunAjaran/delete.php',
+
     // Administrator section
     'role' => 'pages/admin/role/read.php',
     'tambah-role' => 'pages/admin/role/add.php',

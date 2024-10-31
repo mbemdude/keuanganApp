@@ -68,8 +68,8 @@
                       <td><?php echo$row['kelas'] ?></td>
                       <td><?php echo$row['jenjang'] ?></td>
                       <td>
-                        <a href="?page=show-siswa&id=<?php echo $row['id'] ?>" class="btn btn-info"><i class="bi bi-eye"></i></a>
-                        <a href="?page=edit-siswa&id=<?php echo $row['id'] ?>" class="btn btn-warning"><i class="bi bi-pen"></i></a>
+                        <a href="?page=show-siswa&id=<?php echo $row['id'] ?>" class="btn btn-warning"><i class="bi bi-pen"></i></a>
+                        <!-- <a href="?page=edit-siswa&id=<?php echo $row['id'] ?>" class="btn btn-warning"><i class="bi bi-pen"></i></a> -->
                         <a href="#" class="btn btn-danger" onclick="confirmDelete('?page=hapus-siswa&id=<?php echo $row['id']; ?>')">
                             <i class="bi bi-trash"></i>
                         </a>

@@ -63,7 +63,6 @@
                       <td><?php echo$row['nip'] ?></td>
                       <td><?php echo$row['role'] ?></td>
                       <td>
-                        <a href="?page=show-user&id=<?php echo $row['id'] ?>" class="btn btn-info"><i class="bi bi-eye"></i></a>
                         <a href="?page=edit-user&id=<?php echo $row['id'] ?>" class="btn btn-warning"><i class="bi bi-pen"></i></a>
                         <a href="#" class="btn btn-danger" onclick="confirmDelete('?page=hapus-user&id=<?php echo $row['id']; ?>')">
                             <i class="bi bi-trash"></i>
