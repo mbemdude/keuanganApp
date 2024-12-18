@@ -167,16 +167,16 @@ if (isset($_POST['button_create'])) {
 </section>
 
 <script>
-    let inputTimer; // Timer untuk debounce
-    const debounceDelay = 500; // Waktu debounce dalam milidetik (sesuaikan jika perlu)
+    let inputTimer;
+    const debounceDelay = 500;
 
+    // Menambahkan delay untuk penginputan menggunakan barcodescanner
     document.getElementById('barang_id').addEventListener('input', function(event) {
-        clearTimeout(inputTimer); // Hapus timer sebelumnya jika ada
+        clearTimeout(inputTimer);
 
         inputTimer = setTimeout(() => {
             const value = event.target.value.trim();
             if (value) {
-                // Proses data barcode di sini
                 addItem(value);
             }
         }, debounceDelay);
@@ -190,7 +190,7 @@ if (isset($_POST['button_create'])) {
             const barang_id = selectedBarang.value;
             const nama_barang = selectedBarang.getAttribute('data-nama');
             const harga = selectedBarang.getAttribute('data-harga');
-            const jumlah = document.getElementById('jumlah').value || 1; // Default qty = 1
+            const jumlah = document.getElementById('jumlah').value || 1;
 
             const total = jumlah * harga;
 
