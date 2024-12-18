@@ -13,6 +13,10 @@ $routes = [
     'import-siswa' => 'pages/siswa/import.php',
     'detail-siswa' => 'pages/siswa/show.php',
 
+    // User section
+    'dashboard-siswa' => 'pages/user/home.php',
+    'riwayat-transaksi' => 'pages/user/riwayatTransaksi.php',
+
     // Keuangan section
     'uang-saku' => 'pages/keuangan/uangSaku/read.php',
     'tambah-uang-saku' => 'pages/keuangan/uangSaku/add.php',
@@ -55,6 +59,13 @@ $routes = [
     'hapus-barang-masuk' => 'pages/kasir/barangMasuk/delete.php',
     'hapus-semua-barang-masuk' => 'pages/kasir/barangMasuk/deleteAll.php',
     'import-barang-masuk' => 'pages/kasir/barangMasuk/import.php',
+    
+    'supplier' => 'pages/kasir/supplier/read.php',
+    'tambah-supplier' => 'pages/kasir/supplier/add.php',
+    'edit-supplier' => 'pages/kasir/supplier/update.php',
+    'hapus-supplier' => 'pages/kasir/supplier/delete.php',
+    'hapus-semua-supplier' => 'pages/kasir/supplier/deleteAll.php',
+    'import-supplier' => 'pages/kasir/supplier/import.php',
 
     'transaksi' => 'pages/kasir/transaksi/read.php',
     'tambah-transaksi' => 'pages/kasir/transaksi/add.php',
