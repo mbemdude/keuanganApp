@@ -18,10 +18,12 @@ if (isset($_POST['button_create'])) {
         </div>
         <?php
     } else {
-        $insertSql = "INSERT INTO barang (kode_barang, nama_barang, harga, stock) VALUES (:kode_barang, :nama_barang, :harga, :stock)";
+        $insertSql = "INSERT INTO barang (kode_barang, nama_barang, kategori, konversi_satuan, harga, stock) VALUES (:kode_barang, :nama_barang, :kategori, :konversi_satuan, :harga, :stock)";
         $stmt = $db->prepare($insertSql);
         $stmt->bindParam(':kode_barang', $_POST['kode_barang']);
         $stmt->bindParam(':nama_barang', $_POST['nama_barang']);
+        $stmt->bindParam(':kategori', $_POST['kategori']);
+        $stmt->bindParam(':konversi_satuan', $_POST['konversi_satuan']);
         $stmt->bindParam(':harga', $_POST['harga']);
         $stmt->bindParam(':stock', $_POST['stock']);
         
@@ -49,6 +51,10 @@ if (isset($_POST['button_create'])) {
                     <input type="text" name="kode_barang" class="form-control">
                     <label for="nama_barang">Nama Barang</label>
                     <input type="text" name="nama_barang" class="form-control">
+                    <label for="kategori">Kategori Barang</label>
+                    <input type="text" name="kategori" class="form-control">
+                    <label for="konversi_satuan">Isi barang (pcs)</label>
+                    <input type="text" name="konversi_satuan" class="form-control">
                     <label for="harga">Harga</label>
                     <input type="text" name="harga" class="form-control">
                     <label for="stock">Stock</label>

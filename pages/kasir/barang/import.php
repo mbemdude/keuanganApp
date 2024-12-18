@@ -20,15 +20,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
             fgetcsv($handle, 1000, ",");
 
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-                $kode_barang   = $data[0];
-                $nama_barang   = $data[1];
-                $harga         = $data[2];
-                $stock         = $data[3];
+                $kode_barang        = $data[0];
+                $nama_barang        = $data[1];
+                $kategori           = $data[2];
+                $konversi_satuan    = $data[3];
+                $harga              = $data[4];
+                $stock              = $data[5];
 
-                $query = "INSERT INTO barang (kode_barang, nama_barang, harga, stock) VALUES (?, ?, ?, ?)";
+                $query = "INSERT INTO barang (kode_barang, nama_barang, kategori, konversi_satuan, harga, stock) VALUES (?, ?, ?, ?, ?, ?)";
 
                 $stmt = $db->prepare($query);
-                $stmt->execute([$kode_barang, $nama_barang, $harga, $stock]);
+                $stmt->execute([$kode_barang, $nama_barang, $kategori, $konversi_satuan, $harga, $stock]);
             }
             fclose($handle);
         }
@@ -44,12 +46,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
             // Mengambil nilai yang dihitung dari sel
             $kode_barang = $worksheet->getCell("A$rowIndex")->getCalculatedValue();
             $nama_barang = $worksheet->getCell("B$rowIndex")->getCalculatedValue();
-            $harga = $worksheet->getCell("C$rowIndex")->getCalculatedValue();
-            $stock = $worksheet->getCell("D$rowIndex")->getCalculatedValue();
+            $kategori = $worksheet->getCell("C$rowIndex")->getCalculatedValue();
+            $konversi_satuan = $worksheet->getCell("D$rowIndex")->getCalculatedValue();
+            $harga = $worksheet->getCell("E$rowIndex")->getCalculatedValue();
+            $stock = $worksheet->getCell("F$rowIndex")->getCalculatedValue();
 
-            $query = "INSERT INTO barang (kode_barang, nama_barang, harga, stock) VALUES (?, ?, ?, ?)";
+            $query = "INSERT INTO barang (kode_barang, nama_barang, kategori, konversi_satuan, harga, stock) VALUES (?, ?, ?, ?, ?, ?)";
             $stmt = $db->prepare($query);
-            $stmt->execute([$kode_barang, $nama_barang, $harga, $stock]);
+            $stmt->execute([$kode_barang, $nama_barang, $kategori, $konversi_satuan, $harga, $stock]);
         }
     } else {
         echo "Format file tidak didukung.";

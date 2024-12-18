@@ -24,16 +24,18 @@ if (isset($_GET['id'])) {
                 ?>
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <h5>Gagal</h5>
-                    Data kdoe barang sudah ada
+                    Data kode barang sudah ada
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 <?php
             } else {
                 // Update Query
-                $updateSql = "UPDATE barang SET kode_barang = :kode_barang, nama_barang = :nama_barang, harga = :harga, stock = :stock WHERE id = :id";
+                $updateSql = "UPDATE barang SET kode_barang = :kode_barang, nama_barang = :nama_barang, kategori = :kategori, konversi_satuan = :konversi_satuan, harga = :harga, stock = :stock WHERE id = :id";
                 $stmt = $db->prepare($updateSql);
                 $stmt->bindParam(':kode_barang', $_POST['kode_barang']);
                 $stmt->bindParam(':nama_barang', $_POST['nama_barang']);
+                $stmt->bindParam(':kategori', $_POST['kategori']);
+                $stmt->bindParam(':konversi_satuan', $_POST['konversi_satuan']);
                 $stmt->bindParam(':harga', $_POST['harga']);
                 $stmt->bindParam(':stock', $_POST['stock']);
                 $stmt->bindParam(':id', $_POST['id']);
@@ -62,6 +64,10 @@ if (isset($_GET['id'])) {
                             <input type="text" name="kode_barang" class="form-control" value="<?= $row['kode_barang'] ?>">
                             <label for="nama_barang">Nama Barang</label>
                             <input type="text" name="nama_barang" class="form-control" value="<?= $row['nama_barang'] ?>">
+                            <label for="kategori">Kategori Barang</label>
+                            <input type="text" name="kategori" class="form-control" value="<?= $row['kategori'] ?>">
+                            <label for="konversi_satuan">Isi Barang (pcs)</label>
+                            <input type="text" name="konversi_satuan" class="form-control" value="<?= $row['konversi_satuan'] ?>">
                             <label for="harga">Harga</label>
                             <input type="text" name="harga" class="form-control" value="<?= $row['harga'] ?>">
                             <label for="stock">Stock</label>

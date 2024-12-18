@@ -41,6 +41,8 @@
                       <th>No</th>
                       <th>Kode Barang</th>
                       <th>Nama Barang</th>
+                      <th>Kategori</th>
+                      <th>Isi barang (pcs)</th>
                       <th>Harga</th>
                       <th>Stock</th>
                       <th>Aksi</th>
@@ -63,6 +65,8 @@
                       <th scope="row"><?php echo $no++ ?></th>
                       <td><?php echo $row['kode_barang'] ?></td>
                       <td><?php echo $row['nama_barang'] ?></td>
+                      <td><?php echo $row['kategori'] ?></td>
+                      <td><?php echo $row['konversi_satuan'] ?></td>
                       <td><?php echo rupiah($row['harga']) ?></td>
                       <td><?php echo $row['stock'] ?></td>
                       <td>
@@ -77,6 +81,8 @@
                       <th>No</th>
                       <th>Kode Barang</th>
                       <th>Nama Barang</th>
+                      <th>Kategori</th>
+                      <th>Isi barang (pcs)</th>
                       <th>Harga</th>
                       <th>Stock</th>
                       <th>Aksi</th>
