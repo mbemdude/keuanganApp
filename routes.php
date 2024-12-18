@@ -14,8 +14,8 @@ $routes = [
     'detail-siswa' => 'pages/siswa/show.php',
 
     // User section
-    'dashboard-siswa' => 'pages/user/home.php',
-    'riwayat-transaksi' => 'pages/user/riwayatTransaksi.php',
+    // 'dashboard-siswa' => 'pages/user/home.php',
+    // 'riwayat-transaksi' => 'pages/user/riwayatTransaksi.php',
 
     // Keuangan section
     'uang-saku' => 'pages/keuangan/uangSaku/read.php',
