@@ -41,6 +41,7 @@
                       <th>No</th>
                       <th>Kode Barang</th>
                       <th>Nama Barang</th>
+                      <th>Nama Supplier</th>
                       <th>Jumlah</th>
                       <th>Harga Beli/pckg</th>
                       <th>Tanggal Transaksi</th>
@@ -52,7 +53,7 @@
                       $database = new Database();
                       $db = $database->getConnection();
                       
-                      $selectSql = "SELECT bm.*, b.kode_barang, b.nama_barang  FROM barang_masuk bm JOIN barang b ON bm.barang_id = b.id";
+                      $selectSql = "SELECT bm.*, b.kode_barang, b.nama_barang, s.nama_supplier  FROM barang_masuk bm JOIN barang b ON bm.barang_id = b.id JOIN supplier s ON bm.supplier_id = s.id";
                       $stmt = $db->prepare($selectSql);
                       $stmt->execute();
                       $row_data = $stmt->rowCount();
@@ -64,6 +65,7 @@
                       <th scope="row"><?php echo $no++ ?></th>
                       <td><?php echo $row['kode_barang'] ?></td>
                       <td><?php echo $row['nama_barang'] ?></td>
+                      <td><?php echo $row['nama_supplier'] ?></td>
                       <td><?php echo $row['jumlah'] ?></td>
                       <td><?php echo rupiah($row['harga_beli']) ?></td>
                       <td><?php echo $row['tanggal_transaksi'] ?></td>
@@ -79,6 +81,7 @@
                       <th>No</th>
                       <th>Kode Barang</th>
                       <th>Nama Barang</th>
+                      <th>Nama Supplier</th>
                       <th>Jumlah</th>
                       <th>Harga Beli/pckg</th>
                       <th>Tanggal Transaksi</th>

@@ -27,6 +27,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
     $file = $_FILES['file']['tmp_name'];
     $ext = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
 
+    // Validasi tipe file
+    $mimeType = mime_content_type($file);
+    if (!in_array($mimeType, ['text/csv', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'])) {
+        echo "File yang diunggah tidak valid.";
+        exit();
+    }
+
     $database = new Database();
     $db = $database->getConnection();
 
@@ -39,11 +46,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 $kode_barang        = $data[0];
                 $nama_barang        = $data[1];
-                $jumlah             = $data[2];
-                $harga_beli         = $data[3];
-                $tanggal_transaksi  = convertToDate($data[4]); // Konversi tanggal
+                $kategori           = $data[2];
+                $konversi_satuan    = $data[3];
+                $jumlah             = $data[4];
+                $harga_beli         = $data[5];
+                $tanggal_transaksi  = convertToDate($data[6]); // Konversi tanggal
+                $nama_supplier      = $data[7];
+                $no_mitra           = $data[8];
+                $stock_tambahan     = $konversi_satuan * $jumlah; // Hitung stock tambahan
 
-                // Proses pengecekan barang dan penyimpanan ke database tetap sama
+                // Proses pengecekan barang dan penyimpanan ke database
                 $checkBarang = "SELECT id FROM barang WHERE kode_barang = ?";
                 $stmtCheck = $db->prepare($checkBarang);
                 $stmtCheck->execute([$kode_barang]);
@@ -52,16 +64,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
                 if ($barang) {
                     $barang_id = $barang['id'];
                 } else {
-                    $insertBarang = "INSERT INTO barang (kode_barang, nama_barang) VALUES (?, ?)";
+                    $insertBarang = "INSERT INTO barang (kode_barang, nama_barang, kategori, konversi_satuan, stock) VALUES (?, ?, ?, ?, ?)";
                     $stmtInsertBarang = $db->prepare($insertBarang);
-                    $stmtInsertBarang->execute([$kode_barang, $nama_barang]);
+                    $stmtInsertBarang->execute([$kode_barang, $nama_barang, $kategori, $konversi_satuan, $stock_tambahan]);
                     $barang_id = $db->lastInsertId();
                 }
 
+                // Proses pengecekan supplier dan penyimpanan ke database
+                $checkSupplier = "SELECT id FROM supplier WHERE no_mitra = ?";
+                $stmtCheck = $db->prepare($checkSupplier);
+                $stmtCheck->execute([$no_mitra]);
+                $supplier = $stmtCheck->fetch(PDO::FETCH_ASSOC);
+
+                if ($supplier) {
+                    $supplier_id = $supplier['id'];
+                } else {
+                    $insertSupplier = "INSERT INTO supplier (nama_supplier, no_mitra) VALUES (?, ?)";
+                    $stmtInsertSupplier = $db->prepare($insertSupplier);
+                    $stmtInsertSupplier->execute([$nama_supplier, $no_mitra]);
+                    $supplier_id = $db->lastInsertId();
+                }
+
                 // Insert ke tabel barang_masuk
-                $query = "INSERT INTO barang_masuk (barang_id, jumlah, harga_beli, tanggal_transaksi) VALUES (?, ?, ?, ?)";
+                $query = "INSERT INTO barang_masuk (jumlah, harga_beli, tanggal_transaksi, barang_id, supplier_id) VALUES (?, ?, ?, ?, ?)";
                 $stmt = $db->prepare($query);
-                $stmt->execute([$barang_id, $jumlah, $harga_beli, $tanggal_transaksi]);
+                $stmt->execute([$jumlah, $harga_beli, $tanggal_transaksi, $barang_id, $supplier_id]);
             }
             fclose($handle);
         }
@@ -75,11 +102,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
 
             $kode_barang        = $worksheet->getCell("A$rowIndex")->getCalculatedValue();
             $nama_barang        = $worksheet->getCell("B$rowIndex")->getCalculatedValue();
-            $jumlah             = $worksheet->getCell("C$rowIndex")->getCalculatedValue();
-            $harga_beli         = $worksheet->getCell("D$rowIndex")->getCalculatedValue();
-            $tanggal_transaksi  = convertToDate($worksheet->getCell("E$rowIndex")->getCalculatedValue()); // Konversi tanggal
+            $kategori           = $worksheet->getCell("C$rowIndex")->getCalculatedValue();
+            $konversi_satuan    = $worksheet->getCell("D$rowIndex")->getCalculatedValue();
+            $jumlah             = $worksheet->getCell("E$rowIndex")->getCalculatedValue();
+            $harga_beli         = $worksheet->getCell("F$rowIndex")->getCalculatedValue();
+            $tanggal_transaksi  = convertToDate($worksheet->getCell("G$rowIndex")->getCalculatedValue());
+            $nama_supplier      = $worksheet->getCell("H$rowIndex")->getCalculatedValue();
+            $no_mitra           = $worksheet->getCell("I$rowIndex")->getCalculatedValue();
+            $stock_tambahan     = $konversi_satuan * $jumlah; // Hitung stock tambahan
 
-            // Proses pengecekan barang dan penyimpanan ke database tetap sama
+            // Proses pengecekan barang dan penyimpanan ke database
             $checkBarang = "SELECT id FROM barang WHERE kode_barang = ?";
             $stmtCheck = $db->prepare($checkBarang);
             $stmtCheck->execute([$kode_barang]);
@@ -88,19 +120,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
             if ($barang) {
                 $barang_id = $barang['id'];
             } else {
-                $insertBarang = "INSERT INTO barang (kode_barang, nama_barang) VALUES (?, ?)";
+                $insertBarang = "INSERT INTO barang (kode_barang, nama_barang, kategori, konversi_satuan, stock) VALUES (?, ?, ?, ?, ?)";
                 $stmtInsertBarang = $db->prepare($insertBarang);
-                $stmtInsertBarang->execute([$kode_barang, $nama_barang]);
+                $stmtInsertBarang->execute([$kode_barang, $nama_barang, $kategori, $konversi_satuan, $stock_tambahan]);
                 $barang_id = $db->lastInsertId();
             }
 
+            // Proses pengecekan supplier dan penyimpanan ke database
+            $checkSupplier = "SELECT id FROM supplier WHERE no_mitra = ?";
+            $stmtCheck = $db->prepare($checkSupplier);
+            $stmtCheck->execute([$no_mitra]);
+            $supplier = $stmtCheck->fetch(PDO::FETCH_ASSOC);
+
+            if ($supplier) {
+                $supplier_id = $supplier['id'];
+            } else {
+                $insertSupplier = "INSERT INTO supplier (nama_supplier, no_mitra) VALUES (?, ?)";
+                $stmtInsertSupplier = $db->prepare($insertSupplier);
+                $stmtInsertSupplier->execute([$nama_supplier, $no_mitra]);
+                $supplier_id = $db->lastInsertId();
+            }
+
             // Insert ke tabel barang_masuk
-            $query = "INSERT INTO barang_masuk (barang_id, jumlah, harga_beli, tanggal_transaksi) VALUES (?, ?, ?, ?)";
+            $query = "INSERT INTO barang_masuk (jumlah, harga_beli, tanggal_transaksi, barang_id, supplier_id) VALUES (?, ?, ?, ?, ?)";
             $stmt = $db->prepare($query);
-            $stmt->execute([$barang_id, $jumlah, $harga_beli, $tanggal_transaksi]);
+            $stmt->execute([$jumlah, $harga_beli, $tanggal_transaksi, $barang_id, $supplier_id]);
         }
     } else {
         echo "Format file tidak didukung.";
+        exit();
     }
 
     $_SESSION['hasil'] = true;
@@ -108,7 +156,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
     echo "<meta http-equiv='refresh' content='0;url=?page=barang-masuk'>";
     exit();
 }
-
 ?>
 
 <section class="content">
@@ -135,16 +182,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
         <div class="col-lg-6 col-sm-12">
             <div class="card mx-3">
                 <div class="card-header">
-                    <h3 class="card-title">Tata Cara Import Siswa</h3>
+                    <h3 class="card-title">Tata Cara Import Data</h3>
                 </div>
                 <div class="card-body">
                     <ul>
-                        <li>Pastikan format file Import bertipekan csv, xls, atau xlsx</li>
-                        <li>Pastikan data yang diimport jika ada mengambil data dari tempat lain, data tersebut sudah terinputkan</li>
-                        <ul>
-                            <li>Contoh, kita memiliki 3 baris data siswa A, B, C masing masing siswa memiliki kunci utama yaitu berupa id. Id disini berupa angka yang otomatis bertambah sendiri jika ada inputan baru</li>
-                        </ul>
-                        <li>Lebih mudahnya bisa download contoh import data dibawah ini</li>
+                        <li>Pastikan format file bertipe CSV, XLS, atau XLSX.</li>
+                        <li>Pastikan data yang diimport sudah valid.</li>
                         <a href="assets/sample/test_import_siswa.xlsx" class="btn btn-primary">Download Sample</a>
                     </ul>
                 </div>

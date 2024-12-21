@@ -23,17 +23,18 @@ if (isset($_GET['id'])) {
                 ?>
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <h5>Gagal</h5>
-                    Data kdoe barang sudah ada
+                    Data barang masuk sudah ada
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 <?php
             } else {
                 // Update Query
-                $updateSql = "UPDATE barang_masuk SET barang_id = :barang_id, harga_beli = :harga_beli, jumlah = :jumlah, tanggal_transaksi = NOW() WHERE id = :id";
+                $updateSql = "UPDATE barang_masuk SET harga_beli = :harga_beli, jumlah = :jumlah, tanggal_transaksi = NOW(), barang_id = :barang_id, supplier_id = :supplier_id,  WHERE id = :id";
                 $stmt = $db->prepare($updateSql);
-                $stmt->bindParam(':barang_id', $_POST['barang_id']);
                 $stmt->bindParam(':harga_beli', $_POST['harga_beli']);
                 $stmt->bindParam(':jumlah', $_POST['jumlah']);
+                $stmt->bindParam(':barang_id', $_POST['barang_id']);
+                $stmt->bindParam(':supplier_id', $_POST['supplier_id']);
                 $stmt->bindParam(':id', $_POST['id']);
 
                 if ($stmt->execute()) {
@@ -73,9 +74,26 @@ if (isset($_GET['id'])) {
                                 }
                                 ?>
                             </select>
+                            <label for="supplier_id">Barang</label>
+                            <select name="supplier_id" class="form-select">
+                                <option value=""> - Pilih -</option>
+                                <?php 
+                                $database = new Database();
+                                $db = $database->getConnection();
+
+                                $selectSupplier = "SELECT * supplier";
+                                $stmtSupplier = $db->prepare($selectSupplier);
+                                $stmtSupplier->execute();
+
+                                while ($rowSupplier = $stmtSupplier->fetch(PDO::FETCH_ASSOC)) {
+                                    $selected = ($rowSupplier['id'] == $row['supplier_id'] ? 'selected' : '');
+                                    echo "<option value=\"" . $rowSupplier['id'] . "\" $selected>" . $rowSupplier['nama_supplier']. "</option>";
+                                }
+                                ?>
+                            </select>
                             <label for="harga_beli">Harga Beli</label>
                             <input type="text" name="harga_beli" class="form-control" value="<?= $row['harga_beli'] ?>">
-                            <label for="jumlah">Jumlah / pckg</label>
+                            <label for="jumlah">Jumlah (pckg)</label>
                             <input type="text" name="jumlah" class="form-control" value="<?= $row['jumlah'] ?>">
                             <input type="hidden" name="id" value="<?= $row['id'] ?>">
                         </div>

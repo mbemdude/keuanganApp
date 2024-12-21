@@ -18,12 +18,13 @@ if (isset($_POST['button_create'])) {
         </div>
         <?php
     } else {
-        $insertSql = "INSERT INTO barang_masuk (barang_id, harga_beli, jumlah, tanggal_transaksi) 
-                      VALUES (:barang_id, :harga_beli, :jumlah, NOW())";
+        $insertSql = "INSERT INTO barang_masuk (harga_beli, jumlah, tanggal_transaksi, barang_id, supplier_id) 
+                      VALUES (:harga_beli, :jumlah, NOW(), :barang_id, :supplier_id)";
         $stmt = $db->prepare($insertSql);
-        $stmt->bindParam(':barang_id', $_POST['barang_id']);
         $stmt->bindParam(':harga_beli', $_POST['harga_beli']);
         $stmt->bindParam(':jumlah', $_POST['jumlah']);
+        $stmt->bindParam(':barang_id', $_POST['barang_id']);
+        $stmt->bindParam(':supplier', $_POST['supplier']);
         
         if ($stmt->execute()) {
             $_SESSION['hasil'] = true;
@@ -61,9 +62,25 @@ if (isset($_POST['button_create'])) {
                         }
                         ?>
                     </select>
+                    <label for="supplier_id">Supplier</label>
+                    <select name="supplier_id" class="form-select">
+                        <option value=""> - Pilih -</option>
+                        <?php 
+                        $database = new Database();
+                        $db = $database->getConnection();
+
+                        $selectSupplier = "SELECT * supplier";
+                        $stmtSupplier = $db->prepare($selectSupplier);
+                        $stmtSupplier->execute();
+
+                        while ($rowSupplier = $stmtSupplier->fetch(PDO::FETCH_ASSOC)) {
+                            "<option value='{$rowSupplier['id']}'>{$rowSupplier['supplier']}</option>";
+                        }
+                        ?>
+                    </select>
                     <label for="harga_beli">Harga Beli/pckg</label>
                     <input type="text" name="harga_beli" class="form-control">
-                    <label for="jumlah">Jumlah</label>
+                    <label for="jumlah">Jumlah (pckg)</label>
                     <input type="text" name="jumlah" class="form-control">
                 </div>
                 <div class="mt-2">
