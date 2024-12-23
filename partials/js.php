@@ -100,6 +100,14 @@
     </script>
     <!-- modal delete end -->
 
+    <!-- Cetak transaksi keuangan start -->
+    <script>
+        function printTransaction(id) {
+            var printWindow = window.open('?page=print-transaksi-keuangan&id=' + id, '_blank');
+        }
+    </script>
+    <!-- Cetak transaksi keuangan end -->
+
     <!-- Pengaturan sesi timeout -->
     <script>
         let inactivityTime = function () {

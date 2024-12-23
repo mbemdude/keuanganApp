@@ -39,3 +39,28 @@
 .image-container:hover .btn-change-image {
     display: block;
 }
+
+@media print {
+    /* Sembunyikan elemen yang tidak diperlukan */
+    .sidebar,
+    .navbar,
+    .footer,
+    .breadcrumb,
+    .btn, /* Tombol */
+    .modal, /* Modal */
+    #confirmModal, /* ID Modal */
+    .no-print { /* Tambahkan kelas untuk elemen tertentu */
+        display: none !important;
+    }
+
+    /* Atur margin halaman cetak */
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Contoh: Maksimalkan area konten */
+    .app-main {
+        width: 100%;
+    }
+}

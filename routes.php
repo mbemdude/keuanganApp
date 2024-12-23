@@ -44,6 +44,7 @@ $routes = [
     'hapus-transaksi-keuangan' => 'pages/keuangan/transaksiKeuangan/delete.php',
     'hapus-semua-transaksi-keuangan' => 'pages/keuangan/transaksiKeuangan/deleteAll.php',
     'import-transaksi-keuangan' => 'pages/keuangan/transaksiKeuangan/import.php',
+    'print-transaksi-keuangan' => 'pages/keuangan/transaksiKeuangan/print.php',
 
     // Kasir section
     'barang' => 'pages/kasir/barang/read.php',
