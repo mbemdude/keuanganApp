@@ -19,15 +19,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['export'])) {
     $sheet = $spreadsheet->getActiveSheet();
 
     // Menulis header ke file Excel
-    $sheet->setCellValue('A1', 'Tagihan Siswa ID');
-    $sheet->setCellValue('B1', 'Nama Yang Dituju');
-    $sheet->setCellValue('C1', 'Nominal Pembayaran');
-    $sheet->setCellValue('D1', 'Tanggal Transaksi');
+    $sheet->setCellValue('A1', 'Nama Yang Dituju');
+    $sheet->setCellValue('B1', 'Nominal Pembayaran');
+    $sheet->setCellValue('C1', 'Tanggal Transaksi');
 
     // Menulis data siswa ke file Excel
     $rowNumber = 2;
     foreach ($data as $row) {
-        $sheet->setCellValue('A' . $rowNumber, $row['tagihan_siswa_id']);
         $sheet->setCellValue('B' . $rowNumber, $row['nama']);
         $sheet->setCellValue('C' . $rowNumber, $row['jumlah']);
         $sheet->setCellValue('D' . $rowNumber, $row['tanggal_transaksi']);

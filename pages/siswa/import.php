@@ -18,28 +18,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['export'])) {
     $sheet = $spreadsheet->getActiveSheet();
 
     // Menulis header ke file Excel
-    $sheet->setCellValue('A1', 'ID');
-    $sheet->setCellValue('B1', 'Kode');
-    $sheet->setCellValue('C1', 'NIS');
-    $sheet->setCellValue('D1', 'Nama');
-    $sheet->setCellValue('E1', 'Alamat');
-    $sheet->setCellValue('F1', 'Jenis Kelamin');
-    $sheet->setCellValue('G1', 'Jenjang');
-    $sheet->setCellValue('H1', 'Kelas');
-    $sheet->setCellValue('I1', 'Status');
+    $sheet->setCellValue('A1', 'Kode');
+    $sheet->setCellValue('B1', 'NIS');
+    $sheet->setCellValue('C1', 'Nama');
+    $sheet->setCellValue('D1', 'Alamat');
+    $sheet->setCellValue('E1', 'Jenis Kelamin');
+    $sheet->setCellValue('F1', 'Jenjang');
+    $sheet->setCellValue('G1', 'Kelas');
+    $sheet->setCellValue('H1', 'Status');
 
     // Menulis data siswa ke file Excel
     $rowNumber = 2;
     foreach ($data as $row) {
-        $sheet->setCellValue('A' . $rowNumber, $row['id']);
-        $sheet->setCellValue('B' . $rowNumber, $row['kode']);
-        $sheet->setCellValue('C' . $rowNumber, $row['nis']);
-        $sheet->setCellValue('D' . $rowNumber, $row['nama']);
-        $sheet->setCellValue('E' . $rowNumber, $row['alamat']);
-        $sheet->setCellValue('F' . $rowNumber, $row['jenis_kelamin']);
-        $sheet->setCellValue('G' . $rowNumber, $row['jenjang']);
-        $sheet->setCellValue('H' . $rowNumber, $row['kelas']);
-        $sheet->setCellValue('I' . $rowNumber, $row['status']);
+        $sheet->setCellValue('A' . $rowNumber, $row['kode']);
+        $sheet->setCellValue('B' . $rowNumber, $row['nis']);
+        $sheet->setCellValue('C' . $rowNumber, $row['nama']);
+        $sheet->setCellValue('D' . $rowNumber, $row['alamat']);
+        $sheet->setCellValue('E' . $rowNumber, $row['jenis_kelamin']);
+        $sheet->setCellValue('F' . $rowNumber, $row['jenjang']);
+        $sheet->setCellValue('G' . $rowNumber, $row['kelas']);
+        $sheet->setCellValue('H' . $rowNumber, $row['status']);
         $rowNumber++;
     }
 
