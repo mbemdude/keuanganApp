@@ -127,9 +127,9 @@
                     <td><?php echo $row['nama'] ?></td>
                     <td><?php echo $row['kelas'] ?></td>
                     <td><?php echo $row['jenjang'] ?></td>
-                    <td><?php echo $row['uang_pangkal'] ?></td>
-                    <td><?php echo $row['daftar_ulang'] ?></td>
-                    <td><?php echo $row['spp'] ?></td>
+                    <td><?php echo rupiah($row['uang_pangkal']) ?></td>
+                    <td><?php echo rupiah($row['daftar_ulang']) ?></td>
+                    <td><?php echo rupiah($row['spp']) ?></td>
                     <td><?php echo $row['tipe'] ?></td>
                     <td><?php echo $row['tanggal_tagihan'] ?></td>
                 </tr>
