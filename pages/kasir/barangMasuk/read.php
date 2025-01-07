@@ -31,6 +31,7 @@
               <div class="card-header">
                 <a href="?page=tambah-barang-masuk" class="btn btn-success">Tambah Data <i class="bi bi-plus-circle-fill"></i></a>
                 <a href="?page=import-barang-masuk" class="btn btn-primary">Import Data <i class="bi bi-database-fill-down"></i></a>
+                <a href="#" onclick="printBarangMasukAll()" class="btn btn-warning">Cetak Data <i class="bi bi-printer-fill"></i></a>
                 <a href="#" onclick="confirmDelete('?page=hapus-semua-barang-masuk')" class="btn btn-danger">Hapus Semua Data <i class="bi bi-trash-fill"></i></a>
               </div>
               <!-- /.card-header -->

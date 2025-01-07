@@ -100,13 +100,29 @@
     </script>
     <!-- modal delete end -->
 
-    <!-- Cetak transaksi keuangan start -->
+    <!-- Cetak start -->
     <script>
         function printTransaction(id) {
             var printWindow = window.open('?page=print-transaksi-keuangan&id=' + id, '_blank');
         }
+
+        function printTransactionAll() {
+            var printWindow = window.open('?page=cetak-transaksi-keuangan', '_blank');
+        }
+
+        function printTagihanSiswaAll() {
+            var printWindow = window.open('?page=cetak-tagihan-siswa', '_blank');
+        }
+
+        function printTransaksiKasirAll() {
+            var printWindow = window.open('?page=cetak-transaksi', '_blank');
+        }
+
+        function printBarangMasukAll() {
+            var printWindow = window.open('?page=cetak-barang-masuk', '_blank');
+        }
     </script>
-    <!-- Cetak transaksi keuangan end -->
+    <!-- Cetak end -->
 
     <!-- Pengaturan sesi timeout -->
     <script>
