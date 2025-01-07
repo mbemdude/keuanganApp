@@ -63,8 +63,8 @@ if (isset($_GET['id'])) {
                         <div class="form-group">
                             <label for="nama">Nama</label>
                             <input type="text" name="nama" class="form-control" value="<?= $row['nama'] ?>">
-                            <label for="nip">NIP</label>
-                            <input type="text" name="nip" class="form-control" value="<?= $row['nip'] ?>">
+                            <!-- <label for="nip">NIP</label>
+                            <input type="text" name="nip" class="form-control" value="<?= $row['nip'] ?>"> -->
                             <label for="jenis_kelamin">Jenis Kelamin</label>
                             <select name="jenis_kelamin" class="form-select">
                                 <option value=""> - Pilih -</option>
