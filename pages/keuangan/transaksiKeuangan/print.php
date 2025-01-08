@@ -84,20 +84,33 @@
             margin-bottom: 20px;
         }
         .content {
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             text-align: left; /* Menambahkan perataan kiri untuk konten */
+        }
+        .content h1 {
+            margin-bottom: 50px;
         }
         .content p {
             margin: 5px 0;
+            font-size: 20px;
         }
         .content p strong {
             display: inline-block;
-            width: 150px; /* Menentukan lebar label yang konsisten */
+            width: 200px; /* Menentukan lebar label yang konsisten */
             text-align: left;
         }
         .footer {
             text-align: center;
             margin-top: 30px;
+        }
+        .footer-text {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            text-align: right;
+        }
+        .footer-text p {
+            margin: 0;
         }
         .print-button {
             margin-top: 20px;
@@ -111,7 +124,7 @@
     </style>
 </head>
 <body>
-    <div class="container">
+    <!-- <div class="container"> -->
         <div class="header">
             <img src="assets/image/logoats3.png" alt="Logo Yayasan">
             <div class="header-text">
@@ -122,17 +135,20 @@
         <div class="header-line"></div>
         <div class="header-line-bottom"></div>
         <div class="content">
+            <h1 align="center">KWITANSI PEMBAYARAN</h1>
             <p><strong>Nomor Kwitansi:</strong> <?php echo htmlspecialchars($nomor_kwitansi); ?></p>
-            <p><strong>Tanggal:</strong> <?php echo strftime('%d %B %Y', strtotime($dataPembayaran['tanggal'])); ?></p>
             <p><strong>Nama Siswa:</strong> <?php echo htmlspecialchars($dataPembayaran['nama_siswa']); ?></p>
             <p><strong>Kelas:</strong> <?php echo htmlspecialchars($dataPembayaran['kelas']); ?></p>
             <p><strong>Total Pembayaran:</strong> Rp<?php echo number_format($dataPembayaran['jumlah'], 0, ',', '.'); ?></p>
         </div>
-        <div class="footer">
-            <p>Terima kasih atas pembayaran Anda.</p>
-            <p><em>Admin Keuangan</em></p>
+        <div class="footer-text">
+            <p>Martapura, <?php echo strftime('%d %B %Y', strtotime($dataPembayaran['tanggal'])); ?></p>
+            <br>
+            <br>
+            <br>
+            <p><br>Yayasan Sa'adah Martapura</p>
         </div>
-    </div>
+    <!-- </div> -->
 
     <script>
         window.print();
