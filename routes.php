@@ -37,6 +37,7 @@ $routes = [
     'hapus-tagihan-siswa' => 'pages/keuangan/tagihanSiswa/delete.php',
     'hapus-semua-tagihan-siswa' => 'pages/keuangan/tagihanSiswa/deleteAll.php',
     'import-tagihan-siswa' => 'pages/keuangan/tagihanSiswa/import.php',
+    'cetak-tagihan-siswa' => 'pages/keuangan/tagihanSiswa/printAll.php',
 
     'transaksi-keuangan' => 'pages/keuangan/transaksiKeuangan/read.php',
     'tambah-transaksi-keuangan' => 'pages/keuangan/transaksiKeuangan/add.php',
@@ -45,6 +46,7 @@ $routes = [
     'hapus-semua-transaksi-keuangan' => 'pages/keuangan/transaksiKeuangan/deleteAll.php',
     'import-transaksi-keuangan' => 'pages/keuangan/transaksiKeuangan/import.php',
     'print-transaksi-keuangan' => 'pages/keuangan/transaksiKeuangan/print.php',
+    'cetak-transaksi-keuangan' => 'pages/keuangan/transaksiKeuangan/printAll.php',
 
     // Kasir section
     'barang' => 'pages/kasir/barang/read.php',
@@ -60,6 +62,7 @@ $routes = [
     'hapus-barang-masuk' => 'pages/kasir/barangMasuk/delete.php',
     'hapus-semua-barang-masuk' => 'pages/kasir/barangMasuk/deleteAll.php',
     'import-barang-masuk' => 'pages/kasir/barangMasuk/import.php',
+    'cetak-barang-masuk' => 'pages/kasir/barangMasuk/printAll.php',
     
     'supplier' => 'pages/kasir/supplier/read.php',
     'tambah-supplier' => 'pages/kasir/supplier/add.php',
@@ -74,6 +77,7 @@ $routes = [
     'hapus-transaksi' => 'pages/kasir/transaksi/delete.php',
     'hapus-semua-transaksi' => 'pages/kasir/transaksi/deleteAll.php',
     'export-transaksi' => 'pages/kasir/transaksi/export.php',
+    'cetak-transaksi' => 'pages/kasir/transaksi/printAll.php',
 
     'kasir' => 'pages/kasir/transaksi/kasir.php',
     'belanja' => 'pages/kasir/transaksi/belanja.php',
