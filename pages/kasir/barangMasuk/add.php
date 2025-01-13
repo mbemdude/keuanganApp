@@ -24,7 +24,7 @@ if (isset($_POST['button_create'])) {
         $stmt->bindParam(':harga_beli', $_POST['harga_beli']);
         $stmt->bindParam(':jumlah', $_POST['jumlah']);
         $stmt->bindParam(':barang_id', $_POST['barang_id']);
-        $stmt->bindParam(':supplier', $_POST['supplier']);
+        $stmt->bindParam(':supplier_id', $_POST['supplier_id']);
         
         if ($stmt->execute()) {
             $_SESSION['hasil'] = true;
@@ -39,55 +39,71 @@ if (isset($_POST['button_create'])) {
 ?>
 
 <section class="content">
-    <div class="card mx-3">
-        <div class="card-header">
-            <h3 class="card-title">Tambah Data</h3>
+    <div class="row">
+        <div class="col-lg-6 col-md-6">
+            <div class="card mx-3">
+                <div class="card-header">
+                    <h3 class="card-title">Tambah Data</h3>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        <div class="form-group">
+                            <label for="barang_id">Barang</label>
+                            <select name="barang_id" class="form-select">
+                                <option value="">- Pilih -</option>
+                                <?php 
+                                $database = new Database();
+                                $db = $database->getConnection();
+
+                                $selectBarangSql = "SELECT * FROM barang";
+                                $stmtBarang = $db->prepare($selectBarangSql);
+                                $stmtBarang->execute();
+
+                                while ($rowBarang = $stmtBarang->fetch(PDO::FETCH_ASSOC)){
+                                    echo "<option value='{$rowBarang['id']}'>{$rowBarang['nama_barang']}</option>";
+                                }
+                                ?>
+                            </select>
+                            <label for="supplier_id">Supplier</label>
+                            <select name="supplier_id" class="form-select">
+                                <option value="">- Pilih -</option>
+                                <?php 
+                                $database = new Database();
+                                $db = $database->getConnection();
+
+                                $selectSupplierSql = "SELECT * FROM supplier";
+                                $stmtSupplier = $db->prepare($selectSupplierSql);
+                                $stmtSupplier->execute();
+
+                                while ($rowSupplier = $stmtSupplier->fetch(PDO::FETCH_ASSOC)){
+                                    echo "<option value='{$rowSupplier['id']}'>{$rowSupplier['nama_supplier']}</option>";
+                                }
+                                ?>
+                            </select>
+                            <label for="harga_beli">Harga Beli/pckg</label>
+                            <input type="text" name="harga_beli" class="form-control">
+                            <label for="jumlah">Jumlah (pckg)</label>
+                            <input type="text" name="jumlah" class="form-control">
+                        </div>
+                        <div class="mt-2">
+                            <a href="?page=barang-masuk" class="btn btn-danger">Batal</a>
+                            <button type="submit" name="button_create" class="btn btn-success">Simpan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="card-body">
-            <form method="POST">
-                <div class="form-group">
-                    <label for="barang_id">Barang</label>
-                    <select name="barang_id" class="form-select">
-                        <option value=""> - Pilih -</option>
-                        <?php 
-                        $database = new Database();
-                        $db = $database->getConnection();
-
-                        $selectBarang = "SELECT * barang";
-                        $stmtBarang = $db->prepare($selectBarang);
-                        $stmtBarang->execute();
-
-                        while ($rowBarang = $stmtBarang->fetch(PDO::FETCH_ASSOC)) {
-                            "<option value='{$rowBarang['id']}'>{$rowBarang['kode_barang']} | {$rowBarang['nama_barang']}</option>";
-                        }
-                        ?>
-                    </select>
-                    <label for="supplier_id">Supplier</label>
-                    <select name="supplier_id" class="form-select">
-                        <option value=""> - Pilih -</option>
-                        <?php 
-                        $database = new Database();
-                        $db = $database->getConnection();
-
-                        $selectSupplier = "SELECT * supplier";
-                        $stmtSupplier = $db->prepare($selectSupplier);
-                        $stmtSupplier->execute();
-
-                        while ($rowSupplier = $stmtSupplier->fetch(PDO::FETCH_ASSOC)) {
-                            "<option value='{$rowSupplier['id']}'>{$rowSupplier['supplier']}</option>";
-                        }
-                        ?>
-                    </select>
-                    <label for="harga_beli">Harga Beli/pckg</label>
-                    <input type="text" name="harga_beli" class="form-control">
-                    <label for="jumlah">Jumlah (pckg)</label>
-                    <input type="text" name="jumlah" class="form-control">
+        <div class="col-lg-6 col-md-6">
+            <div class="card mx-3">
+                <div class="card-header">
+                    <h3 class="card-title">Note Tambah Data</h3>
                 </div>
-                <div class="mt-2">
-                    <a href="?page=barang-masuk" class="btn btn-danger">Batal</a>
-                    <button type="submit" name="button_create" class="btn btn-success">Simpan</button>
+                <div class="card-body">
+                    <ul>
+                        <li>Untuk entry barang dan supplier baru silahkan melakukan melalui import data</li>
+                    </ul>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 </section>

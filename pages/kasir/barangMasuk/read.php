@@ -54,7 +54,7 @@
                       $database = new Database();
                       $db = $database->getConnection();
                       
-                      $selectSql = "SELECT bm.*, b.kode_barang, b.nama_barang, s.nama_supplier  FROM barang_masuk bm JOIN barang b ON bm.barang_id = b.id JOIN supplier s ON bm.supplier_id = s.id";
+                      $selectSql = "SELECT bm.*, b.kode_barang, b.nama_barang, s.nama_supplier  FROM barang_masuk bm JOIN barang b ON bm.barang_id = b.id JOIN supplier s ON bm.supplier_id = s.id ORDER BY id DESC";
                       $stmt = $db->prepare($selectSql);
                       $stmt->execute();
                       $row_data = $stmt->rowCount();
