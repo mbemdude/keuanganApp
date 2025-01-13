@@ -31,7 +31,7 @@ if (isset($_POST['button_create'])) {
             $_SESSION['hasil'] = false;
             $_SESSION['pesan'] = "Gagal simpan data";
         }
-        echo "<meta http-equiv='refresh' content='0;url=?page=barang'>";
+        echo "<meta http-equiv='refresh' content='0;url=?page=supplier'>";
     }
 }
 ?>
