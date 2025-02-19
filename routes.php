@@ -33,6 +33,7 @@ $routes = [
 
     'tagihan-siswa' => 'pages/keuangan/tagihanSiswa/read.php',
     'tambah-tagihan-siswa' => 'pages/keuangan/tagihanSiswa/add.php',
+    'tambah-tagihan-siswa-lama' => 'pages/keuangan/tagihanSiswa/addLama.php',
     'edit-tagihan-siswa' => 'pages/keuangan/tagihanSiswa/update.php',
     'hapus-tagihan-siswa' => 'pages/keuangan/tagihanSiswa/delete.php',
     'hapus-semua-tagihan-siswa' => 'pages/keuangan/tagihanSiswa/deleteAll.php',
