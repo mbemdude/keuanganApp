@@ -5,11 +5,26 @@ if (isset($_POST['button_create'])) {
     $db = $database->getConnection();
 
     // Array untuk menyimpan data tagihan
-    $tagihanData = [
-        ['jenis_pembayaran_id' => 1, 'jumlah_tagihan' => $_POST['jumlah_tagihan1']],
-        ['jenis_pembayaran_id' => 2, 'jumlah_tagihan' => $_POST['jumlah_tagihan2']],
-        ['jenis_pembayaran_id' => 3, 'jumlah_tagihan' => $_POST['jumlah_tagihan3']],
-    ];
+    $tagihanData = [];
+
+    // Cek apakah masing-masing tagihan memiliki nilai lebih dari 0, jika ya, tambahkan ke array
+    if ($_POST['jumlah_tagihan1'] > 0) {
+        $tagihanData[] = ['jenis_pembayaran_id' => 1, 'jumlah_tagihan' => $_POST['jumlah_tagihan1']];
+    }
+    if ($_POST['jumlah_tagihan2'] > 0) {
+        $tagihanData[] = ['jenis_pembayaran_id' => 2, 'jumlah_tagihan' => $_POST['jumlah_tagihan2']];
+    }
+    if ($_POST['jumlah_tagihan3'] > 0) {
+        $tagihanData[] = ['jenis_pembayaran_id' => 3, 'jumlah_tagihan' => $_POST['jumlah_tagihan3']];
+    }
+
+    // Jika tidak ada tagihan yang valid, hentikan proses
+    if (empty($tagihanData)) {
+        $_SESSION['hasil'] = false;
+        $_SESSION['pesan'] = "Tidak ada tagihan yang valid untuk disimpan.";
+        echo "<meta http-equiv='refresh' content='0;url=?page=tagihan-siswa'>";
+        exit();
+    }
 
     // Ambil tarif_pembayaran_id berdasarkan tipe dan jenis_pembayaran_id
     $tarifQuery = "
@@ -64,10 +79,10 @@ if (isset($_POST['button_create'])) {
 
 <section class="content">
     <div class="row">
-        <div class="col-lg-8 col-md-6">
+        <div class="col-lg-8">
             <div class="card mx-3">
                 <div class="card-header">
-                    <h3 class="card-title">Tambah Data</h3>
+                    <h3 class="card-title">Tagihan Siswa</h3>
                 </div>
                 <div class="card-body">
                     <form method="POST" id="form-tagihan">
@@ -78,17 +93,17 @@ if (isset($_POST['button_create'])) {
                                 <?php 
                                 $database = new Database();
                                 $db = $database->getConnection();
-        
+
                                 $selectSiswaSQL = "SELECT * FROM siswa";
                                 $stmtSiswa = $db->prepare($selectSiswaSQL);
                                 $stmtSiswa->execute();
-        
+
                                 while ($rowSiswa = $stmtSiswa->fetch(PDO::FETCH_ASSOC)){
                                     echo "<option value='{$rowSiswa['id']}'>{$rowSiswa['nama']}</option>";
                                 }
                                 ?>
                             </select>
-        
+
                             <label for="tarif_pembayaran_tipe">Tipe Pembayaran</label>
                             <select name="tarif_pembayaran_tipe" id="tarif_pembayaran_tipe" class="form-select">
                                 <option value="">- Pilih -</option>
@@ -107,7 +122,7 @@ if (isset($_POST['button_create'])) {
                                     ORDER BY ta.tahun_ajaran, j.jenjang ASC";
                                 $stmtTarif = $db->prepare($selectTarifSQL);
                                 $stmtTarif->execute();
-        
+
                                 while ($rowTarif = $stmtTarif->fetch(PDO::FETCH_ASSOC)){
                                     echo "<option value='{$rowTarif['tipe']}' data-tahun-ajaran='{$rowTarif['tahun_ajaran_id']}' data-pembayaran='{$rowTarif['pembayaran']}'>
                                             Tipe {$rowTarif['tipe']} | Tahun Ajaran {$rowTarif['tahun_ajaran']} | {$rowTarif['jenjang']}
@@ -115,20 +130,20 @@ if (isset($_POST['button_create'])) {
                                 }
                                 ?>
                             </select>
-        
+
                             <input type="hidden" name="tahun_ajaran_id" id="tahun_ajaran_id">
-        
+
                             <label for="tanggal_tagihan">Tanggal Tagihan</label>
                             <input type="date" name="tanggal_tagihan" class="form-control">
-        
+
                             <label for="jumlah_tagihan1">Jumlah Tagihan Uang Pangkal</label>
-                            <input type="text" name="jumlah_tagihan1" id="jumlah_tagihan1" class="form-control" readonly>
-        
+                            <input type="text" name="jumlah_tagihan1" id="jumlah_tagihan1" class="form-control">
+
                             <label for="jumlah_tagihan2">Jumlah Tagihan Daftar Ulang</label>
-                            <input type="text" name="jumlah_tagihan2" id="jumlah_tagihan2" class="form-control" readonly>
-        
+                            <input type="text" name="jumlah_tagihan2" id="jumlah_tagihan2" class="form-control">
+
                             <label for="jumlah_tagihan3">Jumlah Tagihan SPP</label>
-                            <input type="text" name="jumlah_tagihan3" id="jumlah_tagihan3" class="form-control" readonly>
+                            <input type="text" name="jumlah_tagihan3" id="jumlah_tagihan3" class="form-control">
                         </div>
                         
                         <div class="mt-2">
@@ -136,17 +151,6 @@ if (isset($_POST['button_create'])) {
                             <button type="submit" name="button_create" class="btn btn-success">Simpan</button>
                         </div>
                     </form>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4 col-md-6">
-            <div class="card mx-3">
-                <div class="card-header">
-                    <h3 class="card-title">Note</h3>
-                </div>
-                <div class="card-body">
-                    <p>Untuk mengisi data tunggakkan silahkan klik tombol dibawah</p>
-                    <a href="?page=tambah-tagihan-siswa-lama" class="btn btn-success">Data Tunggakkan</a>
                 </div>
             </div>
         </div>
