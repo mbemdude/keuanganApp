@@ -40,7 +40,7 @@ if (isset($_POST['button_create'])) {
 
 <section class="content">
     <div class="row">
-        <div class="col-lg-6 col-md-6">
+        <div class="col-lg-8 col-md-6">
             <div class="card mx-3">
                 <div class="card-header">
                     <h3 class="card-title">Tambah Data</h3>
@@ -93,15 +93,13 @@ if (isset($_POST['button_create'])) {
                 </div>
             </div>
         </div>
-        <div class="col-lg-6 col-md-6">
+        <div class="col-lg-4 col-md-6">
             <div class="card mx-3">
                 <div class="card-header">
-                    <h3 class="card-title">Note Tambah Data</h3>
+                    <h3 class="card-title">Note</h3>
                 </div>
                 <div class="card-body">
-                    <ul>
-                        <li>Untuk entry barang dan supplier baru silahkan melakukan melalui import data</li>
-                    </ul>
+                    <p>Untuk entry barang dan supplier baru silahkan melakukan melalui import data</p>
                 </div>
             </div>
         </div>
