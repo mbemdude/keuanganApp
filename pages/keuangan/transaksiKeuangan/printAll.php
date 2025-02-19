@@ -88,7 +88,7 @@
     <div class="header-line"></div>
     <div class="header-line-bottom"></div>
     <div class="content">
-        <h1 align="center">LAPORAN TRANSAKSI PEMBAYARAN KEUANGAN</h1>
+        <h3 align="center">LAPORAN TRANSAKSI PEMBAYARAN KEUANGAN</h3>
         <table class="table table-bordered">
             <thead class="table">
                 <tr>

@@ -135,7 +135,7 @@
         <div class="header-line"></div>
         <div class="header-line-bottom"></div>
         <div class="content">
-            <h1 align="center">KWITANSI PEMBAYARAN</h1>
+            <h3 align="center">KWITANSI PEMBAYARAN</h3>
             <p><strong>Nomor Kwitansi:</strong> <?php echo htmlspecialchars($nomor_kwitansi); ?></p>
             <p><strong>Nama Siswa:</strong> <?php echo htmlspecialchars($dataPembayaran['nama_siswa']); ?></p>
             <p><strong>Kelas:</strong> <?php echo htmlspecialchars($dataPembayaran['kelas']); ?></p>
