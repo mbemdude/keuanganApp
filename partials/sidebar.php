@@ -123,15 +123,17 @@
                         </li>
                         <?php endif ?>
                         
-                        <?php if($role == 'Admin'): ?>
+                        <?php if($role == 'Admin' || $role == 'Operator' || $role =='Keuangan'): ?>
                         <li class="nav-header">
                              <span>Master Data</span>
                         </li>
+                        <?php endif ?>
+                        <?php if($role == 'Admin' || $role == 'Operator'): ?>
                         <li class="nav-item"> 
                             <a href="#" class="nav-link"> 
                                 <i class="nav-icon bi bi-archive-fill"></i>
                                 <p>
-                                    Master Data Admin
+                                    Data Admin
                                     <i class="nav-arrow bi bi-chevron-right"></i>
                                 </p>
                             </a>
@@ -160,13 +162,21 @@
                                         <p>Tahun Ajaran</p>
                                     </a>
                                 </li>
+                                <li class="nav-item"> 
+                                    <a href="?page=mata-pelajaran" class="nav-link"> 
+                                        <i class="nav-icon bi bi-file-earmark-fill"></i>
+                                        <p>Mata Pelajaran</p>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
+                        <?php endif ?>
+                        <?php if($role == 'Admin' || $role == 'Keuangan'): ?>
                         <li class="nav-item"> 
                             <a href="#" class="nav-link"> 
                                 <i class="nav-icon bi bi-archive-fill"></i>
                                 <p>
-                                    Master Data Keuangan
+                                    Data Keuangan
                                     <i class="nav-arrow bi bi-chevron-right"></i>
                                 </p>
                             </a>
@@ -179,6 +189,8 @@
                                 </li>
                             </ul>
                         </li>
+                        <?php endif ?>
+                        <?php if($role == 'Admin'): ?>
                         <li class="nav-header">
                              <span>Admin</span>
                         </li>
@@ -201,6 +213,35 @@
                                     <a href="?page=user" class="nav-link"> 
                                         <i class="nav-icon bi bi-person-plus-fill"></i>
                                         <p>User</p>
+                                    </a> 
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"> 
+                            <a href="#" class="nav-link"> 
+                                <i class="nav-icon bi bi-clipboard2-fill"></i>
+                                <p>
+                                    Perhitungan SPK
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item"> 
+                                    <a href="#" class="nav-link"> 
+                                        <i class="nav-icon bi bi-clipboard2-check-fill"></i>
+                                        <p>Kriteria</p>
+                                    </a> 
+                                </li>
+                                <li class="nav-item"> 
+                                    <a href="#" class="nav-link"> 
+                                        <i class="nav-icon bi bi-clipboard2-data-fill"></i>
+                                        <p>Normalisasi Data</p>
+                                    </a> 
+                                </li>
+                                <li class="nav-item"> 
+                                    <a href="#" class="nav-link"> 
+                                        <i class="nav-icon bi bi-clipboard2-pulse-fill"></i>
+                                        <p>Perhitungan SPK</p>
                                     </a> 
                                 </li>
                             </ul>
