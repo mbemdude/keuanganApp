@@ -96,6 +96,32 @@
                             </ul>
                         </li>
                         <?php endif ?>
+
+                        <?php if($role == 'Operator' || $role == 'Admin'): ?>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon bi bi-person-fill-gear"></i>
+                                <p>
+                                    Operator
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon bi bi-person-check-fill"></i>
+                                        <p>Presensi Siswa</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon bi bi-clipboard2-data-fill"></i>
+                                        <p>Nilai Rapor</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <?php endif ?>
                         
                         <?php if($role == 'Admin'): ?>
                         <li class="nav-header">
