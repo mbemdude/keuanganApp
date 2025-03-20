@@ -108,7 +108,7 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="?page=presensi" class="nav-link">
                                         <i class="nav-icon bi bi-person-check-fill"></i>
                                         <p>Presensi Siswa</p>
                                     </a>
