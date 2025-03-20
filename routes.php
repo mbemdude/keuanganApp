@@ -49,6 +49,11 @@ $routes = [
     'print-transaksi-keuangan' => 'pages/keuangan/transaksiKeuangan/print.php',
     'cetak-transaksi-keuangan' => 'pages/keuangan/transaksiKeuangan/printAll.php',
 
+    'jenis-pembayaran' => 'pages/masterdata/jenisPembayaran/read.php',
+    'tambah-jenis-pembayaran' => 'pages/masterdata/jenisPembayaran/add.php',
+    'edit-jenis-pembayaran' => 'pages/masterdata/jenisPembayaran/update.php',
+    'hapus-jenis-pembayaran' => 'pages/masterdata/jenisPembayaran/delete.php',
+    
     // Kasir section
     'barang' => 'pages/kasir/barang/read.php',
     'tambah-barang' => 'pages/kasir/barang/add.php',
@@ -83,7 +88,30 @@ $routes = [
     'kasir' => 'pages/kasir/transaksi/kasir.php',
     'belanja' => 'pages/kasir/transaksi/belanja.php',
 
-    // Masterdata section
+    // Administrator section
+    'role' => 'pages/admin/role/read.php',
+    'tambah-role' => 'pages/admin/role/add.php',
+    'edit-role' => 'pages/admin/role/update.php',
+    'hapus-role' => 'pages/admin/role/delete.php',
+    
+    'user' => 'pages/admin/user/read.php',
+    'tambah-user' => 'pages/admin/user/add.php',
+    'edit-user' => 'pages/admin/user/update.php',
+    'hapus-user' => 'pages/admin/user/delete.php',
+    'hapus-semua-user' => 'pages/admin/user/deleteAll.php',
+
+    // Operator Section
+    'mata-pelajaran' => 'pages/masterdata/mataPelajaran/read.php',
+    'tambah-mata-pelajaran' => 'pages/masterdata/mataPelajaran/add.php',
+    'edit-mata-pelajaran' => 'pages/masterdata/mataPelajaran/update.php',
+    'hapus-mata-pelajaran' => 'pages/masterdata/mataPelajaran/delete.php',
+    'hapus-semua-mata-pelajaran' => 'pages/masterdata/mataPelajaran/deleteAll.php',
+
+    'tahun-ajaran' => 'pages/masterdata/tahunAjaran/read.php',
+    'tambah-tahun-ajaran' => 'pages/masterdata/tahunAjaran/add.php',
+    'edit-tahun-ajaran' => 'pages/masterdata/tahunAjaran/update.php',
+    'hapus-tahun-ajaran' => 'pages/masterdata/tahunAjaran/delete.php',
+
     'jenjang' => 'pages/masterdata/jenjang/read.php',
     'tambah-jenjang' => 'pages/masterdata/jenjang/add.php',
     'edit-jenjang' => 'pages/masterdata/jenjang/update.php',
@@ -101,29 +129,6 @@ $routes = [
     'edit-status' => 'pages/masterdata/status/update.php',
     'hapus-status' => 'pages/masterdata/status/delete.php',
     'hapus-semua-status' => 'pages/masterdata/status/deleteAll.php',
-
-    'jenis-pembayaran' => 'pages/masterdata/jenisPembayaran/read.php',
-    'tambah-jenis-pembayaran' => 'pages/masterdata/jenisPembayaran/add.php',
-    'edit-jenis-pembayaran' => 'pages/masterdata/jenisPembayaran/update.php',
-    'hapus-jenis-pembayaran' => 'pages/masterdata/jenisPembayaran/delete.php',
-
-    'tahun-ajaran' => 'pages/masterdata/tahunAjaran/read.php',
-    'tambah-tahun-ajaran' => 'pages/masterdata/tahunAjaran/add.php',
-    'edit-tahun-ajaran' => 'pages/masterdata/tahunAjaran/update.php',
-    'hapus-tahun-ajaran' => 'pages/masterdata/tahunAjaran/delete.php',
-
-    // Administrator section
-    'role' => 'pages/admin/role/read.php',
-    'tambah-role' => 'pages/admin/role/add.php',
-    'edit-role' => 'pages/admin/role/update.php',
-    'hapus-role' => 'pages/admin/role/delete.php',
-    
-    'user' => 'pages/admin/user/read.php',
-    'tambah-user' => 'pages/admin/user/add.php',
-    'edit-user' => 'pages/admin/user/update.php',
-    'hapus-user' => 'pages/admin/user/delete.php',
-    'hapus-semua-user' => 'pages/admin/user/deleteAll.php',
-
 ];
 
 // Check if page parameter exists and load corresponding file or default to home
