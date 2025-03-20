@@ -129,6 +129,12 @@ $routes = [
     'edit-status' => 'pages/masterdata/status/update.php',
     'hapus-status' => 'pages/masterdata/status/delete.php',
     'hapus-semua-status' => 'pages/masterdata/status/deleteAll.php',
+
+    'presensi' => 'pages/operator/presensi/read.php',
+    'tambah-presensi' => 'pages/operator/presensi/add.php',
+    'edit-presensi' => 'pages/operator/presensi/update.php',
+    'hapus-presensi' => 'pages/operator/presensi/delete.php',
+    'hapus-semua-presensi' => 'pages/operator/presensi/deleteAll.php',
 ];
 
 // Check if page parameter exists and load corresponding file or default to home
