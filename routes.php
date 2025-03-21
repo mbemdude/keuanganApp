@@ -131,6 +131,7 @@ $routes = [
     'hapus-semua-status' => 'pages/masterdata/status/deleteAll.php',
 
     'presensi' => 'pages/operator/presensi/read.php',
+    'show-presensi' => 'pages/operator/presensi/show.php',
     'tambah-presensi' => 'pages/operator/presensi/add.php',
     'edit-presensi' => 'pages/operator/presensi/update.php',
     'hapus-presensi' => 'pages/operator/presensi/delete.php',
