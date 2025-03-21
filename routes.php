@@ -136,6 +136,7 @@ $routes = [
     'edit-presensi' => 'pages/operator/presensi/update.php',
     'hapus-presensi' => 'pages/operator/presensi/delete.php',
     'hapus-semua-presensi' => 'pages/operator/presensi/deleteAll.php',
+    'impor-presensi' => 'pages/operator/presensi/export.php',
 ];
 
 // Check if page parameter exists and load corresponding file or default to home
