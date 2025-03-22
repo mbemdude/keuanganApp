@@ -114,7 +114,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="?page=nilai-rapor" class="nav-link">
                                         <i class="nav-icon bi bi-clipboard2-data-fill"></i>
                                         <p>Nilai Rapor</p>
                                     </a>
