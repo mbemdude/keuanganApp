@@ -145,7 +145,8 @@ $routes = [
     'hapus-nilai-rapor' => 'pages/operator/nilaiRapor/delete.php',
     'hapus-semua-nilai-rapor' => 'pages/operator/nilaiRapor/deleteAll.php',
     'cetak-nilai-uts' => 'pages/operator/nilaiRapor/printUts.php',
-    'cetak-nilai-uas' => 'pages/operator/nilaiRapor/printUas.php'
+    'cetak-nilai-uas' => 'pages/operator/nilaiRapor/printUas.php',
+    'impor-nilai-rapor' => 'pages/operator/nilaiRapor/export.php'
 ];
 
 // Check if page parameter exists and load corresponding file or default to home
