@@ -1,15 +1,14 @@
 <?php
 require 'vendor/autoload.php';
+
+use PhpOffice\PhpSpreadsheet\Helper\Handler;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
-// Handle ekspor
+// Handler Expor
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['export'])) {
-    $database = new Database();
-    $db = $database->getConnection();
-
-    $query = "SELECT s.*, j.jenjang, k.kelas, st.status FROM siswa s JOIN jenjang j ON s.jenjang_id = j.id JOIN kelas k ON s.kelas_id = k.id JOIN status st ON s.status_id = st.id";
+    $query = "SELECT nr.*, s.nama, k.kelas, mp.mata_pelajaran, ta.tahun_ajaran FROM nilai_rapor nr JOIN siswa s ON nr.siswa_id = s.id JOIN kelas k ON s.kelas_id = k.id JOIN mata_pelajaran mp ON nr.mata_pelajaran_id = mp.id JOIN tahun_ajaran ta ON nr.tahun_ajaran_id = ta.id";
     $stmt = $db->prepare($query);
     $stmt->execute();
     $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -18,36 +17,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['export'])) {
     $sheet = $spreadsheet->getActiveSheet();
 
     // Menulis header ke file Excel
-    $sheet->setCellValue('A1', 'Kode');
-    $sheet->setCellValue('B1', 'NIS');
-    $sheet->setCellValue('C1', 'Nama');
-    $sheet->setCellValue('D1', 'Alamat');
-    $sheet->setCellValue('E1', 'Jenis Kelamin');
-    $sheet->setCellValue('F1', 'Jenjang');
-    $sheet->setCellValue('G1', 'Kelas');
-    $sheet->setCellValue('H1', 'Status');
+    $sheet->setCellValue('A1', 'Nama');
+    $sheet->setCellValue('B1', 'Kelas');
+    $sheet->setCellValue('C1', 'Mata Pelajaran');
+    $sheet->setCellValue('D1', 'Nilai UTS');
+    $sheet->setCellValue('E1', 'Nilai UAS');
+    $sheet->setCellValue('F1', 'Semester');
+    $sheet->setCellValue('G1', 'Tahun Ajaran');
 
     // Menulis data siswa ke file Excel
     $rowNumber = 2;
     foreach ($data as $row) {
-        $sheet->setCellValue('A' . $rowNumber, $row['kode']);
-        $sheet->setCellValue('B' . $rowNumber, $row['nis']);
-        $sheet->setCellValue('C' . $rowNumber, $row['nama']);
-        $sheet->setCellValue('D' . $rowNumber, $row['alamat']);
-        $sheet->setCellValue('E' . $rowNumber, $row['jenis_kelamin']);
-        $sheet->setCellValue('F' . $rowNumber, $row['jenjang']);
-        $sheet->setCellValue('G' . $rowNumber, $row['kelas']);
-        $sheet->setCellValue('H' . $rowNumber, $row['status']);
+        $sheet->setCellValue('A' . $rowNumber, $row['nama']);
+        $sheet->setCellValue('B' . $rowNumber, $row['kelas']);
+        $sheet->setCellValue('C' . $rowNumber, $row['mata_pelajaran']);
+        $sheet->setCellValue('D' . $rowNumber, $row['nilai_uts']);
+        $sheet->setCellValue('E' . $rowNumber, $row['nilai_uas']);
+        $sheet->setCellValue('F' . $rowNumber, $row['semester']);
+        $sheet->setCellValue('G' . $rowNumber, $row['tahun_ajaran']);
         $rowNumber++;
     }
-
-    // Menghapus semua output buffer sebelum memulai proses export
+    
     ob_end_clean();
 
     $writer = new Xlsx($spreadsheet);
-    $filename = 'data_siswa.xlsx';
+    $filename = 'data_nilai_siswa.xlsx';
 
-    // Mengatur header untuk mendownload file
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     header('Content-Disposition: attachment;filename="' . $filename . '"');
     header('Cache-Control: max-age=0');
@@ -68,23 +63,46 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
         // Jika file adalah CSV
         $handle = fopen($file, 'r');
         if ($handle !== FALSE) {
-            // Melewati header file CSV
-            fgetcsv($handle, 1000, ",");
+            fgetcsv($handle, 1000, ","); // Melewati header file CSV
 
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-                $kode           = $data[0];
-                $nis            = $data[1];
-                $nama           = $data[2];
-                $alamat         = $data[3];
-                $jenis_kelamin  = $data[4];
-                $jenjang_id     = $data[5];
-                $kelas_id       = $data[6];
-                $status_id      = $data[7];
+                $nis            = trim($data[0]);
+                $nama           = trim($data[1]);
+                $jenis_kelamin  = trim($data[2]);
+                $jenjangNama    = trim($data[3]);
+                $kelasNama      = trim($data[4]);
+                $statusNama     = trim($data[5]);
+                $pekerjaan_ayah = trim($data[6]);
+                $jumlah_saudara = trim($data[7]);
 
-                $query = "INSERT INTO siswa (kode, nis, nama, alamat, jenis_kelamin, jenjang_id, kelas_id, status_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                // 🔹 Cari ID jenjang berdasarkan nama
+                $stmtJenjang = $db->prepare("SELECT id FROM jenjang WHERE jenjang = :jenjang");
+                $stmtJenjang->bindParam(':jenjang', $jenjangNama);
+                $stmtJenjang->execute();
+                $jenjangRow = $stmtJenjang->fetch(PDO::FETCH_ASSOC);
+                $jenjang_id = $jenjangRow ? $jenjangRow['id'] : null;
 
-                $stmt = $db->prepare($query);
-                $stmt->execute([$kode, $nis, $nama, $alamat, $jenis_kelamin, $jenjang_id, $kelas_id, $status_id]);
+                // 🔹 Cari ID kelas berdasarkan nama
+                $stmtkelas = $db->prepare("SELECT id FROM kelas WHERE kelas = :kelas");
+                $stmtkelas->bindParam(':kelas', $kelasNama);
+                $stmtkelas->execute();
+                $kelasRow = $stmtkelas->fetch(PDO::FETCH_ASSOC);
+                $kelas_id = $kelasRow ? $kelasRow['id'] : null;
+
+                // 🔹 Cari ID status berdasarkan nama
+                $stmtStatus = $db->prepare("SELECT id FROM status WHERE status = :status");
+                $stmtStatus->bindParam(':status', $statusNama);
+                $stmtStatus->execute();
+                $status = $stmtStatus->fetch(PDO::FETCH_ASSOC);
+                $status_id = $status ? $status['id'] : null;
+
+                // 🔹 Hanya masukkan data jika ID ditemukan
+                if ($jenjang_id && $kelas_id && $status_id) {
+                    $query = "INSERT INTO siswa (nis, nama, jenis_kelamin, jenjang_id, kelas_id, status_id, jumlah_saudara, pekerjaan_ayah) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)";      
+                    $stmt = $db->prepare($query);
+                    $stmt->execute([$nis, $nama, $jenis_kelamin, $jenjang_id, $kelas_id, $status_id, $jumlah_saudara, $pekerjaan_ayah]);
+                }
             }
             fclose($handle);
         }
@@ -94,29 +112,53 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
         $worksheet = $spreadsheet->getActiveSheet();
 
         foreach ($worksheet->getRowIterator() as $rowIndex => $row) {
-            // Melewati header di baris pertama
-            if ($rowIndex == 1) continue;
+            if ($rowIndex == 1) continue; // Melewati header
 
-            // Mengambil nilai yang dihitung dari sel
-            $kode = $worksheet->getCell("A$rowIndex")->getCalculatedValue();
-            $nis = $worksheet->getCell("B$rowIndex")->getCalculatedValue();
-            $nama = $worksheet->getCell("C$rowIndex")->getCalculatedValue();
-            $alamat = $worksheet->getCell("D$rowIndex")->getCalculatedValue();
-            $jenis_kelamin = $worksheet->getCell("E$rowIndex")->getCalculatedValue();
-            $jenjang_id = $worksheet->getCell("F$rowIndex")->getCalculatedValue();
-            $kelas_id = $worksheet->getCell("G$rowIndex")->getCalculatedValue();
-            $status_id = $worksheet->getCell("H$rowIndex")->getCalculatedValue();
+            $nis            = trim($worksheet->getCell("A$rowIndex")->getValue());
+            $nama           = trim($worksheet->getCell("B$rowIndex")->getValue());
+            $jenis_kelamin  = trim($worksheet->getCell("C$rowIndex")->getValue());
+            $jenjangNama    = trim($worksheet->getCell("D$rowIndex")->getValue());
+            $kelasNama      = trim($worksheet->getCell("E$rowIndex")->getValue());
+            $statusNama     = trim($worksheet->getCell("F$rowIndex")->getValue());
+            $pekerjaan_ayah = trim($worksheet->getCell("G$rowIndex")->getValue());
+            $jumlah_saudara = trim($worksheet->getCell("H$rowIndex")->getValue());
 
-            $query = "INSERT INTO siswa (kode, nis, nama, alamat, jenis_kelamin, jenjang_id, kelas_id, status_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-            $stmt = $db->prepare($query);
-            $stmt->execute([$kode, $nis, $nama, $alamat, $jenis_kelamin, $jenjang_id, $kelas_id, $status_id]);
+            // 🔹 Cari ID jenjang berdasarkan nama
+            $stmtJenjang = $db->prepare("SELECT id FROM jenjang WHERE jenjang = :jenjang");
+            $stmtJenjang->bindParam(':jenjang', $jenjangNama);
+            $stmtJenjang->execute();
+            $jenjangRow = $stmtJenjang->fetch(PDO::FETCH_ASSOC);
+            $jenjang_id = $jenjangRow ? $jenjangRow['id'] : null;
+
+            // 🔹 Cari ID kelas berdasarkan nama
+            $stmtkelas = $db->prepare("SELECT id FROM kelas WHERE kelas = :kelas");
+            $stmtkelas->bindParam(':kelas', $kelasNama);
+            $stmtkelas->execute();
+            $kelasRow = $stmtkelas->fetch(PDO::FETCH_ASSOC);
+            $kelas_id = $kelasRow ? $kelasRow['id'] : null;
+
+            // 🔹 Cari ID status berdasarkan nama
+            $stmtStatus = $db->prepare("SELECT id FROM status WHERE status = :status");
+            $stmtStatus->bindParam(':status', $statusNama);
+            $stmtStatus->execute();
+            $status = $stmtStatus->fetch(PDO::FETCH_ASSOC);
+            $status_id = $status ? $status['id'] : null;
+
+            // 🔹 Hanya masukkan data jika ID ditemukan
+            if ($jenjang_id && $kelas_id && $status_id) {
+                $query = "INSERT INTO siswa (nis, nama, jenis_kelamin, jenjang_id, kelas_id, status_id, jumlah_saudara, pekerjaan_ayah) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)";      
+                $stmt = $db->prepare($query);
+                $stmt->execute([$nis, $nama, $jenis_kelamin, $jenjang_id, $kelas_id, $status_id, $jumlah_saudara, $pekerjaan_ayah]);
+            }
         }
     } else {
         echo "Format file tidak didukung.";
     }
+
     $_SESSION['hasil'] = true;
     $_SESSION['pesan'] = "Berhasil import data";
-    echo "<meta http-equiv='refresh' content='0;url=?page=siswa'>";
+    echo "<meta http-equiv='refresh' content='0;url=?page=nilai-rapor'>";
     exit();
 }
 ?>
@@ -141,7 +183,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
                             <input type="file" id="file" name="file" class="form-control" accept=".csv, .xls, .xlsx" required>
                         </div>
                         <div class="mt-2">
-                            <a href="?page=tagihan-siswa" class="btn btn-danger">Batal</a>
+                            <a href="?page=nilai-rapor" class="btn btn-danger">Batal</a>
                             <button type="submit" class="btn btn-success">Impor Data</button>
                         </div>
                     </form>
@@ -151,7 +193,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
         <div class="col-lg-6 col-sm-12">
             <div class="card mx-3">
                 <div class="card-header">
-                    <h3 class="card-title">Tata Cara Import Siswa</h3>
+                    <h3 class="card-title">Tata Cara Import Presensi</h3>
                 </div>
                 <div class="card-body">
                     <ul>
@@ -161,7 +203,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
                             <li>Contoh, kita memiliki 3 baris data siswa A, B, C masing masing siswa memiliki kunci utama yaitu berupa id. Id disini berupa angka yang otomatis bertambah sendiri jika ada inputan baru</li>
                         </ul>
                         <li>Lebih mudahnya bisa download contoh import data dibawah ini</li>
-                        <a href="assets/sample/test_import_siswa.xlsx" class="btn btn-primary">Download Sample</a>
+                        <a href="assets/sample/test_import_presensi_siswa.xlsx" class="btn btn-primary">Download Sample</a>
                     </ul>
                 </div>
             </div>
