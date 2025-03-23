@@ -39,7 +39,6 @@
                   <thead>
                     <tr>
                       <th>No</th>
-                      <th>Kode</th>
                       <th>NIS</th>
                       <th>Nama</th>
                       <th>Kelas</th>
@@ -62,7 +61,6 @@
                     ?>
                     <tr>
                       <th scope="row"><?php echo $no++ ?></th>
-                      <td><?php echo$row['kode'] ?></td>
                       <td><?php echo$row['nis'] ?></td>
                       <td><?php echo$row['nama'] ?></td>
                       <td><?php echo$row['kelas'] ?></td>
@@ -80,7 +78,6 @@
                   <tfoot>
                     <tr>
                       <th>No</th>
-                      <th>Kode</th>
                       <th>NIS</th>
                       <th>Nama</th>
                       <th>Kelas</th>

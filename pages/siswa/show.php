@@ -41,9 +41,8 @@ if (isset($_GET['id'])) {
 
         if (isset($_POST['button_update'])) {
             // Update Query
-            $updateSql = "UPDATE siswa SET kode = :kode, nis = :nis, nama = :nama, alamat = :alamat, jenis_kelamin = :jenis_kelamin, jenjang_id = :jenjang_id, kelas_id = :kelas_id, status_id = :status_id WHERE id = :id";
+            $updateSql = "UPDATE siswa SET nis = :nis, nama = :nama, alamat = :alamat, jenis_kelamin = :jenis_kelamin, jenjang_id = :jenjang_id, kelas_id = :kelas_id, status_id = :status_id, pekerjaan_ayah = :pekerjaan_ayah, jumlah_saudara = :jumlah_saudara WHERE id = :id";
             $stmt = $db->prepare($updateSql);
-            $stmt->bindParam(':kode', $_POST['kode']);
             $stmt->bindParam(':nis', $_POST['nis']);
             $stmt->bindParam(':nama', $_POST['nama']);
             $stmt->bindParam(':alamat', $_POST['alamat']);
@@ -51,6 +50,8 @@ if (isset($_GET['id'])) {
             $stmt->bindParam(':jenjang_id', $_POST['jenjang_id']);
             $stmt->bindParam(':kelas_id', $_POST['kelas_id']);
             $stmt->bindParam(':status_id', $_POST['status_id']);
+            $stmt->bindParam(':pekerjaan_ayah', $_POST['pekerjaan_ayah']);
+            $stmt->bindParam(':jumlah_saudara', $_POST['jumlah_saudara']);
             $stmt->bindParam(':id', $_POST['id']);
 
             if ($stmt->execute()) {
@@ -95,19 +96,17 @@ if (isset($_GET['id'])) {
                             <div class="col-lg-7 col-sm-8">
                                 <!-- Form untuk data siswa -->
                                 <div class="form-group">
-                                    <label for="kode">Kode</label>
-                                    <input type="text" name="kode" class="form-control" value="<?= $row['kode'] ?>">
                                     <label for="nis">NIS</label>
                                     <input type="text" name="nis" class="form-control" value="<?= $row['nis'] ?>">
                                     <label for="nama">Nama</label>
                                     <input type="text" name="nama" class="form-control" value="<?= $row['nama'] ?>">
                                     <label for="alamat">Alamat</label>
-                                    <input type="text" name="alamat" class="form-control" value="<?= $row['alamat'] ?>">
+                                    <textarea name="alamat" class="form-control" value="<?= $row['alamat'] ?>"></textarea>
                                     <label for="jenis_kelamin">Jenis Kelamin</label>
                                     <select name="jenis_kelamin" class="form-select">
                                         <option value="">- Pilih -</option>
-                                        <option value="Laki-laki" <?= ($row['jenis_kelamin'] == 'Laki-laki') ? 'selected' : '' ?>>Laki-laki</option>
-                                        <option value="Perempuan" <?= ($row['jenis_kelamin'] == 'Perempuan') ? 'selected' : '' ?>>Perempuan</option>
+                                        <option value="Laki-laki" <?= ($row['jenis_kelamin'] == 'L') ? 'selected' : '' ?>>Laki-laki</option>
+                                        <option value="Perempuan" <?= ($row['jenis_kelamin'] == 'P') ? 'selected' : '' ?>>Perempuan</option>
                                     </select>
                                     <label for="jenjang_id">Jenjang</label>
                                     <select name="jenjang_id" class="form-select">
@@ -150,6 +149,16 @@ if (isset($_GET['id'])) {
                                             echo "<option value=\"" . $rowStatus['id'] . "\" $selected>" . $rowStatus['status'] . "</option>";
                                         }
                                         ?>
+                                    </select>
+                                    <label for="jumlah_saudara">Jumlah Saudara</label>
+                                    <input type="text" name="jumlah_saudara" class="form-control" value="<?= $row['jumlah_saudara'] ?>">
+                                    <label for="pekerjaan_ayah">Pekerjaan Ayah</label>
+                                    <select name="pekerjaan_ayah" class="form-select">
+                                        <option value="">- Pilih -</option>
+                                        <option value="Tidak Bekerja" <?= ($row['pekerjaan_ayah'] == 'Tidak Bekerja') ? 'selected' : '' ?>>Tidak Bekerja</option>
+                                        <option value="Buruh" <?= ($row['pekerjaan_ayah'] == 'Buruh') ? 'selected' : '' ?>>Buruh</option>
+                                        <option value="Pedagang" <?= ($row['pekerjaan_ayah'] == 'Pedagang') ? 'selected' : '' ?>>Pedagang</option>
+                                        <option value="Karyawan Swasta" <?= ($row['pekerjaan_ayah'] == 'Karyawan Swasta') ? 'selected' : '' ?>>Karyawan Swasta</option>
                                     </select>
                                     <input type="hidden" name="id" value="<?= $row['id'] ?>">
                                 </div>

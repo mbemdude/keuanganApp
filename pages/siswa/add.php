@@ -19,9 +19,8 @@ if (isset($_POST['button_create'])) {
         </div>
         <?php
     } else {
-        $insertSql = "INSERT INTO siswa (kode, nama, nis, jenjang_id, kelas_id, status_id) VALUES (:kode, :nama, :nis, :jenjang_id, :kelas_id, :status_id)";
+        $insertSql = "INSERT INTO siswa (nama, nis, jenjang_id, kelas_id, status_id) VALUES (:nama, :nis, :jenjang_id, :kelas_id, :status_id)";
         $stmt = $db->prepare($insertSql);
-        $stmt->bindParam(':kode', $_POST['kode']);
         $stmt->bindParam(':nama', $_POST['nama']);
         $stmt->bindParam(':nis', $_POST['nis']);
         $stmt->bindParam(':jenjang_id', $_POST['jenjang_id']);
@@ -48,8 +47,6 @@ if (isset($_POST['button_create'])) {
         <div class="card-body">
             <form method="POST">
                 <div class="form-group">
-                    <label for="kode">Kode</label>
-                    <input type="text" name="kode" class="form-control">
                     <label for="nis">NIS</label>
                     <input type="text" name="nis" class="form-control">
                     <label for="nama">Nama</label>
