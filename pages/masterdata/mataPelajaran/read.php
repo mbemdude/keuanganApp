@@ -39,6 +39,7 @@
                     <tr>
                       <th>No</th>
                       <th>Mata Pelajaran</th>
+                      <th>Kategori</th>
                       <th>Aksi</th>
                     </tr>
                   </thead>
@@ -58,6 +59,7 @@
                     <tr>
                       <th scope="row"><?php echo $no++ ?></th>
                       <td><?php echo$row['mata_pelajaran'] ?></td>
+                      <td><?php echo$row['kategori'] ?></td>
                       <td>
                         <a href="?page=edit-mata-pelajaran&id=<?php echo $row['id'] ?>" class="btn btn-warning"><i class="bi bi-pen"></i></a>
                         <a href="#" onclick="confirmDelete('?page=hapus-mata-pelajaran&id=<?php echo $row['id'] ?>')" class="btn btn-danger"><i class="bi bi-trash"></i></a>
@@ -65,13 +67,6 @@
                     </tr>
                     <?php } ?>
                   </tbody>
-                  <tfoot>
-                    <tr>
-                      <th>No</th>
-                      <th>Mata Pelajaran</th>
-                      <th>Aksi</th>
-                    </tr>
-                  </tfoot>
                 </table>
               </div>
               <!-- /.card-body -->

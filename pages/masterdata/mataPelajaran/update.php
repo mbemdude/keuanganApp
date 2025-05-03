@@ -30,9 +30,10 @@ if (isset($_GET['id'])) {
                 <?php
             } else {
                 // Update Query
-                $updateSql = "UPDATE mata_pelajaran SET mata_pelajaran = :mata_pelajaran WHERE id = :id";
+                $updateSql = "UPDATE mata_pelajaran SET mata_pelajaran = :mata_pelajaran, kategori = :kategori WHERE id = :id";
                 $stmt = $db->prepare($updateSql);
                 $stmt->bindParam(':mata_pelajaran', $_POST['mata_pelajaran']);
+                $stmt->bindParam(':kategori', $_POST['kategori']);
                 $stmt->bindParam(':id', $_POST['id']);
 
                 if ($stmt->execute()) {
@@ -57,6 +58,13 @@ if (isset($_GET['id'])) {
                         <div class="form-group">
                             <label for="mata_pelajaran">Mata Pelajaran</label>
                             <input type="text" name="mata_pelajaran" class="form-control" value="<?= $row['mata_pelajaran'] ?>">
+                            <label for="kategori">Kategori</label>
+                            <select name="kategori" class="form-select">
+                                <option value="">-- Pilih Kategori --</option>
+                                <option value="Agama">Agama</option>
+                                <option value="Bahasa">Bahasa</option>
+                                <option value="Umum">Umum</option>
+                            </select>
                             <input type="hidden" name="id" value="<?= $row['id'] ?>">
                         </div>
                         <div class="mt-2">

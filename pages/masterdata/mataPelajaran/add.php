@@ -18,9 +18,10 @@ if (isset($_POST['button_create'])) {
         </div>
         <?php
     } else {
-        $insertSql = "INSERT INTO mata_pelajaran (mata_pelajaran) VALUES (:mata_pelajaran)";
+        $insertSql = "INSERT INTO mata_pelajaran (mata_pelajaran, kategori) VALUES (:mata_pelajaran, :kategori)";
         $stmt = $db->prepare($insertSql);
         $stmt->bindParam(':mata_pelajaran', $_POST['mata_pelajaran']);
+        $stmt->bindParam(':kategori', $_POST['kategori']);
         
         if ($stmt->execute()) {
             $_SESSION['hasil'] = true;
@@ -44,6 +45,13 @@ if (isset($_POST['button_create'])) {
                 <div class="form-group">
                     <label for="mata_pelajaran">Mata Pelajaran</label>
                     <input type="text" name="mata_pelajaran" class="form-control">
+                    <label for="kategori">Mata Pelajaran</label>
+                    <select name="kategori" class="form-select">
+                        <option value="">-- Pilih Kategori --</option>
+                        <option value="Agama">Agama</option>
+                        <option value="Bahasa">Bahasa</option>
+                        <option value="Umum">Umum</option>
+                    </select>
                 </div>
                 <div class="mt-2">
                     <a href="?page=mata-pelajaran" class="btn btn-danger">Batal</a>
