@@ -138,15 +138,11 @@ $routes = [
     'hapus-semua-presensi' => 'pages/operator/presensi/deleteAll.php',
     'impor-presensi' => 'pages/operator/presensi/export.php',
 
-    'nilai-rapor' => 'pages/operator/nilaiRapor/read.php',
-    'show-nilai-rapor' => 'pages/operator/nilaiRapor/show.php',
-    'tambah-nilai-rapor' => 'pages/operator/nilaiRapor/add.php',
-    'edit-nilai-rapor' => 'pages/operator/nilaiRapor/update.php',
-    'hapus-nilai-rapor' => 'pages/operator/nilaiRapor/delete.php',
-    'hapus-semua-nilai-rapor' => 'pages/operator/nilaiRapor/deleteAll.php',
-    'cetak-nilai-uts' => 'pages/operator/nilaiRapor/printUts.php',
-    'cetak-nilai-uas' => 'pages/operator/nilaiRapor/printUas.php',
-    'impor-nilai-rapor' => 'pages/operator/nilaiRapor/export.php'
+    'nilai-rapor-uts' => 'pages/operator/nilaiRapor/uts/read.php',
+    'tambah-nilai-rapor-uts' => 'pages/operator/nilaiRapor/uts/add.php',
+    'hapus-semua-nilai-rapor-uts' => 'pages/operator/nilaiRapor/uts/deleteAll.php',
+    'cetak-nilai-uts' => 'pages/operator/nilaiRapor/uts/printUts.php',
+    'impor-nilai-rapor' => 'pages/operator/nilaiRapor/uts/export.php'
 ];
 
 // Check if page parameter exists and load corresponding file or default to home
