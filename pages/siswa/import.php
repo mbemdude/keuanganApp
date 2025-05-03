@@ -8,7 +8,7 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 
 // Handler Expor
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['export'])) {
-    $query = "SELECT nr.*, s.nama, k.kelas, mp.mata_pelajaran, ta.tahun_ajaran FROM nilai_rapor nr JOIN siswa s ON nr.siswa_id = s.id JOIN kelas k ON s.kelas_id = k.id JOIN mata_pelajaran mp ON nr.mata_pelajaran_id = mp.id JOIN tahun_ajaran ta ON nr.tahun_ajaran_id = ta.id";
+    $query = "SELECT s.*, j.jenjang, k.kelas, st.status FROM siswa s JOIN jenjang j ON s.jenjang_id = j.id JOIN kelas k ON s.kelas_id = k.id JOIN status st ON s.status_id = st.id";
     $stmt = $db->prepare($query);
     $stmt->execute();
     $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -17,31 +17,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['export'])) {
     $sheet = $spreadsheet->getActiveSheet();
 
     // Menulis header ke file Excel
-    $sheet->setCellValue('A1', 'Nama');
-    $sheet->setCellValue('B1', 'Kelas');
-    $sheet->setCellValue('C1', 'Mata Pelajaran');
-    $sheet->setCellValue('D1', 'Nilai UTS');
-    $sheet->setCellValue('E1', 'Nilai UAS');
-    $sheet->setCellValue('F1', 'Semester');
-    $sheet->setCellValue('G1', 'Tahun Ajaran');
+    $sheet->setCellValue('A1', 'NIS');
+    $sheet->setCellValue('B1', 'NAMA');
+    $sheet->setCellValue('C1', 'ALAMAT');
+    $sheet->setCellValue('D1', 'JENIS KELAMIN');
+    $sheet->setCellValue('E1', 'JENJANG');
+    $sheet->setCellValue('F1', 'KELAS');
+    $sheet->setCellValue('G1', 'STATUS');
+    $sheet->setCellValue('H1', 'JUMLAH SAUDARA');
+    $sheet->setCellValue('I1', 'PEKERJAAN AYAH');
 
     // Menulis data siswa ke file Excel
     $rowNumber = 2;
     foreach ($data as $row) {
-        $sheet->setCellValue('A' . $rowNumber, $row['nama']);
-        $sheet->setCellValue('B' . $rowNumber, $row['kelas']);
-        $sheet->setCellValue('C' . $rowNumber, $row['mata_pelajaran']);
-        $sheet->setCellValue('D' . $rowNumber, $row['nilai_uts']);
-        $sheet->setCellValue('E' . $rowNumber, $row['nilai_uas']);
-        $sheet->setCellValue('F' . $rowNumber, $row['semester']);
-        $sheet->setCellValue('G' . $rowNumber, $row['tahun_ajaran']);
+        $sheet->setCellValue('A' . $rowNumber, $row['nis']);
+        $sheet->setCellValue('B' . $rowNumber, $row['nama']);
+        $sheet->setCellValue('C' . $rowNumber, $row['alamat']);
+        $sheet->setCellValue('D' . $rowNumber, $row['jenis_kelamin']);
+        $sheet->setCellValue('E' . $rowNumber, $row['jenjang']);
+        $sheet->setCellValue('F' . $rowNumber, $row['kelas']);
+        $sheet->setCellValue('G' . $rowNumber, $row['status']);
+        $sheet->setCellValue('H' . $rowNumber, $row['jumlah_saudara']);
+        $sheet->setCellValue('I' . $rowNumber, $row['pekerjaan_ayah']);
         $rowNumber++;
     }
     
     ob_end_clean();
 
     $writer = new Xlsx($spreadsheet);
-    $filename = 'data_nilai_siswa.xlsx';
+    $filename = 'data_siswa.xlsx';
 
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     header('Content-Disposition: attachment;filename="' . $filename . '"');
