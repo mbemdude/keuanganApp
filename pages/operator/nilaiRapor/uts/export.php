@@ -18,9 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['export'])) {
     $sheet->setCellValue('B1', 'Kelas');
     $sheet->setCellValue('C1', 'Mata Pelajaran');
     $sheet->setCellValue('D1', 'Nilai UTS');
-    $sheet->setCellValue('E1', 'Nilai UAS');
-    $sheet->setCellValue('F1', 'Semester');
-    $sheet->setCellValue('G1', 'Tahun Ajaran');
+    $sheet->setCellValue('E1', 'Semester');
+    $sheet->setCellValue('F1', 'Tahun Ajaran');
 
     // Menulis data siswa ke file Excel
     $rowNumber = 2;
@@ -29,9 +28,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['export'])) {
         $sheet->setCellValue('B' . $rowNumber, $row['kelas']);
         $sheet->setCellValue('C' . $rowNumber, $row['mata_pelajaran']);
         $sheet->setCellValue('D' . $rowNumber, $row['nilai_uts']);
-        $sheet->setCellValue('E' . $rowNumber, $row['nilai_uas']);
-        $sheet->setCellValue('F' . $rowNumber, $row['semester']);
-        $sheet->setCellValue('G' . $rowNumber, $row['tahun_ajaran']);
+        $sheet->setCellValue('E' . $rowNumber, $row['semester']);
+        $sheet->setCellValue('F' . $rowNumber, $row['tahun_ajaran']);
         $rowNumber++;
     }
     
@@ -156,7 +154,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
 
     $_SESSION['hasil'] = true;
     $_SESSION['pesan'] = "Berhasil import data";
-    echo "<meta http-equiv='refresh' content='0;url=?page=nilai-rapor'>";
+    echo "<meta http-equiv='refresh' content='0;url=?page=nilai-rapor-uts'>";
     exit();
 }
 ?>
@@ -181,7 +179,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
                             <input type="file" id="file" name="file" class="form-control" accept=".csv, .xls, .xlsx" required>
                         </div>
                         <div class="mt-2">
-                            <a href="?page=nilai-rapor" class="btn btn-danger">Batal</a>
+                            <a href="?page=nilai-rapor-uts" class="btn btn-danger">Batal</a>
                             <button type="submit" class="btn btn-success">Impor Data</button>
                         </div>
                     </form>
