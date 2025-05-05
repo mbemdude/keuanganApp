@@ -142,7 +142,13 @@ $routes = [
     'tambah-nilai-rapor-uts' => 'pages/operator/nilaiRapor/uts/add.php',
     'hapus-semua-nilai-rapor-uts' => 'pages/operator/nilaiRapor/uts/deleteAll.php',
     'cetak-nilai-uts' => 'pages/operator/nilaiRapor/uts/printUts.php',
-    'impor-nilai-rapor' => 'pages/operator/nilaiRapor/uts/export.php'
+    'impor-nilai-rapor' => 'pages/operator/nilaiRapor/uts/export.php',
+
+    'nilai-rapor-uas' => 'pages/operator/nilaiRapor/uas/read.php',
+    'tambah-nilai-rapor-uas' => 'pages/operator/nilaiRapor/uas/add.php',
+    'hapus-semua-nilai-rapor-uas' => 'pages/operator/nilaiRapor/uas/deleteAll.php',
+    'cetak-nilai-uas' => 'pages/operator/nilaiRapor/uas/printUas.php',
+    'impor-nilai-rapor' => 'pages/operator/nilaiRapor/uas/export.php'
 ];
 
 // Check if page parameter exists and load corresponding file or default to home
