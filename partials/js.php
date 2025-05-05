@@ -127,6 +127,10 @@
         function printUts(siswa_id, tahun_ajaran_id, semester) {
             var printWindow = window.open('?page=cetak-nilai-uts&siswa_id=' + siswa_id +'&tahun_ajaran_id=' + tahun_ajaran_id + '&semester=' + semester, '_blank');
         }
+
+        function printUas(siswa_id, tahun_ajaran_id, semester) {
+            var printWindow = window.open('?page=cetak-nilai-uas&siswa_id=' + siswa_id +'&tahun_ajaran_id=' + tahun_ajaran_id + '&semester=' + semester, '_blank');
+        }
     </script>
     <!-- Cetak end -->
 
