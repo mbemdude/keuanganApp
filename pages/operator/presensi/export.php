@@ -153,7 +153,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
                             <input type="file" id="file" name="file" class="form-control" accept=".csv, .xls, .xlsx" required>
                         </div>
                         <div class="mt-2">
-                            <a href="?page=tagihan-siswa" class="btn btn-danger">Batal</a>
+                            <a href="?page=presensi" class="btn btn-danger">Batal</a>
                             <button type="submit" class="btn btn-success">Impor Data</button>
                         </div>
                     </form>
