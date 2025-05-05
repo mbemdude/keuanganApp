@@ -114,10 +114,31 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="?page=nilai-rapor" class="nav-link">
+                                    <a href="#" class="nav-link">
                                         <i class="nav-icon bi bi-clipboard2-data-fill"></i>
-                                        <p>Nilai Rapor</p>
+                                        <p>
+                                            Nilai Rapor
+                                            <i class="nav-arrow bi bi-chevron-right"></i>
+                                        </p>
                                     </a>
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item">
+                                            <a href="?page=nilai-rapor-uts" class="nav-link">
+                                                <i class="nav-icon bi bi-clipboard2-data-fill"></i>
+                                                <p>
+                                                    UTS
+                                                </p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="?page=nilai-rapor-uas" class="nav-link">
+                                                <i class="nav-icon bi bi-clipboard2-data-fill"></i>
+                                                <p>
+                                                    UAS
+                                                </p>
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </li>
                             </ul>
                         </li>
