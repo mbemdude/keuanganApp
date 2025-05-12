@@ -7,7 +7,7 @@ function resetNilaiRaporTable() {
     $database = new Database();
     $db = $database->getConnection();
     $tableName = 'nilai_rapor';
-    $deleteSql = "UPDATE $tableName SET nilai_uts = NULL";
+    $deleteSql = "DELETE FROM $tableName";
     $resetAutoIncrementSql = "ALTER TABLE $tableName AUTO_INCREMENT = 1";
 
     try {
