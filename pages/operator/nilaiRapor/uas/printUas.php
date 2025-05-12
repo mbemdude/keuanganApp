@@ -122,7 +122,7 @@ $labelKategori = [
         </tr>
         <tr>
             <th><?= $siswa['tahun_ajaran'] ?></th><th>Tahun Ajaran / العام الدراسي</th>
-            <th>No Induk</th><th>NISN</th>
+            <th><?= $siswa['nisn']?></th><th>NISN</th>
         </tr>
     </table>
 
