@@ -99,6 +99,12 @@ $routes = [
     'edit-user' => 'pages/admin/user/update.php',
     'hapus-user' => 'pages/admin/user/delete.php',
     'hapus-semua-user' => 'pages/admin/user/deleteAll.php',
+    
+    'kriteria' => 'pages/admin/kriteria/read.php',
+    'tambah-kriteria' => 'pages/admin/kriteria/add.php',
+    'edit-kriteria' => 'pages/admin/kriteria/update.php',
+    'hapus-kriteria' => 'pages/admin/kriteria/delete.php',
+    'hapus-semua-kriteria' => 'pages/admin/kriteria/deleteAll.php',
 
     // Operator Section
     'mata-pelajaran' => 'pages/masterdata/mataPelajaran/read.php',
