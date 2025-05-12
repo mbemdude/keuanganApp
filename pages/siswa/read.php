@@ -40,6 +40,7 @@
                     <tr>
                       <th>No</th>
                       <th>NIS</th>
+                      <th>NISN</th>
                       <th>Nama</th>
                       <th>Kelas</th>
                       <th>Jenjang</th>
@@ -62,6 +63,7 @@
                     <tr>
                       <th scope="row"><?php echo $no++ ?></th>
                       <td><?php echo$row['nis'] ?></td>
+                      <td><?php echo$row['nisn'] ?></td>
                       <td><?php echo$row['nama'] ?></td>
                       <td><?php echo$row['kelas'] ?></td>
                       <td><?php echo$row['jenjang'] ?></td>

@@ -19,10 +19,11 @@ if (isset($_POST['button_create'])) {
         </div>
         <?php
     } else {
-        $insertSql = "INSERT INTO siswa (nama, nis, jenjang_id, kelas_id, status_id) VALUES (:nama, :nis, :jenjang_id, :kelas_id, :status_id)";
+        $insertSql = "INSERT INTO siswa (nis, nisn, nama, jenjang_id, kelas_id, status_id) VALUES (:nis, :nisn, :nama, :jenjang_id, :kelas_id, :status_id)";
         $stmt = $db->prepare($insertSql);
-        $stmt->bindParam(':nama', $_POST['nama']);
         $stmt->bindParam(':nis', $_POST['nis']);
+        $stmt->bindParam(':nisn', $_POST['nisn']);
+        $stmt->bindParam(':nama', $_POST['nama']);
         $stmt->bindParam(':jenjang_id', $_POST['jenjang_id']);
         $stmt->bindParam(':kelas_id', $_POST['kelas_id']);
         $stmt->bindParam(':status_id', $_POST['status_id']);
@@ -49,6 +50,8 @@ if (isset($_POST['button_create'])) {
                 <div class="form-group">
                     <label for="nis">NIS</label>
                     <input type="text" name="nis" class="form-control">
+                    <label for="nisn">NISN</label>
+                    <input type="text" name="nisn" class="form-control">
                     <label for="nama">Nama</label>
                     <input type="text" name="nama" class="form-control">
                     <label for="Jenjang_id">Jenjang</label>

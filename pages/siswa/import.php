@@ -71,13 +71,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
 
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 $nis            = trim($data[0]);
-                $nama           = trim($data[1]);
-                $jenis_kelamin  = trim($data[2]);
-                $jenjangNama    = trim($data[3]);
-                $kelasNama      = trim($data[4]);
-                $statusNama     = trim($data[5]);
-                $pekerjaan_ayah = trim($data[6]);
-                $jumlah_saudara = trim($data[7]);
+                $nisn           = trim($data[1]);
+                $nama           = trim($data[2]);
+                $jenis_kelamin  = trim($data[3]);
+                $jenjangNama    = trim($data[4]);
+                $kelasNama      = trim($data[5]);
+                $statusNama     = trim($data[6]);
+                $pekerjaan_ayah = trim($data[7]);
+                $jumlah_saudara = trim($data[8]);
 
                 // 🔹 Cari ID jenjang berdasarkan nama
                 $stmtJenjang = $db->prepare("SELECT id FROM jenjang WHERE jenjang = :jenjang");
@@ -102,10 +103,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
 
                 // 🔹 Hanya masukkan data jika ID ditemukan
                 if ($jenjang_id && $kelas_id && $status_id) {
-                    $query = "INSERT INTO siswa (nis, nama, jenis_kelamin, jenjang_id, kelas_id, status_id, jumlah_saudara, pekerjaan_ayah) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)";      
+                    $query = "INSERT INTO siswa (nis, nisn, nama, jenis_kelamin, jenjang_id, kelas_id, status_id, jumlah_saudara, pekerjaan_ayah) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";      
                     $stmt = $db->prepare($query);
-                    $stmt->execute([$nis, $nama, $jenis_kelamin, $jenjang_id, $kelas_id, $status_id, $jumlah_saudara, $pekerjaan_ayah]);
+                    $stmt->execute([$nis, $nisn, $nama, $jenis_kelamin, $jenjang_id, $kelas_id, $status_id, $jumlah_saudara, $pekerjaan_ayah]);
                 }
             }
             fclose($handle);
@@ -119,13 +120,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
             if ($rowIndex == 1) continue; // Melewati header
 
             $nis            = trim($worksheet->getCell("A$rowIndex")->getValue());
-            $nama           = trim($worksheet->getCell("B$rowIndex")->getValue());
-            $jenis_kelamin  = trim($worksheet->getCell("C$rowIndex")->getValue());
-            $jenjangNama    = trim($worksheet->getCell("D$rowIndex")->getValue());
-            $kelasNama      = trim($worksheet->getCell("E$rowIndex")->getValue());
-            $statusNama     = trim($worksheet->getCell("F$rowIndex")->getValue());
-            $pekerjaan_ayah = trim($worksheet->getCell("G$rowIndex")->getValue());
-            $jumlah_saudara = trim($worksheet->getCell("H$rowIndex")->getValue());
+            $nisn           = trim($worksheet->getCell("B$rowIndex")->getValue());
+            $nama           = trim($worksheet->getCell("C$rowIndex")->getValue()); 
+            $alamat         = trim($worksheet->getCell("D$rowIndex")->getValue()); 
+            $jenis_kelamin  = trim($worksheet->getCell("E$rowIndex")->getValue());
+            $jenjangNama    = trim($worksheet->getCell("F$rowIndex")->getValue());
+            $kelasNama      = trim($worksheet->getCell("G$rowIndex")->getValue());
+            $statusNama     = trim($worksheet->getCell("H$rowIndex")->getValue());
+            $jumlah_saudara = trim($worksheet->getCell("I$rowIndex")->getValue());
+            $pekerjaan_ayah = trim($worksheet->getCell("J$rowIndex")->getValue());
 
             // 🔹 Cari ID jenjang berdasarkan nama
             $stmtJenjang = $db->prepare("SELECT id FROM jenjang WHERE jenjang = :jenjang");
@@ -150,10 +153,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
 
             // 🔹 Hanya masukkan data jika ID ditemukan
             if ($jenjang_id && $kelas_id && $status_id) {
-                $query = "INSERT INTO siswa (nis, nama, jenis_kelamin, jenjang_id, kelas_id, status_id, jumlah_saudara, pekerjaan_ayah) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)";      
+                $query = "INSERT INTO siswa (nis, nisn, nama, alamat, jenis_kelamin, jenjang_id, kelas_id, status_id, jumlah_saudara, pekerjaan_ayah) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";      
                 $stmt = $db->prepare($query);
-                $stmt->execute([$nis, $nama, $jenis_kelamin, $jenjang_id, $kelas_id, $status_id, $jumlah_saudara, $pekerjaan_ayah]);
+                $stmt->execute([$nis, $nisn, $nama, $alamat, $jenis_kelamin, $jenjang_id, $kelas_id, $status_id, $jumlah_saudara, $pekerjaan_ayah]);
             }
         }
     } else {
@@ -162,7 +165,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
 
     $_SESSION['hasil'] = true;
     $_SESSION['pesan'] = "Berhasil import data";
-    echo "<meta http-equiv='refresh' content='0;url=?page=nilai-rapor'>";
+    echo "<meta http-equiv='refresh' content='0;url=?page=siswa'>";
     exit();
 }
 ?>
@@ -187,7 +190,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
                             <input type="file" id="file" name="file" class="form-control" accept=".csv, .xls, .xlsx" required>
                         </div>
                         <div class="mt-2">
-                            <a href="?page=nilai-rapor" class="btn btn-danger">Batal</a>
+                            <a href="?page=siswa" class="btn btn-danger">Batal</a>
                             <button type="submit" class="btn btn-success">Impor Data</button>
                         </div>
                     </form>
