@@ -101,7 +101,7 @@ if (isset($_GET['id'])) {
                                     <label for="nama">Nama</label>
                                     <input type="text" name="nama" class="form-control" value="<?= $row['nama'] ?>">
                                     <label for="alamat">Alamat</label>
-                                    <textarea name="alamat" class="form-control" value="<?= $row['alamat'] ?>"></textarea>
+                                    <textarea name="alamat" class="form-control"><?= $row['alamat'] ?></textarea>
                                     <label for="jenis_kelamin">Jenis Kelamin</label>
                                     <select name="jenis_kelamin" class="form-select">
                                         <option value="">- Pilih -</option>
@@ -157,8 +157,9 @@ if (isset($_GET['id'])) {
                                         <option value="">- Pilih -</option>
                                         <option value="Tidak Bekerja" <?= ($row['pekerjaan_ayah'] == 'Tidak Bekerja') ? 'selected' : '' ?>>Tidak Bekerja</option>
                                         <option value="Buruh" <?= ($row['pekerjaan_ayah'] == 'Buruh') ? 'selected' : '' ?>>Buruh</option>
-                                        <option value="Pedagang" <?= ($row['pekerjaan_ayah'] == 'Pedagang') ? 'selected' : '' ?>>Pedagang</option>
+                                        <option value="Wirausaha" <?= ($row['pekerjaan_ayah'] == 'Wirausaha') ? 'selected' : '' ?>>Wirausaha</option>
                                         <option value="Karyawan Swasta" <?= ($row['pekerjaan_ayah'] == 'Karyawan Swasta') ? 'selected' : '' ?>>Karyawan Swasta</option>
+                                        <option value="PNS" <?= ($row['pekerjaan_ayah'] == 'PNS') ? 'selected' : '' ?>>PNS</option>
                                     </select>
                                     <input type="hidden" name="id" value="<?= $row['id'] ?>">
                                 </div>
