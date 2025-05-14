@@ -4,24 +4,6 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
-// Fungsi untuk mengonversi format tanggal
-function convertToDate($dateValue, $format = 'Y-m-d') {
-    if (is_numeric($dateValue)) {
-        // Jika tanggal dalam format angka Excel, konversi ke DateTime
-        $date = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($dateValue);
-    } else {
-        // Jika tanggal dalam format teks, konversi ke DateTime
-        $date = date_create_from_format('Y-m-d', $dateValue);
-        if (!$date) {
-            // Jika format gagal, coba format lain, seperti d-m-Y atau m/d/Y
-            $date = date_create_from_format('d-m-Y', $dateValue) ?: date_create($dateValue);
-        }
-    }
-
-    // Kembalikan format tanggal yang sesuai atau null jika gagal
-    return $date ? $date->format($format) : null;
-}
-
 // Handle ekspor
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['export'])) {
     $database = new Database();
