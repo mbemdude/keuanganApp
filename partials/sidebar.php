@@ -248,9 +248,15 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item"> 
-                                    <a href="#" class="nav-link"> 
+                                    <a href="?page=kriteria" class="nav-link"> 
                                         <i class="nav-icon bi bi-clipboard2-check-fill"></i>
                                         <p>Kriteria</p>
+                                    </a> 
+                                </li>
+                                <li class="nav-item"> 
+                                    <a href="?page=nilai-alternatif" class="nav-link"> 
+                                        <i class="nav-icon bi bi-clipboard2-check-fill"></i>
+                                        <p>Nilai Alternatif</p>
                                     </a> 
                                 </li>
                                 <li class="nav-item"> 
