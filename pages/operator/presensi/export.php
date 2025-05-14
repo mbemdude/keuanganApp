@@ -97,8 +97,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
 
             $namaSiswa      = trim($worksheet->getCell("A$rowIndex")->getValue());
             $mataPelajaran  = trim($worksheet->getCell("B$rowIndex")->getValue());
-            $tanggal        = trim($worksheet->getCell("C$rowIndex")->getValue());
-            $status         = trim($worksheet->getCell("D$rowIndex")->getValue());
+            $tanggal        = convertToDate(trim($worksheet->getCell("C$rowIndex")->getCalculatedValue()));
+            $status         = trim($worksheet->getCell("D$rowIndex")->getCalculatedValue());
 
             // 🔹 Cari ID siswa berdasarkan nama
             $stmtSiswa = $db->prepare("SELECT id FROM siswa WHERE nama = :nama");
