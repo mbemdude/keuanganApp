@@ -108,8 +108,13 @@ $routes = [
     
     'nilai-alternatif' => 'pages/admin/nilaiAlternatif/read.php',
     'generate-nilai-alternatif' => 'pages/admin/nilaiAlternatif/add.php',
-    'hapus-nliai-alternatif' => 'pages/admin/nilaiAlternatif/delete.php',
+    'hapus-nilai-alternatif' => 'pages/admin/nilaiAlternatif/delete.php',
     'hapus-semua-nilai-alternatif' => 'pages/admin/nilaiAlternatif/deleteAll.php',
+    
+    'normalisasi' => 'pages/admin/normalisasi/read.php',
+    'generate-normalisasi' => 'pages/admin/normalisasi/add.php',
+    'hapus-normalisasi' => 'pages/admin/normalisasi/delete.php',
+    'hapus-semua-normalisasi' => 'pages/admin/normalisasi/deleteAll.php',
 
     // Operator Section
     'mata-pelajaran' => 'pages/masterdata/mataPelajaran/read.php',
