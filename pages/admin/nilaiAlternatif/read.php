@@ -30,7 +30,7 @@
             <div class="card">
               <div class="card-header">
                 <a href="?page=generate-nilai-alternatif" class="btn btn-success">Generate Data <i class="bi bi-plus-circle-fill"></i></a>
-                <a href="#" onclick="confirmDelete('?page=hapus-semua-nliai-alternatif')" class="btn btn-danger">Hapus Semua Data <i class="bi bi-trash-fill"></i></a>
+                <a href="#" onclick="confirmDelete('?page=hapus-semua-nilai-alternatif')" class="btn btn-danger">Hapus Semua Data <i class="bi bi-trash-fill"></i></a>
               </div>
               <!-- /.card-header -->
               <div class="card-body">

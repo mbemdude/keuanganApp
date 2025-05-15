@@ -109,7 +109,7 @@ $routes = [
     'nilai-alternatif' => 'pages/admin/nilaiAlternatif/read.php',
     'generate-nilai-alternatif' => 'pages/admin/nilaiAlternatif/add.php',
     'hapus-nliai-alternatif' => 'pages/admin/nilaiAlternatif/delete.php',
-    'hapus-semua-nliai-alternatif' => 'pages/admin/nilaiAlternatif/deleteAll.php',
+    'hapus-semua-nilai-alternatif' => 'pages/admin/nilaiAlternatif/deleteAll.php',
 
     // Operator Section
     'mata-pelajaran' => 'pages/masterdata/mataPelajaran/read.php',
