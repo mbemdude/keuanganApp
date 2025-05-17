@@ -20,7 +20,7 @@ function resetNilaiAlternatifTable() {
         $stmt->execute();
 
         $_SESSION['hasil'] = true;
-        $_SESSION['pesan'] = "Semua data nilai alternatif berhasil dihapus.";
+        $_SESSION['pesan'] = "Semua data normalisasi berhasil dihapus.";
     } catch (Exception $e) {
         // Rollback transaksi jika ada kesalahan
         $db->rollBack();
