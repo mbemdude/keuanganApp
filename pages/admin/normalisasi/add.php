@@ -1,39 +1,57 @@
 <?php
-// Kosongkan tabel normalisasi sebelum insert baru
-$db->exec("DELETE FROM normalisasi");
+// Ambil semua data nilai alternatif
+$stmt = $db->prepare("SELECT * FROM nilai_alternatif");
+$stmt->execute();
+$dataAlternatif = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Ambil semua kriteria
-$stmtKriteria = $db->prepare("SELECT id, tipe FROM kriteria");
-$stmtKriteria->execute();
-$kriteriaList = $stmtKriteria->fetchAll(PDO::FETCH_ASSOC);
+$stmt = $db->prepare("SELECT * FROM kriteria");
+$stmt->execute();
+$dataKriteria = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-foreach ($kriteriaList as $kriteria) {
-    $kriteria_id = $kriteria['id'];
-    $tipe = strtolower($kriteria['tipe']);
+// Buat array max/min berdasarkan kriteria
+$max = [];
+$min = [];
+foreach ($dataKriteria as $kriteria) {
+    $id = $kriteria['id'];
+    $stmt = $db->prepare("SELECT nilai FROM nilai_alternatif WHERE kriteria_id = ?");
+    $stmt->execute([$id]);
+    $nilaiList = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    $max[$id] = max($nilaiList);
+    $min[$id] = min($nilaiList);
+}
 
-    // Ambil semua nilai alternatif untuk kriteria ini
-    $stmtNilai = $db->prepare("SELECT siswa_id, nilai FROM nilai_alternatif WHERE kriteria_id = ?");
-    $stmtNilai->execute([$kriteria_id]);
-    $nilaiList = $stmtNilai->fetchAll(PDO::FETCH_ASSOC);
+// Kosongkan tabel normalisasi
+$db->exec("DELETE FROM normalisasi");
 
-    // Hitung pembagi: max (benefit) atau min (cost)
-    $pembagi = ($tipe === 'benefit') ? max(array_column($nilaiList, 'nilai')) : min(array_column($nilaiList, 'nilai'));
+// Proses normalisasi dan simpan
+$nilaiNormalisasi = [];
+foreach ($dataAlternatif as $alt) {
+    $kriteria_id = $alt['kriteria_id'];
+    $siswa_id = $alt['siswa_id'];
+    $nilai = $alt['nilai'];
 
-    // Simpan nilai normalisasi ke tabel
-    foreach ($nilaiList as $row) {
-        $siswa_id = $row['siswa_id'];
-        $nilai = $row['nilai'];
-
-        $nilai_normalisasi = ($tipe === 'benefit') 
-            ? ($pembagi != 0 ? $nilai / $pembagi : 0) 
-            : ($nilai != 0 ? $pembagi / $nilai : 0);
-
-        $stmtInsert = $db->prepare("INSERT INTO normalisasi (siswa_id, kriteria_id, nilai_normalisasi) VALUES (?, ?, ?)");
-        $stmtInsert->execute([$siswa_id, $kriteria_id, $nilai_normalisasi]);
+    $tipe = '';
+    foreach ($dataKriteria as $krit) {
+        if ($krit['id'] == $kriteria_id) {
+            $tipe = $krit['tipe'];
+            break;
+        }
     }
+
+    if ($tipe == 'benefit') {
+        $nilaiNorm = $max[$kriteria_id] ? $nilai / $max[$kriteria_id] : 0;
+    } else {
+        $nilaiNorm = $nilai ? $min[$kriteria_id] / $nilai : 0;
+    }
+
+    $nilaiNormalisasi[$siswa_id][$kriteria_id] = $nilaiNorm;
+
+    $stmt = $db->prepare("INSERT INTO normalisasi (siswa_id, kriteria_id, nilai_normalisasi) VALUES (?, ?, ?)");
+    $stmt->execute([$siswa_id, $kriteria_id, $nilaiNorm]);
 }
 
 $_SESSION['hasil'] = true;
-$_SESSION['pesan'] = "Berhasil generate nilai normalisasi.";
+$_SESSION['pesan'] = "Berhasil melakukan normalisasi.";
 echo "<meta http-equiv='refresh' content='0;url=?page=normalisasi'>";
 exit();
