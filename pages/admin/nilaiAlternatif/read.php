@@ -75,7 +75,6 @@
                       <td><?php echo$row['c4'] ?></td>
                       <td><?php echo$row['c5'] ?></td>
                       <td>
-                        <a href="?page=edit-kriteria&id=<?php echo $row['id'] ?>" class="btn btn-warning"><i class="bi bi-pen"></i></a>
                         <a href="#" onclick="confirmDelete('?page=hapus-nilai-alternatif&id=<?php echo $row['id'] ?>')" class="btn btn-danger"><i class="bi bi-trash"></i></a>
                       </td>
                     </tr>
