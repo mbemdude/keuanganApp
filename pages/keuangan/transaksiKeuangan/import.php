@@ -67,10 +67,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
         array_shift($data);
 
         foreach ($data as $row) {
-            $siswaId = $row[0];
+            $nis = trim($row[0]);
             $jumlah = $row[1];
             $tanggalTransaksi = date('Y-m-d', strtotime($row[2])); // Konversi tanggal
 
+            $stmtSiswa = $db->prepare("SELECT id FROM siswa WHERE nis = ?");
+            $stmtSiswa->execute([$nis]);
+            $siswa = $stmtSiswa->fetch(PDO::FETCH_ASSOC);
+            if (!$siswa) {
+                throw new Exception("Data siswa dengan nis : $nis tidak ditemukan");
+            }
+            $siswaId = $siswa['id'];
             try {
                 $db->beginTransaction();
 
