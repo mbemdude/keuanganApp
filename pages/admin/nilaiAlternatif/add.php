@@ -54,11 +54,11 @@ foreach ($siswaList as $siswa) {
                 $stmtTunggakan = $db->prepare("SELECT SUM(jumlah_tagihan) FROM tagihan_siswa WHERE siswa_id = ?");
                 $stmtTunggakan->execute([$siswa['id']]);
                 $total = $stmtTunggakan->fetchColumn();
-                if ($total >= 5000000) {
+                if ($total >= 8000000) {
                     $nilai = 5;
-                } elseif ($total >= 4000000) {
+                } elseif ($total >= 6000000) {
                     $nilai = 4;
-                } elseif ($total >= 3000000) {
+                } elseif ($total >= 4000000) {
                     $nilai = 3;
                 } elseif ($total >= 2000000) {
                     $nilai = 2;
