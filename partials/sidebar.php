@@ -266,7 +266,7 @@
                                     </a> 
                                 </li>
                                 <li class="nav-item"> 
-                                    <a href="#" class="nav-link"> 
+                                    <a href="?page=perhitungan-spk" class="nav-link"> 
                                         <i class="nav-icon bi bi-clipboard2-pulse-fill"></i>
                                         <p>Perhitungan SPK</p>
                                     </a> 
