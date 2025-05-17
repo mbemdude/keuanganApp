@@ -115,6 +115,12 @@ $routes = [
     'generate-normalisasi' => 'pages/admin/normalisasi/add.php',
     'hapus-normalisasi' => 'pages/admin/normalisasi/delete.php',
     'hapus-semua-normalisasi' => 'pages/admin/normalisasi/deleteAll.php',
+    
+    'perhitungan-spk' => 'pages/admin/hasilPerhitungan/read.php',
+    'generate-perhitungan-spk' => 'pages/admin/hasilPerhitungan/add.php',
+    'hapus-perhitungan-spk' => 'pages/admin/hasilPerhitungan/delete.php',
+    'hapus-semua-perhitungan-spk' => 'pages/admin/hasilPerhitungan/deleteAll.php',
+    'cetak-perhitungan-spk' => 'pages/admin/hasilPerhitungan/printAll.php',
 
     // Operator Section
     'mata-pelajaran' => 'pages/masterdata/mataPelajaran/read.php',
