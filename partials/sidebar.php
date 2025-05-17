@@ -260,9 +260,9 @@
                                     </a> 
                                 </li>
                                 <li class="nav-item"> 
-                                    <a href="#" class="nav-link"> 
+                                    <a href="?page=normalisasi" class="nav-link"> 
                                         <i class="nav-icon bi bi-clipboard2-data-fill"></i>
-                                        <p>Normalisasi Data</p>
+                                        <p>Normalisasi</p>
                                     </a> 
                                 </li>
                                 <li class="nav-item"> 
