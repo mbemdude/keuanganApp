@@ -233,7 +233,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
         <div class="col-lg-6 col-sm-12">
             <div class="card mx-3">
                 <div class="card-header">
-                    <h3 class="card-title">Ekspor/Impor Data Siswa</h3>
+                    <h3 class="card-title">Ekspor/Impor Data</h3>
                 </div>
                 <div class="card-body">
                     <form action="" method="post" class="mb-4">
@@ -258,7 +258,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
         <div class="col-lg-6 col-sm-12">
             <div class="card mx-3">
                 <div class="card-header">
-                    <h3 class="card-title">Tata Cara Import Siswa</h3>
+                    <h3 class="card-title">Cara Penggunaan Impor</h3>
                 </div>
                 <div class="card-body">
                     <ul>
