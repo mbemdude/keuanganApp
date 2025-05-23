@@ -64,24 +64,24 @@ if (isset($_GET['id'])) {
                                 $database = new Database();
                                 $db = $database->getConnection();
 
-                                $selectBarang = "SELECT * barang";
+                                $selectBarang = "SELECT * FROM barang";
                                 $stmtBarang = $db->prepare($selectBarang);
                                 $stmtBarang->execute();
 
                                 while ($rowBarang = $stmtBarang->fetch(PDO::FETCH_ASSOC)) {
                                     $selected = ($rowBarang['id'] == $row['barang_id'] ? 'selected' : '');
-                                    echo "<option value=\"" . $rowBarang['id'] . "\" $selected>" . $rowBarang['kode_barang'] | $rowBarang['nama_barang'] . "</option>";
+                                    echo "<option value=\"" . $rowBarang['id'] . "\" $selected>" . $rowBarang['kode_barang'] . " | " . $rowBarang['nama_barang'] . "</option>";
                                 }
                                 ?>
                             </select>
-                            <label for="supplier_id">Barang</label>
+                            <label for="supplier_id">Supplier</label>
                             <select name="supplier_id" class="form-select">
                                 <option value=""> - Pilih -</option>
                                 <?php 
                                 $database = new Database();
                                 $db = $database->getConnection();
 
-                                $selectSupplier = "SELECT * supplier";
+                                $selectSupplier = "SELECT * FROM supplier";
                                 $stmtSupplier = $db->prepare($selectSupplier);
                                 $stmtSupplier->execute();
 
