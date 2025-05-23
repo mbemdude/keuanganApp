@@ -59,7 +59,7 @@
                       <td><?php echo$row['role'] ?></td>
                       <td>
                         <a href="?page=edit-role&id=<?php echo $row['id'] ?>" class="btn btn-warning"><i class="bi bi-pen"></i></a>
-                        <a href="?page=hapus-role&id=<?php echo $row['id'] ?>" class="btn btn-danger"><i class="bi bi-trash"></i></a>
+                        <a href="#" onclick="confirmDelete('?page=hapus-role&id=<?php echo $row['id'] ?>')" class="btn btn-danger"><i class="bi bi-trash"></i></a>
                       </td>
                     </tr>
                     <?php } ?>
