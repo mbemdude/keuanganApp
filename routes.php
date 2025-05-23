@@ -53,6 +53,7 @@ $routes = [
     'tambah-jenis-pembayaran' => 'pages/masterdata/jenisPembayaran/add.php',
     'edit-jenis-pembayaran' => 'pages/masterdata/jenisPembayaran/update.php',
     'hapus-jenis-pembayaran' => 'pages/masterdata/jenisPembayaran/delete.php',
+    'hapus-semua-jenis-pembayaran' => 'pages/masterdata/jenisPembayaran/deleteAll.php',
     
     // Kasir section
     'barang' => 'pages/kasir/barang/read.php',
@@ -158,6 +159,7 @@ $routes = [
     'edit-presensi' => 'pages/operator/presensi/update.php',
     'hapus-presensi' => 'pages/operator/presensi/delete.php',
     'hapus-semua-presensi' => 'pages/operator/presensi/deleteAll.php',
+    'cetak-presensi' => 'pages/operator/presensi/printAll.php',
     'impor-presensi' => 'pages/operator/presensi/export.php',
 
     'nilai-rapor-uts' => 'pages/operator/nilaiRapor/uts/read.php',
