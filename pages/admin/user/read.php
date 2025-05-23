@@ -39,7 +39,7 @@
                     <tr>
                       <th>No</th>
                       <th>Nama</th>
-                      <th>NIP</th>
+                      <th>Username</th>
                       <th>Role</th>
                       <th>Aksi</th>
                     </tr>
@@ -60,7 +60,7 @@
                     <tr>
                       <th scope="row"><?php echo $no++ ?></th>
                       <td><?php echo$row['nama'] ?></td>
-                      <td><?php echo$row['nip'] ?></td>
+                      <td><?php echo$row['username'] ?></td>
                       <td><?php echo$row['role'] ?></td>
                       <td>
                         <a href="?page=edit-user&id=<?php echo $row['id'] ?>" class="btn btn-warning"><i class="bi bi-pen"></i></a>
@@ -75,7 +75,7 @@
                     <tr>
                       <th>No</th>
                       <th>Nama</th>
-                      <th>NIP</th>
+                      <th>Username</th>
                       <th>Role</th>
                       <th>Aksi</th>
                     </tr>
