@@ -17,7 +17,7 @@ if (isset($_POST['qr_code'])) {
         exit;
     } else {
         $_SESSION['error'] = "Siswa tidak ditemukan!";
-        header("Location: ?page=transaksi.php");
+        header("Location: ?page=transaksi");
         exit;
     }
     ob_end_flush();
