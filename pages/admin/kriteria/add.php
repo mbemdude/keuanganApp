@@ -18,9 +18,9 @@ if (isset($_POST['button_create'])) {
         </div>
         <?php
     } else {
-        $insertSql = "INSERT INTO kriteria (kriteria, bobot, tipe) VALUES (:kriteria, :bobot, :tipe)";
+        $insertSql = "INSERT INTO kriteria (nama_kriteria, bobot, tipe) VALUES (:nama_kriteria, :bobot, :tipe)";
         $stmt = $db->prepare($insertSql);
-        $stmt->bindParam(':kriteria', $_POST['kriteria']);
+        $stmt->bindParam(':nama_kriteria', $_POST['nama_kriteria']);
         $stmt->bindParam(':bobot', $_POST['bobot']);
         $stmt->bindParam(':tipe', $_POST['tipe']);
         
@@ -44,8 +44,8 @@ if (isset($_POST['button_create'])) {
         <div class="card-body">
             <form method="POST">
                 <div class="form-group">
-                    <label for="kriteria">Kriteria</label>
-                    <input type="text" name="kriteria" class="form-control">
+                    <label for="nama_kriteria">Kriteria</label>
+                    <input type="text" name="nama_kriteria" class="form-control">
                     <label for="bobot">Bobot</label>
                     <input type="text" name="bobot" class="form-control">
                     <label for="tipe">Tipe</label>

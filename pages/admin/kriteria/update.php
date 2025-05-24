@@ -30,9 +30,9 @@ if (isset($_GET['id'])) {
                 <?php
             } else {
                 // Update Query
-                $updateSql = "UPDATE kriteria SET kriteria = :kriteria, bobot = :bobot, tipe = :tipe WHERE id = :id";
+                $updateSql = "UPDATE kriteria SET nama_kriteria = :nama_kriteria, bobot = :bobot, tipe = :tipe WHERE id = :id";
                 $stmt = $db->prepare($updateSql);
-                $stmt->bindParam(':kriteria', $_POST['kriteria']);
+                $stmt->bindParam(':nama_kriteria', $_POST['nama_kriteria']);
                 $stmt->bindParam(':bobot', $_POST['bobot']);
                 $stmt->bindParam(':tipe', $_POST['tipe']);
                 $stmt->bindParam(':id', $_POST['id']);
@@ -57,8 +57,8 @@ if (isset($_GET['id'])) {
                 <div class="card-body">
                     <form method="POST">    
                         <div class="form-group">
-                            <label for="kriteria">Kriteria</label>
-                            <input type="text" name="kriteria" class="form-control" value="<?= $row['kriteria'] ?>">
+                            <label for="nama_kriteria">Kriteria</label>
+                            <input type="text" name="nama_kriteria" class="form-control" value="<?= $row['nama_kriteria'] ?>">
                             <label for="bobot">Bobot</label>
                             <input type="number" name="bobot" class="form-control" value="<?= $row['bobot'] ?>">
                             <label for="tipe">Tipe</label>
