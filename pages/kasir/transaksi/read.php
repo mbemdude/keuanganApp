@@ -74,7 +74,7 @@
                       <td><?php echo $row['harga'] * $row['jumlah'] ?></td>
                       <td><?php echo $row['petugas'] ?></td>
                       <td>
-                        <a href="?page=edit-transaksi&id=<?php echo $row['id'] ?>" class="btn btn-warning"><i class="bi bi-pen"></i></a>
+                        <!-- <a href="?page=edit-transaksi&id=<?php echo $row['id'] ?>" class="btn btn-warning"><i class="bi bi-pen"></i></a> -->
                         <a href="#" onclick="confirmDelete('?page=hapus-transaksi&id=<?php echo $row['id'] ?>')" class="btn btn-danger"><i class="bi bi-trash"></i></a>
                       </td>
                     </tr>
