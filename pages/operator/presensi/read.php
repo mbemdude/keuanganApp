@@ -21,6 +21,7 @@ if (isset($_SESSION["hasil"])) {
                         <div>
                             <a href="?page=tambah-presensi" class="btn btn-success">Tambah Presensi</a>
                             <a href="?page=impor-presensi" class="btn btn-info">Impor & Ekspor Presensi</a>
+                            <a href="#" onclick="printPresensiAll()" class="btn btn-warning">Cetak Data <i class="bi bi-printer-fill"></i></a>
                             <a href="#" onclick="confirmDelete('?page=hapus-semua-presensi')" class="btn btn-danger">Hapus Data Presensi</a>
                         </div>
                         <form method="GET" class="ms-auto">
