@@ -64,7 +64,7 @@
                     <td><?php echo rupiah($row['jumlah']) ?></td>
                     <td><?php echo $row['tanggal_transaksi'] ?></td>
                     <td>
-                        <a href="?page=edit-transaksi-keuangan&id=<?php echo $row['id']?>" class="btn btn-warning"><i class="bi bi-pen"></i></a>
+                        <!-- <a href="?page=edit-transaksi-keuangan&id=<?php echo $row['id']?>" class="btn btn-warning"><i class="bi bi-pen"></i></a> -->
                         <a href="#" onclick="printTransaction(<?php echo $row['id'] ?>)" class="btn btn-primary"><i class="bi bi-printer"></i></a>
                         <a href="#" onclick="confirmDelete('?page=hapus-transaksi-keuangan&id=<?php echo $row['id']?>')" class="btn btn-danger"><i class="bi bi-trash"></i></a>
                     </td>
