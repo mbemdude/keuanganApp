@@ -59,7 +59,7 @@
                     ?>
                     <tr>
                       <th scope="row"><?php echo $no++ ?></th>
-                      <td><?php echo$row['kriteria'] ?></td>
+                      <td><?php echo$row['nama_kriteria'] ?></td>
                       <td><?php echo$row['bobot'] ?></td>
                       <td><?php echo$row['tipe'] ?></td>
                       <td>
