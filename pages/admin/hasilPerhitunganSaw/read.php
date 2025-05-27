@@ -59,8 +59,8 @@
                     ?>
                     <tr>
                       <th scope="row"><?php echo $no++ ?></th>
-                      <td><?php echo$row['nama'] ?></td>
-                      <td><?php echo$row['nilai_akhir'] ?></td>
+                      <td><?php echo $row['nama'] ?></td>
+                      <td><?php echo number_format($row['nilai_akhir'], 3) ?></td>
                       <td>
                         <a href="#" onclick="confirmDelete('?page=hapus-perhitungan-saw&id=<?php echo $row['id'] ?>')" class="btn btn-danger"><i class="bi bi-trash"></i></a>
                       </td>

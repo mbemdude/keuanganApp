@@ -103,7 +103,7 @@
                     $database = new Database();
                     $db = $database->getConnection();
                     
-                    $selectSql = "SELECT hp.*, s.nama, RANK() OVER (ORDER BY hp.nilai_akhir DESC) AS ranking FROM hasil_perhitungan hp JOIN siswa s ON hp.siswa_id = s.id ORDER BY ranking";
+                    $selectSql = "SELECT hpa.*, s.nama, RANK() OVER (ORDER BY hpa.nilai_akhir DESC) AS ranking FROM hasil_perhitungan_ahp hpa JOIN siswa s ON hpa.siswa_id = s.id ORDER BY ranking";
                     $stmt = $db->prepare($selectSql);
                     $stmt->execute();
                     $row_data = $stmt->rowCount();
@@ -114,7 +114,7 @@
                 <tr>
                     <td><?php echo $no++ ?></td>
                     <td><?php echo $row['nama'] ?></td>
-                    <td><?php echo $row['nilai_akhir'] ?></td>
+                    <td><?php echo number_format($row['nilai_akhir'], 3) ?></td>
                     <td><?php echo $row['ranking'] ?></td>
                 </tr>
                 <?php } ?>

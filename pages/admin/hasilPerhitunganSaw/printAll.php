@@ -114,7 +114,7 @@
                 <tr>
                     <td><?php echo $no++ ?></td>
                     <td><?php echo $row['nama'] ?></td>
-                    <td><?php echo $row['nilai_akhir'] ?></td>
+                    <td><?php echo number_format($row['nilai_akhir'], 3) ?></td>
                     <td><?php echo $row['ranking'] ?></td>
                 </tr>
                 <?php } ?>
