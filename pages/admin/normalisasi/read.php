@@ -1,4 +1,4 @@
-<?php 
+<?php
         if (isset($_SESSION["hasil"])) {
             if ($_SESSION["hasil"]) {
     ?>
@@ -69,11 +69,11 @@
                     <tr>
                       <th scope="row"><?php echo $no++ ?></th>
                       <td><?php echo$row['nama'] ?></td>
-                      <td><?php echo$row['c1'] ?></td>
-                      <td><?php echo$row['c2'] ?></td>
-                      <td><?php echo$row['c3'] ?></td>
-                      <td><?php echo$row['c4'] ?></td>
-                      <td><?php echo$row['c5'] ?></td>
+                      <td><?php echo number_Format($row['c1'], 3) ?></td>
+                      <td><?php echo number_Format($row['c2'], 3) ?></td>
+                      <td><?php echo number_Format($row['c3'], 3) ?></td>
+                      <td><?php echo number_Format($row['c4'], 3) ?></td>
+                      <td><?php echo number_Format($row['c5'], 3) ?></td>
                       <td>
                         <a href="#" onclick="confirmDelete('?page=hapus-normalisasi&id=<?php echo $row['id'] ?>')" class="btn btn-danger"><i class="bi bi-trash"></i></a>
                       </td>
