@@ -29,9 +29,9 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <a href="?page=generate-perhitungan-spk" class="btn btn-success">Generate Data <i class="bi bi-plus-circle-fill"></i></a>
-                <a href="#" onclick="confirmDelete('?page=hapus-semua-perhitungan-spk')" class="btn btn-danger">Hapus Semua Data <i class="bi bi-trash-fill"></i></a>
-                <a href="#" onclick="printPerhitunganSPKAll()" class="btn btn-warning">Cetak Data <i class="bi bi-printer-fill"></i></a>
+                <a href="?page=generate-perhitungan-saw" class="btn btn-success">Generate Data <i class="bi bi-plus-circle-fill"></i></a>
+                <a href="#" onclick="confirmDelete('?page=hapus-semua-perhitungan-saw')" class="btn btn-danger">Hapus Semua Data <i class="bi bi-trash-fill"></i></a>
+                <a href="#" onclick="printPerhitunganSawAll()" class="btn btn-warning">Cetak Data <i class="bi bi-printer-fill"></i></a>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -62,7 +62,7 @@
                       <td><?php echo$row['nama'] ?></td>
                       <td><?php echo$row['nilai_akhir'] ?></td>
                       <td>
-                        <a href="#" onclick="confirmDelete('?page=hapus-perhitungan-spk&id=<?php echo $row['id'] ?>')" class="btn btn-danger"><i class="bi bi-trash"></i></a>
+                        <a href="#" onclick="confirmDelete('?page=hapus-perhitungan-saw&id=<?php echo $row['id'] ?>')" class="btn btn-danger"><i class="bi bi-trash"></i></a>
                       </td>
                     </tr>
                     <?php } ?>

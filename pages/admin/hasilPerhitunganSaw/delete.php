@@ -16,5 +16,5 @@ if (isset($_GET['id'])) {
         $_SESSION['pesan'] = "Data gagal dihapus";
     }
 }
-echo "<meta http-equiv='refresh' content='0;url=?page=perhitungan-spk'>";
+echo "<meta http-equiv='refresh' content='0;url=?page=perhitungan-saw'>";
 ?>

@@ -40,5 +40,5 @@ foreach ($hasil as $siswa_id => $skor) {
 
 $_SESSION['hasil'] = true;
 $_SESSION['pesan'] = "Berhasil melakukan perhitungan SAW.";
-echo "<meta http-equiv='refresh' content='0;url=?page=perhitungan-spk'>";
+echo "<meta http-equiv='refresh' content='0;url=?page=perhitungan-saw'>";
 exit();

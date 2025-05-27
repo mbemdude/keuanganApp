@@ -31,6 +31,6 @@ function resetNilaiAlternatifTable() {
 
 resetNilaiAlternatifTable();
 
-header("Location: ?page=perhitungan-spk");
+header("Location: ?page=perhitungan-saw");
 exit();
 ?>
