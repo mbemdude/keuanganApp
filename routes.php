@@ -112,16 +112,41 @@ $routes = [
     'hapus-nilai-alternatif' => 'pages/admin/nilaiAlternatif/delete.php',
     'hapus-semua-nilai-alternatif' => 'pages/admin/nilaiAlternatif/deleteAll.php',
     
+    'perbandingan-kriteria' => 'pages/admin/perbandinganKriteria/read.php',
+    'tambah-perbandingan-kriteria' => 'pages/admin/perbandinganKriteria/add.php',
+    'edit-perbandingan-kriteria' => 'pages/admin/perbandinganKriteria/update.php',
+    'hapus-perbandingan-kriteria' => 'pages/admin/perbandinganKriteria/delete.php',
+    'hapus-semua-perbandingan-kriteria' => 'pages/admin/perbandinganKriteria/deleteAll.php',
+    
+    'bobot-kriteria' => 'pages/admin/bobotKriteria/read.php',
+    'tambah-bobot-kriteria' => 'pages/admin/bobotKriteria/add.php',
+    'edit-bobot-kriteria' => 'pages/admin/bobotKriteria/update.php',
+    'hapus-bobot-kriteria' => 'pages/admin/bobotKriteria/delete.php',
+    'hapus-semua-bobot-kriteria' => 'pages/admin/bobotKriteria/deleteAll.php',
+    
+    // SAW
     'normalisasi' => 'pages/admin/normalisasi/read.php',
     'generate-normalisasi' => 'pages/admin/normalisasi/add.php',
     'hapus-normalisasi' => 'pages/admin/normalisasi/delete.php',
     'hapus-semua-normalisasi' => 'pages/admin/normalisasi/deleteAll.php',
     
-    'perhitungan-spk' => 'pages/admin/hasilPerhitungan/read.php',
-    'generate-perhitungan-spk' => 'pages/admin/hasilPerhitungan/add.php',
-    'hapus-perhitungan-spk' => 'pages/admin/hasilPerhitungan/delete.php',
-    'hapus-semua-perhitungan-spk' => 'pages/admin/hasilPerhitungan/deleteAll.php',
-    'cetak-perhitungan-spk' => 'pages/admin/hasilPerhitungan/printAll.php',
+    'perhitungan-saw' => 'pages/admin/hasilPerhitunganSaw/read.php',
+    'generate-perhitungan-saw' => 'pages/admin/hasilPerhitunganSaw/add.php',
+    'hapus-perhitungan-saw' => 'pages/admin/hasilPerhitunganSaw/delete.php',
+    'hapus-semua-perhitungan-saw' => 'pages/admin/hasilPerhitunganSaw/deleteAll.php',
+    'cetak-perhitungan-saw' => 'pages/admin/hasilPerhitunganSaw/printAll.php',
+    
+    // AHP
+    'normalisasi-ahp' => 'pages/admin/normalisasiAhp/read.php',
+    'generate-normalisasi-ahp' => 'pages/admin/normalisasiAhp/add.php',
+    'hapus-normalisasi-ahp' => 'pages/admin/normalisasiAhp/delete.php',
+    'hapus-semua-normalisasi-ahp' => 'pages/admin/normalisasiAhp/deleteAll.php',
+    
+    'perhitungan-ahp' => 'pages/admin/hasilPerhitunganAhp/read.php',
+    'generate-perhitungan-ahp' => 'pages/admin/hasilPerhitunganAhp/add.php',
+    'hapus-perhitungan-ahp' => 'pages/admin/hasilPerhitunganAhp/delete.php',
+    'hapus-semua-perhitungan-ahp' => 'pages/admin/hasilPerhitunganAhp/deleteAll.php',
+    'cetak-perhitungan-ahp' => 'pages/admin/hasilPerhitunganAhp/printAll.php',
 
     // Operator Section
     'mata-pelajaran' => 'pages/masterdata/mataPelajaran/read.php',
