@@ -1,0 +1,87 @@
+<?php 
+if (isset($_GET['id'])) {
+    $database = new Database();
+    $db = $database->getConnection();
+
+    // Find data
+    $id = $_GET['id'];
+    $findSql = "SELECT * FROM kriteria WHERE id = :id";
+    $stmt = $db->prepare($findSql);
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
+    $row = $stmt->fetch();
+
+    if (isset($row['id'])) {
+        if (isset($_POST['button_update'])) {
+            // Validasi
+            $validationSql = "SELECT * FROM kriteria WHERE kriteria = :kriteria AND id != :id";
+            $stmtValidation = $db->prepare($validationSql);
+            $stmtValidation->bindParam(':kriteria', $_POST['kriteria']);
+            $stmtValidation->bindParam(':id', $_POST['id']);
+            $stmtValidation->execute();
+
+            if ($stmtValidation->rowCount() > 0) {
+                ?>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <h5>Gagal</h5>
+                    Data kriteria atau nama sudah ada
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <?php
+            } else {
+                // Update Query
+                $updateSql = "UPDATE kriteria SET nama_kriteria = :nama_kriteria, bobot = :bobot, tipe = :tipe WHERE id = :id";
+                $stmt = $db->prepare($updateSql);
+                $stmt->bindParam(':nama_kriteria', $_POST['nama_kriteria']);
+                $stmt->bindParam(':bobot', $_POST['bobot']);
+                $stmt->bindParam(':tipe', $_POST['tipe']);
+                $stmt->bindParam(':id', $_POST['id']);
+
+                if ($stmt->execute()) {
+                    $_SESSION['hasil'] = true;
+                    $_SESSION['pesan'] = "Berhasil simpan data";
+                } else {
+                    $_SESSION['hasil'] = false;
+                    $_SESSION['pesan'] = "Gagal simpan data";
+                }
+                echo "<meta http-equiv='refresh' content='0;url=?page=kriteria'>";
+            }
+        }
+        ?>
+
+        <section class="content">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Update Data</h3>
+                </div>
+                <div class="card-body">
+                    <form method="POST">    
+                        <div class="form-group">
+                            <label for="nama_kriteria">Kriteria</label>
+                            <input type="text" name="nama_kriteria" class="form-control" value="<?= $row['nama_kriteria'] ?>">
+                            <label for="bobot">Bobot</label>
+                            <input type="number" name="bobot" class="form-control" value="<?= $row['bobot'] ?>">
+                            <label for="tipe">Tipe</label>
+                            <select name="tipe" class="form-select">
+                                <option value="">- Pilih -</option>
+                                <option value="Cost" <?= ($row['tipe'] == 'cost') ? 'selected' : '' ?>>Cost</option>
+                                <option value="Benefit" <?= ($row['tipe'] == 'benefit') ? 'selected' : '' ?>>Benefit</option>
+                            </select>
+                            <input type="hidden" name="id" value="<?= $row['id'] ?>">
+                        </div>
+                        <div class="mt-2">
+                            <a href="?page=kriteria" class="btn btn-danger">Batal</a>
+                            <button type="submit" name="button_update" class="btn btn-success">Simpan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <?php
+    } else {
+        echo "<meta http-equiv='refresh' content='0;url=?page=kriteria'>";
+    }
+} else {
+    echo "<meta http-equiv='refresh' content='0;url=?page=kriteria'>";
+}
+?>
