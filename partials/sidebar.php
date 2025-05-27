@@ -260,16 +260,62 @@
                                     </a> 
                                 </li>
                                 <li class="nav-item"> 
-                                    <a href="?page=normalisasi" class="nav-link"> 
-                                        <i class="nav-icon bi bi-clipboard2-data-fill"></i>
-                                        <p>Normalisasi</p>
+                                    <a href="#" class="nav-link"> 
+                                        <i class="nav-icon bi bi-clipboard2-check-fill"></i>
+                                        <p>
+                                            SAW
+                                            <i class="nav-arrow bi bi-chevron-right"></i>
+                                        </p>
                                     </a> 
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item"> 
+                                            <a href="?page=normalisasi" class="nav-link"> 
+                                                <i class="nav-icon bi bi-clipboard2-data-fill"></i>
+                                                <p>Normalisasi SAW</p>
+                                            </a> 
+                                        </li>
+                                        <li class="nav-item"> 
+                                            <a href="?page=perhitungan-spk" class="nav-link"> 
+                                                <i class="nav-icon bi bi-clipboard2-pulse-fill"></i>
+                                                <p>Perhitungan SAW</p>
+                                            </a> 
+                                        </li>
+                                    </ul>
                                 </li>
-                                <li class="nav-item"> 
-                                    <a href="?page=perhitungan-spk" class="nav-link"> 
-                                        <i class="nav-icon bi bi-clipboard2-pulse-fill"></i>
-                                        <p>Perhitungan SPK</p>
-                                    </a> 
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon bi bi-clipboard2-check-fill"></i>
+                                        <p>
+                                            AHP
+                                            <i class="nav-arrow bi bi-chevron-right"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item"> 
+                                            <a href="?page=perbandingan-kriteria" class="nav-link"> 
+                                                <i class="nav-icon bi bi-clipboard2-check-fill"></i>
+                                                <p>Perbandingan Kriteria</p>
+                                            </a> 
+                                        </li>
+                                        <li class="nav-item"> 
+                                            <a href="?page=bobot-kriteria" class="nav-link"> 
+                                                <i class="nav-icon bi bi-clipboard2-check-fill"></i>
+                                                <p>Bobot Kriteria</p>
+                                            </a> 
+                                        </li>
+                                        <li class="nav-item"> 
+                                            <a href="?page=normalisasi-ahp" class="nav-link"> 
+                                                <i class="nav-icon bi bi-clipboard2-check-fill"></i>
+                                                <p>Normalisasi AHP</p>
+                                            </a> 
+                                        </li>
+                                        <li class="nav-item"> 
+                                            <a href="?page=perhitungan-ahp" class="nav-link"> 
+                                                <i class="nav-icon bi bi-clipboard2-check-fill"></i>
+                                                <p>Perhitungan AHP</p>
+                                            </a> 
+                                        </li>
+                                    </ul>
                                 </li>
                             </ul>
                         </li>
