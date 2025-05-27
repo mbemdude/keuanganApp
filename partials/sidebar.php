@@ -256,7 +256,7 @@
                                 </li>
                                 <li class="nav-item"> 
                                     <a href="#" class="nav-link"> 
-                                        <i class="nav-icon bi bi-clipboard2-check-fill"></i>
+                                        <i class="nav-icon bi bi-diagram-3"></i>
                                         <p>
                                             SAW
                                             <i class="nav-arrow bi bi-chevron-right"></i>
