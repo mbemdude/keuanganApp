@@ -136,8 +136,12 @@
             var printWindow = window.open('?page=cetak-nilai-uas&siswa_id=' + siswa_id +'&tahun_ajaran_id=' + tahun_ajaran_id + '&semester=' + semester, '_blank');
         }
 
-        function printPerhitunganSPKAll() {
-            var printWindow = window.open('?page=cetak-perhitungan-spk', '_blank');
+        function printPerhitunganSawAll() {
+            var printWindow = window.open('?page=cetak-perhitungan-saw', '_blank');
+        }
+
+        function printPerhitunganAhpAll() {
+            var printWindow = window.open('?page=cetak-perhitungan-ahp', '_blank');
         }
     </script>
     <!-- Cetak end -->
