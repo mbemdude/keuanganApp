@@ -12,11 +12,11 @@ $db->exec("DELETE FROM nilai_alternatif");
 foreach ($siswaList as $siswa) {
     foreach ($kriteriaList as $kriteria) {
         $kriteria_id = $kriteria['id'];
-        $namaKriteria = strtolower($kriteria['kriteria']);
+        $namaKriteria = strtolower($kriteria['nama_kriteria']);
         $nilai = 0;
 
         switch ($namaKriteria) {
-            case 'rata nilai rapor':
+            case 'nilai akademik':
                 $stmtNilai = $db->prepare("SELECT AVG((nilai_uts + nilai_uas) / 2) as rata2 FROM nilai_rapor WHERE siswa_id = ?");
                 $stmtNilai->execute([$siswa['id']]);
                 $rata = $stmtNilai->fetchColumn();
@@ -33,7 +33,7 @@ foreach ($siswaList as $siswa) {
                 }
                 break;
 
-            case 'jumlah kehadiran':
+            case 'presensi':
                 $stmtPresensi = $db->prepare("SELECT COUNT(*) FROM presensi WHERE siswa_id = ? AND status = 'Hadir'");
                 $stmtPresensi->execute([$siswa['id']]);
                 $hadir = $stmtPresensi->fetchColumn();
