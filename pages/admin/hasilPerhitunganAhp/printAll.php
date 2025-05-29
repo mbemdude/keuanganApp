@@ -88,8 +88,8 @@
     <div class="header-line"></div>
     <div class="header-line-bottom"></div>
     <div class="content">
-        <h3 align="center">LAPORAN TAGIHAN SISWA</h3>
-        <table class="table table-bordered">
+        <h3 align="center">HASIL PERHITUNGAN AHP</h3>
+        <table class="table table-bordered mt-3">
             <thead class="table">
                 <tr>
                     <th>No</th>
