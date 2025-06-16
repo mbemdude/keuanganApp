@@ -38,9 +38,9 @@
                   <thead>
                     <tr>
                       <th>No</th>
-                      <th>Kriteria</th>
-                      <th>Bobot</th>
-                      <th>Tipe</th>
+                      <th>Kriteria 1</th>
+                      <th>Kriteria 2</th>
+                      <th>Nilai Perbandingan</th>
                       <th>Aksi</th>
                     </tr>
                   </thead>
@@ -73,9 +73,9 @@
                   <tfoot>
                     <tr>
                       <th>No</th>
-                      <th>Kriteria</th>
-                      <th>Bobot</th>
-                      <th>Tipe</th>
+                      <th>Kriteria 1 1</th>
+                      <th>Kriteria 2ria 2</th>
+                      <th>Nilai Perbandingan</th>
                       <th>Aksi</th>
                     </tr>
                   </tfoot>
