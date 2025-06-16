@@ -14,9 +14,9 @@ if (isset($_GET['id'])) {
     if (isset($row['id'])) {
         if (isset($_POST['button_update'])) {
             // Validasi
-            $validationSql = "SELECT * FROM kriteria WHERE kriteria = :kriteria AND id != :id";
+            $validationSql = "SELECT * FROM kriteria WHERE nama_kriteria = :nama_kriteria AND id != :id";
             $stmtValidation = $db->prepare($validationSql);
-            $stmtValidation->bindParam(':kriteria', $_POST['kriteria']);
+            $stmtValidation->bindParam(':nama_kriteria', $_POST['nama_kriteria']);
             $stmtValidation->bindParam(':id', $_POST['id']);
             $stmtValidation->execute();
 

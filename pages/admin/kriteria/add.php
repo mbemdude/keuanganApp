@@ -4,9 +4,9 @@ if (isset($_POST['button_create'])) {
     $database = new Database();
     $db = $database->getConnection();
 
-    $validationSql = "SELECT * FROM kriteria WHERE kriteria = :kriteria";
+    $validationSql = "SELECT * FROM kriteria WHERE nama_kriteria = :nama_kriteria";
     $stmtValidation = $db->prepare($validationSql);
-    $stmtValidation->bindParam(':kriteria', $_POST['kriteria']);
+    $stmtValidation->bindParam(':nama_kriteria', $_POST['nama_kriteria']);
     $stmtValidation->execute();
 
     if ($stmtValidation->rowCount() > 0) {
