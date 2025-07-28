@@ -30,7 +30,7 @@
             <div class="card-header">
             <a href="?page=tambah-tagihan-siswa" class="btn btn-success">Tambah Data <i class="bi bi-plus-circle-fill"></i></a>
             <a href="?page=import-tagihan-siswa" class="btn btn-info">Import & Export Data <i class="bi bi-database-fill-gear"></i></a>
-            <a href="#" onclick="printTagihanSiswaAll()" class="btn btn-warning">Cetak Data <i class="bi bi-printer-fill"></i></a>
+            <!-- <a href="#" onclick="printTagihanSiswaAll()" class="btn btn-warning">Cetak Data <i class="bi bi-printer-fill"></i></a> -->
             <a href="#" onclick="confirmDelete('?page=hapus-semua-tagihan-siswa')"" class="btn btn-danger">Hapus Semua Data <i class="bi bi-trash-fill"></i></a>
             </div>
             <!-- /.card-header -->

@@ -88,7 +88,7 @@
     <div class="header-line"></div>
     <div class="header-line-bottom"></div>
     <div class="content">
-        <h3 align="center">LAPORAN BARANG MASUK</h3>
+        <h3 align="center">Laporan Barang Masuk</h3>
         <table class="table table-bordered">
             <thead class="table">
                 <tr>
@@ -128,6 +128,17 @@
                 <?php } ?>
             </tbody>
         </table>
+        <div class="row mt-5">
+            <div class="col-8"></div>
+            <div class="col-4 mx-auto">
+                <div class="text-center">
+                    <p>Martapura, <?php echo date('d M Y'); ?></p>
+                    <p><strong>Kepala Keuangan</strong></p>
+                    <br><br><br>
+                    <p>_______________________</p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>

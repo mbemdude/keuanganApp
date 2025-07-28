@@ -120,6 +120,17 @@
                 <?php } ?>
             </tbody>
         </table>
+        <div class="row mt-5">
+            <div class="col-8"></div>
+            <div class="col-4 mx-auto">
+                <div class="text-center">
+                    <p>Martapura, <?php echo date('d M Y'); ?></p>
+                    <p><strong>Ketua Yayasan</strong></p>
+                    <br><br><br>
+                    <p>_______________________</p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
