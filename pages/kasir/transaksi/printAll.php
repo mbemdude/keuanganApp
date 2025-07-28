@@ -131,7 +131,7 @@
         <div class="row mt-5">
             <div class="col-8"></div>
             <div class="col-4 mx-auto">
-                <div class="text-start">
+                <div class="text-center">
                     <p>Martapura, <?php echo date('d M Y'); ?></p>
                     <p><strong>Kepala Keuangan</strong></p>
                     <br><br><br>
