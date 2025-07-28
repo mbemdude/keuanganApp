@@ -199,7 +199,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
                             <li>Contoh, kita memiliki 3 baris data siswa A, B, C masing masing siswa memiliki kunci utama yaitu berupa id. Id disini berupa angka yang otomatis bertambah sendiri jika ada inputan baru</li>
                         </ul>
                         <li>Lebih mudahnya bisa download contoh import data dibawah ini</li>
-                        <a href="assets/sample/test_import_presensi_siswa.xlsx" class="btn btn-primary">Download Sample</a>
+                        <a href="assets/sample/Sample Import Nilai UTS.xlsx" class="btn btn-primary">Download Sample</a>
                     </ul>
                 </div>
             </div>

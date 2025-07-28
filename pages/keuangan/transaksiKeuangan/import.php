@@ -200,7 +200,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file'])) {
                         </ul>
                         <li>Untuk impor transaksi keuangan, pastikan data uang saku dan tagihan siswa sudah diinputkan karena akan berpengaruh untuk pengupdate-an data</li>
                         <li>Lebih mudahnya bisa download contoh impor data dibawah ini</li>
-                        <a href="assets/sample/test_import_transaksi_keuangan.xlsx" class="btn btn-primary">Download Sample</a>
+                        <a href="assets/sample/Sample Import Transaksi Keuangan.xlsx" class="btn btn-primary">Download Sample</a>
                     </ul>
                 </div>
             </div>
