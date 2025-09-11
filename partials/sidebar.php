@@ -322,7 +322,7 @@
                                     </a>
                                     <ul class="nav nav-treeview">
                                         <li class="nav-item"> 
-                                            <a href="?page=perbaikan-bobot" class="nav-link"> 
+                                            <a href="?page=perbaikan-bobot-wp" class="nav-link"> 
                                                 <i class="nav-icon bi bi-list-columns-reverse"></i>
                                                 <p>Perbaikan Bobot</p>
                                             </a> 
