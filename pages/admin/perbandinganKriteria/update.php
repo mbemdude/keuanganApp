@@ -31,7 +31,7 @@ if (isset($_GET['id'])) {
                 <?php
             } else {
                 // Update Query
-                $updateSql = "UPDATE kriteria SET kriteria_id_1 = :kriteria_id_1, kriteria_id_2 = :kriteria_id_2, nilai_perbandingan = :nilai_perbandingan WHERE id = :id";
+                $updateSql = "UPDATE perbandingan_kriteria SET kriteria_id_1 = :kriteria_id_1, kriteria_id_2 = :kriteria_id_2, nilai_perbandingan = :nilai_perbandingan WHERE id = :id";
                 $stmt = $db->prepare($updateSql);
                 $stmt->bindParam(':kriteria_id_1', $_POST['kriteria_id_1']);
                 $stmt->bindParam(':kriteria_id_2', $_POST['kriteria_id_2']);
