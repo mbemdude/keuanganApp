@@ -147,6 +147,16 @@ $routes = [
     'hapus-perhitungan-ahp' => 'pages/admin/hasilPerhitunganAhp/delete.php',
     'hapus-semua-perhitungan-ahp' => 'pages/admin/hasilPerhitunganAhp/deleteAll.php',
     'cetak-perhitungan-ahp' => 'pages/admin/hasilPerhitunganAhp/printAll.php',
+    
+    // WP
+    'perbaikan-bobot-wp' => 'pages/admin/perbaikanBobotWp/read.php',
+    'generate-perbaikan-bobot-wp' => 'pages/admin/perbaikanBobotWp/add.php',
+    'hapus-semua-perbaikan-bobot-wp' => 'pages/admin/perbaikanBobotWp/deleteAll.php',
+    
+    'perhitungan-wp' => 'pages/admin/hasilPerhitunganWp/read.php',
+    'generate-perhitungan-wp' => 'pages/admin/hasilPerhitunganWp/add.php',
+    'hapus-semua-perhitungan-wp' => 'pages/admin/hasilPerhitunganWp/deleteAll.php',
+    'cetak-perhitungan-wp' => 'pages/admin/hasilPerhitunganWp/printAll.php',
 
     // Operator Section
     'mata-pelajaran' => 'pages/masterdata/mataPelajaran/read.php',
