@@ -4,6 +4,7 @@ if (isset($_POST['button_create'])) {
     $database = new Database();
     $db = $database->getConnection();
 
+    // Validasi apakah data sudah ada (opsional tergantung kebutuhan)
     $validationSql = "SELECT * FROM barang_masuk WHERE id = :id";
     $stmtValidation = $db->prepare($validationSql);
     $stmtValidation->bindParam(':id', $_POST['id']);
@@ -18,21 +19,53 @@ if (isset($_POST['button_create'])) {
         </div>
         <?php
     } else {
-        $insertSql = "INSERT INTO barang_masuk (harga_beli, jumlah, tanggal_transaksi, barang_id, supplier_id) 
-                      VALUES (:harga_beli, :jumlah, NOW(), :barang_id, :supplier_id)";
-        $stmt = $db->prepare($insertSql);
-        $stmt->bindParam(':harga_beli', $_POST['harga_beli']);
-        $stmt->bindParam(':jumlah', $_POST['jumlah']);
-        $stmt->bindParam(':barang_id', $_POST['barang_id']);
-        $stmt->bindParam(':supplier_id', $_POST['supplier_id']);
-        
-        if ($stmt->execute()) {
+        try {
+            // Gunakan transaksi biar aman
+            $db->beginTransaction();
+
+            // 1. Insert ke barang_masuk
+            $insertSql = "INSERT INTO barang_masuk (harga_beli, jumlah, tanggal_transaksi, barang_id, supplier_id) 
+                          VALUES (:harga_beli, :jumlah, NOW(), :barang_id, :supplier_id)";
+            $stmt = $db->prepare($insertSql);
+            $stmt->bindParam(':harga_beli', $_POST['harga_beli']);
+            $stmt->bindParam(':jumlah', $_POST['jumlah']);
+            $stmt->bindParam(':barang_id', $_POST['barang_id']);
+            $stmt->bindParam(':supplier_id', $_POST['supplier_id']);
+            $stmt->execute();
+
+            // 2. Ambil konversi_satuan dari tabel barang
+            $barangSql = "SELECT konversi_satuan, stock FROM barang WHERE id = :barang_id";
+            $stmtBarang = $db->prepare($barangSql);
+            $stmtBarang->bindParam(':barang_id', $_POST['barang_id']);
+            $stmtBarang->execute();
+            $rowBarang = $stmtBarang->fetch(PDO::FETCH_ASSOC);
+
+            if ($rowBarang) {
+                $konversi_satuan = $rowBarang['konversi_satuan'];
+                $stock_lama = $rowBarang['stock'];
+
+                // Hitung tambahan stock
+                $tambah_stock = $_POST['jumlah'] * $konversi_satuan;
+                $stock_baru = $stock_lama + $tambah_stock;
+
+                // 3. Update stock di tabel barang
+                $updateSql = "UPDATE barang SET stock = :stock WHERE id = :barang_id";
+                $stmtUpdate = $db->prepare($updateSql);
+                $stmtUpdate->bindParam(':stock', $stock_baru);
+                $stmtUpdate->bindParam(':barang_id', $_POST['barang_id']);
+                $stmtUpdate->execute();
+            }
+
+            $db->commit();
+
             $_SESSION['hasil'] = true;
-            $_SESSION['pesan'] = "Berhasil simpan data";
-        } else {
+            $_SESSION['pesan'] = "Berhasil simpan data dan update stok";
+        } catch (Exception $e) {
+            $db->rollBack();
             $_SESSION['hasil'] = false;
-            $_SESSION['pesan'] = "Gagal simpan data";
+            $_SESSION['pesan'] = "Gagal simpan data: " . $e->getMessage();
         }
+
         echo "<meta http-equiv='refresh' content='0;url=?page=barang-masuk'>";
     }
 }
