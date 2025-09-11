@@ -312,6 +312,64 @@
                                         </li>
                                     </ul>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon bi bi-diagram-3"></i>
+                                        <p>
+                                            WP
+                                            <i class="nav-arrow bi bi-chevron-right"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item"> 
+                                            <a href="?page=perbaikan-bobot" class="nav-link"> 
+                                                <i class="nav-icon bi bi-list-columns-reverse"></i>
+                                                <p>Perbaikan Bobot</p>
+                                            </a> 
+                                        </li>
+                                        <li class="nav-item"> 
+                                            <a href="?page=hasil-perhitungan-wp" class="nav-link"> 
+                                                <i class="nav-icon bi bi-sliders2"></i>
+                                                <p>Hasil Perhitungan</p>
+                                            </a> 
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon bi bi-diagram-3"></i>
+                                        <p>
+                                            TOPSIS
+                                            <i class="nav-arrow bi bi-chevron-right"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item"> 
+                                            <a href="?page=perbandingan-kriteria" class="nav-link"> 
+                                                <i class="nav-icon bi bi-list-columns-reverse"></i>
+                                                <p>Perbandingan Kriteria</p>
+                                            </a> 
+                                        </li>
+                                        <li class="nav-item"> 
+                                            <a href="?page=bobot-kriteria" class="nav-link"> 
+                                                <i class="nav-icon bi bi-sliders2"></i>
+                                                <p>Bobot Kriteria</p>
+                                            </a> 
+                                        </li>
+                                        <li class="nav-item"> 
+                                            <a href="?page=normalisasi-ahp" class="nav-link"> 
+                                                <i class="nav-icon bi bi-filter-circle"></i>
+                                                <p>Normalisasi AHP</p>
+                                            </a> 
+                                        </li>
+                                        <li class="nav-item"> 
+                                            <a href="?page=perhitungan-ahp" class="nav-link"> 
+                                                <i class="nav-icon bi bi-award-fill"></i>
+                                                <p>Perhitungan AHP</p>
+                                            </a> 
+                                        </li>
+                                    </ul>
+                                </li>
                             </ul>
                         </li>
                         <li class="nav-item"> 
@@ -330,7 +388,7 @@
                                     </a> 
                                 </li>
                                 <li class="nav-item"> 
-                                    <a href="#" onclick="printTransactionAlls()" class="nav-link"> 
+                                    <a href="#" onclick="printTransactionAll()" class="nav-link"> 
                                         <i class="nav-icon bi bi-cash-coin"></i>
                                         <p>Laporan Transaksi Keuangan</p>
                                     </a> 
