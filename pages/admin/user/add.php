@@ -4,25 +4,24 @@ if (isset($_POST['button_create'])) {
     $database = new Database();
     $db = $database->getConnection();
 
-    $validationSql = "SELECT * FROM users WHERE nip = :nip";
+    $validationSql = "SELECT * FROM users WHERE id = :id";
     $stmtValidation = $db->prepare($validationSql);
-    $stmtValidation->bindParam(':nip', $_POST['nip']);
+    $stmtValidation->bindParam(':id', $_POST['id']);
     $stmtValidation->execute();
 
     if ($stmtValidation->rowCount() > 0) {
         ?>
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
             <h5>Gagal</h5>
-            Data nip sudah ada
+            Data user sudah ada
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         <?php
     } else {
-        $insertSql = "INSERT INTO users (nama, nip, jenis_kelamin, username, password, role_id) VALUES (:nama, :nip, :jenis_kelamin, :username, :password, :role_id)";
+        $insertSql = "INSERT INTO users (nama, jenis_kelamin, username, password, role_id) VALUES (:nama, :jenis_kelamin, :username, :password, :role_id)";
         $hashedPassword = password_hash($_POST['password'], PASSWORD_BCRYPT);
         $stmt = $db->prepare($insertSql);
         $stmt->bindParam(':nama', $_POST['nama']);
-        $stmt->bindParam(':nip', $_POST['nip']);
         $stmt->bindParam(':jenis_kelamin', $_POST['jenis_kelamin']);
         $stmt->bindParam(':username', $_POST['username']);
         $stmt->bindParam(':password', $hashedPassword);
@@ -50,8 +49,6 @@ if (isset($_POST['button_create'])) {
                 <div class="form-group">
                     <label for="nama">Nama</label>
                     <input type="text" name="nama" class="form-control">
-                    <label for="nip">NIP</label>
-                    <input type="text" name="nip" class="form-control">
                     <label for="jenis_kelamin">Jenis Kelamin</label>
                     <select name="jenis_kelamin" class="form-select">
                         <option value=""> - Pilih - </option>

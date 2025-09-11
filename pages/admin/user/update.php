@@ -14,9 +14,9 @@ if (isset($_GET['id'])) {
     if (isset($row['id'])) {
         if (isset($_POST['button_update'])) {
             // Validasi
-            $validationSql = "SELECT * FROM users WHERE nip = :nip AND id != :id";
+            $validationSql = "SELECT * FROM users WHERE nama = :nama AND id != :id";
             $stmtValidation = $db->prepare($validationSql);
-            $stmtValidation->bindParam(':nip', $_POST['nip']);
+            $stmtValidation->bindParam(':nama', $_POST['nama']);
             $stmtValidation->bindParam(':id', $_POST['id']);
             $stmtValidation->execute();
 
@@ -24,16 +24,15 @@ if (isset($_GET['id'])) {
                 ?>
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <h5>Gagal</h5>
-                    Data nip sudah ada
+                    Data user sudah ada
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 <?php
             } else {
                 // Update Query
-                $updateSql = "UPDATE users SET nama = :nama, nip = :nip, jenis_kelamin = :jenis_kelamin, username = :username, password = :password, role_id = :role_id WHERE id = :id";
+                $updateSql = "UPDATE users SET nama = :nama, jenis_kelamin = :jenis_kelamin, username = :username, password = :password, role_id = :role_id WHERE id = :id";
                 $hashedPassword = password_hash($_POST['password'], PASSWORD_BCRYPT);
                 $stmt = $db->prepare($updateSql);
-                $stmt->bindParam(':nip', $_POST['nip']);
                 $stmt->bindParam(':nama', $_POST['nama']);
                 $stmt->bindParam(':jenis_kelamin', $_POST['jenis_kelamin']);
                 $stmt->bindParam(':username', $_POST['username']);
